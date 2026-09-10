@@ -1,0 +1,169 @@
+/* Apex AI Fitness - Custom Styles & Animations */
+
+:root {
+  --neon-lime: #ccff00;
+  --neon-cyan: #00f0ff;
+  --neon-coral: #ff4d4d;
+  --dark-bg: #0a0c10;
+  --card-bg: #12161f;
+  --card-border: rgba(255, 255, 255, 0.08);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #0a0c10;
+}
+::-webkit-scrollbar-thumb {
+  background: #1e2433;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #ccff00;
+}
+
+/* Base Body Styles */
+body {
+  font-family: 'Outfit', sans-serif;
+  background-color: #0a0c10;
+  color: #f3f4f6;
+  overflow-x: hidden;
+  selection-background-color: #ccff00;
+  selection-color: #000;
+}
+
+/* Display Fonts */
+.font-display {
+  font-family: 'Bebas Neue', sans-serif;
+  letter-spacing: 0.04em;
+}
+
+/* Glow & Neon Effects */
+.glow-lime {
+  box-shadow: 0 0 25px rgba(204, 255, 0, 0.35);
+}
+
+.glow-cyan {
+  box-shadow: 0 0 25px rgba(0, 240, 255, 0.35);
+}
+
+.glow-text-lime {
+  text-shadow: 0 0 12px rgba(204, 255, 0, 0.5);
+}
+
+.glow-text-cyan {
+  text-shadow: 0 0 12px rgba(0, 240, 255, 0.5);
+}
+
+.border-glow-lime:hover {
+  border-color: #ccff00;
+  box-shadow: 0 0 20px rgba(204, 255, 0, 0.25);
+}
+
+/* Radar Scanline Animation for AI Camera */
+@keyframes scanline {
+  0% {
+    top: 0%;
+    opacity: 0.8;
+  }
+  50% {
+    opacity: 0.3;
+  }
+  100% {
+    top: 96%;
+    opacity: 0.8;
+  }
+}
+
+.ai-scanline {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, #00f0ff, #ccff00, transparent);
+  box-shadow: 0 0 15px #00f0ff, 0 0 25px #ccff00;
+  animation: scanline 3s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+
+/* Pulse Keyframes */
+@keyframes pulseGlow {
+  0%, 100% {
+    box-shadow: 0 0 15px rgba(204, 255, 0, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 30px rgba(204, 255, 0, 0.6);
+  }
+}
+
+.animate-pulse-glow {
+  animation: pulseGlow 2.5s infinite ease-in-out;
+}
+
+/* Glassmorphism Classes */
+.glass-card {
+  background: rgba(18, 22, 31, 0.75);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.glass-card-hover {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.glass-card-hover:hover {
+  background: rgba(24, 30, 42, 0.85);
+  border-color: rgba(204, 255, 0, 0.3);
+  transform: translateY(-4px);
+}
+
+/* Custom Range Input Styling */
+input[type="range"] {
+  accent-color: #ccff00;
+  cursor: pointer;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  background-color: #ccff00;
+  box-shadow: 0 0 10px #ccff00;
+  cursor: pointer;
+}
+
+/* Marquee / Ticker text */
+@keyframes ticker {
+  0% { transform: translate3d(0, 0, 0); }
+  100% { transform: translate3d(-50%, 0, 0); }
+}
+
+.ticker-track {
+  display: flex;
+  width: 200%;
+  animation: ticker 25s linear infinite;
+}
+
+.ticker-track:hover {
+  animation-play-state: paused;
+}
+
+/* Grid Pattern Background */
+.bg-grid-pattern {
+  background-size: 40px 40px;
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+}
+
+/* Toast Notifications */
+.toast-enter {
+  transform: translateY(100%);
+  opacity: 0;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.toast-show {
+  transform: translateY(0);
+  opacity: 1;
+}

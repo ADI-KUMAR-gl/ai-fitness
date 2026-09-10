@@ -1,0 +1,1408 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>APEX AI FITNESS | Next-Gen AI Powered Gym & Athletic Performance</title>
+  <meta name="description" content="Experience the future of fitness. Computer-vision form coaching, automated progressive overload, AI workout & diet generation, and elite 24/7 training facilities.">
+  <meta name="theme-color" content="#0a0c10">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            lime: {
+              300: '#d9ff33',
+              400: '#ccff00',
+              500: '#b8e600',
+            },
+            cyan: {
+              300: '#33f3ff',
+              400: '#00f0ff',
+              500: '#00d2e0',
+            },
+            dark: {
+              900: '#0a0c10',
+              800: '#12161f',
+              700: '#1c2230',
+            }
+          },
+          fontFamily: {
+            sans: ['Outfit', 'sans-serif'],
+            display: ['Bebas Neue', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Custom Styles -->
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body class="bg-dark-900 text-gray-100 antialiased selection:bg-lime-400 selection:text-black">
+
+  <!-- =====================================================================
+       HEADER & NAVIGATION
+       ===================================================================== -->
+  <header id="mainHeader" class="fixed top-0 left-0 w-full z-40 transition-all duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+      
+      <!-- Brand Logo -->
+      <a href="#" class="flex items-center gap-2.5 group">
+        <div class="w-10 h-10 rounded-xl bg-lime-400 flex items-center justify-center text-black shadow-lg shadow-lime-400/20 group-hover:scale-105 transition">
+          <i data-lucide="zap" class="w-6 h-6 fill-black stroke-black"></i>
+        </div>
+        <div>
+          <span class="font-display text-2xl tracking-wider text-white">APEX <span class="text-lime-400">AI</span></span>
+          <span class="block text-[9px] uppercase tracking-widest text-cyan-400 font-bold -mt-1">Performance Gym</span>
+        </div>
+      </a>
+
+      <!-- Desktop Navigation Links -->
+      <nav class="hidden lg:flex items-center gap-7 text-sm font-medium text-gray-300">
+        <a href="#ai-coach" class="hover:text-lime-400 transition flex items-center gap-1.5">
+          <span class="w-1.5 h-1.5 rounded-full bg-lime-400 animate-pulse"></span>
+          AI Live Coach
+        </a>
+        <a href="#ai-planner" class="hover:text-lime-400 transition">AI Routine Generator</a>
+        <a href="#muscle-hub" class="hover:text-lime-400 transition">Muscle Explorer</a>
+        <a href="#calculator" class="hover:text-lime-400 transition">Metabolic Calc</a>
+        <a href="#classes" class="hover:text-lime-400 transition">Schedule</a>
+        <a href="#pricing" class="hover:text-lime-400 transition">Memberships</a>
+        <a href="#faq" class="hover:text-lime-400 transition">FAQ</a>
+      </nav>
+
+      <!-- Action Buttons -->
+      <div class="hidden sm:flex items-center gap-4">
+        <a href="#ai-coach" class="text-xs font-bold text-gray-300 hover:text-white px-3 py-2 transition">
+          Watch Demo
+        </a>
+        <button class="open-pass-modal px-5 py-2.5 rounded-xl bg-lime-400 hover:bg-lime-300 text-black font-bold text-xs uppercase tracking-wider glow-lime transition hover:scale-105 flex items-center gap-2">
+          <i data-lucide="ticket" class="w-4 h-4"></i> Claim Free Day Pass
+        </button>
+      </div>
+
+      <!-- Mobile Hamburger Button -->
+      <button id="mobileMenuBtn" class="lg:hidden p-2 text-gray-300 hover:text-white" aria-label="Open Mobile Menu">
+        <i data-lucide="menu" class="w-7 h-7"></i>
+      </button>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer Menu -->
+  <div id="mobileDrawer" class="fixed inset-0 z-50 bg-black/95 backdrop-blur-2xl transform translate-x-full transition-transform duration-300 flex flex-col p-6 lg:hidden">
+    <div class="flex items-center justify-between pb-6 border-b border-white/10">
+      <div class="flex items-center gap-2">
+        <div class="w-8 h-8 rounded-lg bg-lime-400 flex items-center justify-center text-black">
+          <i data-lucide="zap" class="w-5 h-5 fill-black stroke-black"></i>
+        </div>
+        <span class="font-display text-xl tracking-wider text-white">APEX <span class="text-lime-400">AI</span></span>
+      </div>
+      <button id="closeDrawerBtn" class="p-2 text-gray-400 hover:text-white" aria-label="Close menu">
+        <i data-lucide="x" class="w-6 h-6"></i>
+      </button>
+    </div>
+
+    <nav class="flex flex-col gap-5 py-8 text-lg font-semibold text-gray-200">
+      <a href="#ai-coach" class="hover:text-lime-400 transition flex items-center gap-2">
+        <i data-lucide="video" class="w-5 h-5 text-lime-400"></i> AI Motion Coach
+      </a>
+      <a href="#ai-planner" class="hover:text-lime-400 transition flex items-center gap-2">
+        <i data-lucide="cpu" class="w-5 h-5 text-cyan-400"></i> AI Routine Planner
+      </a>
+      <a href="#muscle-hub" class="hover:text-lime-400 transition flex items-center gap-2">
+        <i data-lucide="target" class="w-5 h-5 text-lime-400"></i> Muscle Explorer
+      </a>
+      <a href="#calculator" class="hover:text-lime-400 transition flex items-center gap-2">
+        <i data-lucide="calculator" class="w-5 h-5 text-yellow-400"></i> BMI & TDEE Calculator
+      </a>
+      <a href="#classes" class="hover:text-lime-400 transition flex items-center gap-2">
+        <i data-lucide="calendar" class="w-5 h-5 text-lime-400"></i> Class Schedule
+      </a>
+      <a href="#pricing" class="hover:text-lime-400 transition flex items-center gap-2">
+        <i data-lucide="tag" class="w-5 h-5 text-cyan-400"></i> Memberships & Pricing
+      </a>
+      <a href="#faq" class="hover:text-lime-400 transition flex items-center gap-2">
+        <i data-lucide="help-circle" class="w-5 h-5 text-gray-400"></i> FAQ
+      </a>
+    </nav>
+
+    <div class="mt-auto pt-6 border-t border-white/10">
+      <button class="open-pass-modal w-full py-3.5 rounded-xl bg-lime-400 hover:bg-lime-300 text-black font-bold text-sm uppercase tracking-wider glow-lime transition flex items-center justify-center gap-2">
+        <i data-lucide="ticket" class="w-4 h-4"></i> Claim 1-Day Free Pass
+      </button>
+    </div>
+  </div>
+
+
+  <!-- =====================================================================
+       HERO SECTION
+       ===================================================================== -->
+  <section class="relative min-h-screen pt-32 pb-20 flex items-center justify-center bg-grid-pattern overflow-hidden">
+    <!-- Atmospheric Ambient Glows -->
+    <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[650px] h-[650px] bg-lime-400/10 rounded-full blur-[140px] pointer-events-none"></div>
+    <div class="absolute bottom-10 right-10 w-[450px] h-[450px] bg-cyan-400/10 rounded-full blur-[130px] pointer-events-none"></div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+      
+      <!-- Top Pill Badge -->
+      <div class="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 text-xs font-semibold uppercase tracking-wider text-gray-300 mb-6 backdrop-blur-md">
+        <span class="w-2 h-2 rounded-full bg-lime-400 animate-ping"></span>
+        <span class="text-lime-400">AI Computer Vision 2.4</span> Live In All Pods
+      </div>
+
+      <!-- Main Headline -->
+      <h1 class="font-display text-5xl sm:text-7xl lg:text-8xl tracking-tight uppercase leading-[0.95] text-white max-w-5xl mx-auto">
+        WHERE <span class="text-lime-400 glow-text-lime">BIO-MECHANICS</span> MEETS <span class="text-cyan-400 glow-text-cyan">INTELLIGENCE</span>
+      </h1>
+
+      <!-- Subheadline -->
+      <p class="mt-6 text-lg sm:text-xl text-gray-400 max-w-2xl mx-auto font-light leading-relaxed">
+        Eliminate guesswork from your lifting. Real-time joint angle feedback, automated progressive overload algorithms, and hyper-personalized metabolic routines.
+      </p>
+
+      <!-- Hero Call-to-Actions -->
+      <div class="mt-10 flex flex-wrap items-center justify-center gap-4">
+        <a href="#ai-coach" class="px-8 py-4 rounded-xl bg-lime-400 hover:bg-lime-300 text-black font-extrabold text-sm uppercase tracking-wider glow-lime transition hover:scale-105 flex items-center gap-2">
+          <i data-lucide="play-circle" class="w-5 h-5"></i> Test Live AI Coach Demo
+        </a>
+        <button class="open-pass-modal px-8 py-4 rounded-xl glass-card hover:bg-white/10 text-white font-bold text-sm uppercase tracking-wider border border-white/20 transition hover:scale-105 flex items-center gap-2">
+          <i data-lucide="qr-code" class="w-5 h-5 text-cyan-400"></i> Get 1-Day Gym Pass
+        </button>
+      </div>
+
+      <!-- Metrics & Proof Banner -->
+      <div class="mt-16 grid grid-cols-2 sm:grid-cols-4 gap-4 max-w-4xl mx-auto pt-10 border-t border-white/10">
+        <div class="p-3">
+          <p class="font-display text-4xl text-white">99.4<span class="text-lime-400">%</span></p>
+          <p class="text-xs text-gray-400 mt-1 uppercase tracking-wider">Form Accuracy Rate</p>
+        </div>
+        <div class="p-3">
+          <p class="font-display text-4xl text-white">48,200<span class="text-cyan-400">+</span></p>
+          <p class="text-xs text-gray-400 mt-1 uppercase tracking-wider">Reps Tracked Today</p>
+        </div>
+        <div class="p-3">
+          <p class="font-display text-4xl text-white">24/7</p>
+          <p class="text-xs text-gray-400 mt-1 uppercase tracking-wider">Smart Biometric Access</p>
+        </div>
+        <div class="p-3">
+          <p class="font-display text-4xl text-white">4.9<span class="text-lime-400">/5</span></p>
+          <p class="text-xs text-gray-400 mt-1 uppercase tracking-wider">Member Satisfaction</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- =====================================================================
+       INTERACTIVE AI FORM COACH & REP COUNTER DEMO
+       ===================================================================== -->
+  <section id="ai-coach" class="py-24 relative bg-dark-800/60 border-y border-white/5">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- Section Header -->
+      <div class="text-center max-w-3xl mx-auto mb-12">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-400/10 border border-cyan-400/30 text-cyan-400 text-xs font-semibold uppercase tracking-wider mb-3">
+          <i data-lucide="crosshair" class="w-3.5 h-3.5"></i> Computer Vision Core
+        </div>
+        <h2 class="font-display text-4xl sm:text-5xl text-white tracking-wide">
+          LIVE AI MOTION COACH <span class="text-lime-400">&</span> REP COUNTER
+        </h2>
+        <p class="text-gray-400 text-sm sm:text-base mt-3">
+          Experience real-time joint-angle tracking. Use your webcam or let our simulated athletic kinematic engine demonstrate posture analysis and rep inflection points.
+        </p>
+      </div>
+
+      <!-- Main AI Demo Console Container -->
+      <div class="glass-card rounded-3xl p-4 sm:p-8 border border-white/10 shadow-2xl relative">
+        
+        <!-- Console Toolbar -->
+        <div class="flex flex-wrap items-center justify-between gap-4 pb-6 mb-6 border-b border-white/10">
+          
+          <!-- Exercise Selectors -->
+          <div class="flex flex-wrap items-center gap-2">
+            <span class="text-xs font-bold text-gray-400 uppercase mr-1 hidden sm:inline">Exercise:</span>
+            <button data-exercise="squat" class="px-3.5 py-1.5 rounded-lg text-xs font-bold bg-lime-400 text-black transition">
+              Squats
+            </button>
+            <button data-exercise="curl" class="px-3.5 py-1.5 rounded-lg text-xs font-medium bg-gray-800 text-gray-300 hover:bg-gray-700 transition">
+              Bicep Curls
+            </button>
+            <button data-exercise="pushup" class="px-3.5 py-1.5 rounded-lg text-xs font-medium bg-gray-800 text-gray-300 hover:bg-gray-700 transition">
+              Push-Ups
+            </button>
+            <button data-exercise="jack" class="px-3.5 py-1.5 rounded-lg text-xs font-medium bg-gray-800 text-gray-300 hover:bg-gray-700 transition">
+              Jumping Jacks
+            </button>
+          </div>
+
+          <!-- Controls & Status Badge -->
+          <div class="flex items-center gap-3">
+            <span id="aiSourceBadge" class="px-2.5 py-1 text-xs font-semibold rounded-full bg-lime-400/20 text-lime-400 border border-lime-400/30 flex items-center gap-1.5">
+              <span class="w-1.5 h-1.5 rounded-full bg-lime-400 animate-ping"></span> SIMULATED AI DEMO
+            </span>
+
+            <button id="coachCamBtn" class="px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-gray-800 hover:bg-gray-700 text-gray-200 border border-gray-700 flex items-center gap-1.5 transition">
+              <i data-lucide="camera" class="w-4 h-4 text-lime-400"></i> Enable Webcam
+            </button>
+
+            <button id="coachSoundBtn" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-gray-800 hover:bg-gray-700 text-gray-300 border border-gray-700 flex items-center gap-1.5 transition">
+              <i data-lucide="volume-2" class="w-4 h-4 text-lime-400"></i> Audio ON
+            </button>
+          </div>
+        </div>
+
+        <!-- Stage & HUD Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+          
+          <!-- Visual Canvas Screen (8 Cols) -->
+          <div class="lg:col-span-8 relative rounded-2xl overflow-hidden bg-black border border-white/10 flex items-center justify-center min-h-[360px] sm:min-h-[420px]">
+            <canvas id="aiCoachCanvas" class="w-full h-full object-contain block"></canvas>
+            
+            <!-- Dynamic Radar Scanline -->
+            <div class="ai-scanline"></div>
+
+            <!-- Overlay Control Action Button -->
+            <div class="absolute bottom-4 left-4 right-4 flex items-center justify-between pointer-events-auto">
+              <div class="flex items-center gap-2">
+                <button id="coachToggleBtn" class="px-4 py-2 rounded-xl bg-lime-400 hover:bg-lime-300 text-black font-bold text-xs uppercase tracking-wider flex items-center gap-2 shadow-lg transition">
+                  <i data-lucide="pause" class="w-4 h-4 text-black"></i> Pause Session
+                </button>
+                <button id="coachResetBtn" class="px-3 py-2 rounded-xl bg-black/60 hover:bg-black/80 text-gray-300 hover:text-white text-xs font-semibold border border-white/10 flex items-center gap-1.5 backdrop-blur-md transition">
+                  <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i> Reset
+                </button>
+              </div>
+
+              <div class="text-right hidden sm:block">
+                <span id="currentExerciseTitle" class="text-xs font-bold text-gray-300 uppercase tracking-wider bg-black/70 px-3 py-1.5 rounded-lg border border-white/10">
+                  Barbell / Bodyweight Squat
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Real-Time AI Telemetry & Biometrics (4 Cols) -->
+          <div class="lg:col-span-4 flex flex-col justify-between space-y-4">
+            
+            <!-- Metric Cards -->
+            <div class="grid grid-cols-2 gap-3">
+              <!-- Reps -->
+              <div class="p-4 rounded-2xl bg-black/50 border border-lime-400/20 flex flex-col justify-between">
+                <div class="flex items-center justify-between">
+                  <span class="text-xs font-semibold text-gray-400 uppercase tracking-wider">Completed Reps</span>
+                  <i data-lucide="repeat" class="w-4 h-4 text-lime-400"></i>
+                </div>
+                <div class="mt-2 flex items-baseline gap-1">
+                  <span id="coachRepCount" class="font-display text-5xl font-black text-lime-400">0</span>
+                  <span class="text-xs text-gray-500 font-mono">REPS</span>
+                </div>
+              </div>
+
+              <!-- Form Score -->
+              <div class="p-4 rounded-2xl bg-black/50 border border-cyan-400/20 flex flex-col justify-between">
+                <div class="flex items-center justify-between">
+                  <span class="text-xs font-semibold text-gray-400 uppercase tracking-wider">Form Quality</span>
+                  <i data-lucide="award" class="w-4 h-4 text-cyan-400"></i>
+                </div>
+                <div class="mt-2 flex items-baseline gap-1">
+                  <span id="coachFormScore" class="font-display text-5xl font-black text-cyan-400">95%</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Calories Burned -->
+            <div class="p-4 rounded-2xl bg-black/50 border border-white/10 flex items-center justify-between">
+              <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-red-500/10 text-red-400 flex items-center justify-center">
+                  <i data-lucide="flame" class="w-5 h-5"></i>
+                </div>
+                <div>
+                  <p class="text-xs text-gray-400 font-medium">Estimated Expenditure</p>
+                  <p id="coachCalCount" class="text-xl font-bold text-white">0.0 kcal</p>
+                </div>
+              </div>
+              <span class="text-[10px] uppercase font-mono px-2 py-0.5 rounded bg-red-500/20 text-red-400 font-bold">Live Cal</span>
+            </div>
+
+            <!-- Live Coach Feedback Box -->
+            <div class="p-5 rounded-2xl bg-gradient-to-br from-lime-400/10 via-black/60 to-black/80 border border-lime-400/30 flex-1 flex flex-col justify-between">
+              <div>
+                <div class="flex items-center gap-2 text-lime-400 text-xs font-bold uppercase tracking-wider mb-2">
+                  <i data-lucide="bot" class="w-4 h-4"></i> AI Virtual Trainer Cue
+                </div>
+                <p id="coachFeedbackText" class="text-sm sm:text-base text-gray-200 font-medium leading-relaxed italic">
+                  "Ready! Initiate movement with controlled descent and maintain tall spine."
+                </p>
+              </div>
+
+              <div class="mt-4 pt-3 border-t border-white/10 flex items-center justify-between text-xs text-gray-400">
+                <span class="flex items-center gap-1.5">
+                  <i data-lucide="activity" class="w-3.5 h-3.5 text-cyan-400"></i> Active Joint Analysis
+                </span>
+                <span class="text-lime-400 font-mono font-semibold">Real-Time Sync</span>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- =====================================================================
+       AI WORKOUT & NUTRITION ROUTINE GENERATOR
+       ===================================================================== -->
+  <section id="ai-planner" class="py-24 relative bg-dark-900">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- Section Header -->
+      <div class="text-center max-w-3xl mx-auto mb-14">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-lime-400/10 border border-lime-400/30 text-lime-400 text-xs font-semibold uppercase tracking-wider mb-3">
+          <i data-lucide="cpu" class="w-3.5 h-3.5"></i> Neural Workout Engine
+        </div>
+        <h2 class="font-display text-4xl sm:text-5xl text-white tracking-wide">
+          AI PERSONALIZED ROUTINE <span class="text-cyan-400">&</span> NUTRITION
+        </h2>
+        <p class="text-gray-400 text-sm sm:text-base mt-3">
+          Configure your fitness profile. Our neural engine generates a scientific 7-day periodization microcycle and precision daily macronutrient targets.
+        </p>
+      </div>
+
+      <!-- Generator Layout -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+        
+        <!-- Input Configuration Card (4 Cols) -->
+        <div class="lg:col-span-4">
+          <div class="glass-card rounded-3xl p-6 sm:p-7 border border-white/10 sticky top-28">
+            <h3 class="text-xl font-bold text-white flex items-center gap-2 mb-6">
+              <i data-lucide="sliders" class="w-5 h-5 text-lime-400"></i> Profile Parameters
+            </h3>
+
+            <form id="aiPlannerForm" class="space-y-5">
+              
+              <!-- Fitness Goal -->
+              <div>
+                <label for="planGoal" class="block text-xs font-bold text-gray-300 uppercase tracking-wider mb-2">Primary Fitness Goal</label>
+                <select id="planGoal" class="w-full bg-black/60 border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:border-lime-400 focus:outline-none transition">
+                  <option value="hypertrophy" selected>Hypertrophy & Muscle Growth</option>
+                  <option value="fatloss">Rapid Fat Shred & Lean Definition</option>
+                  <option value="athletic">Athletic Power & Explosive Speed</option>
+                  <option value="mobility">Calisthenics & Joint Longevity</option>
+                </select>
+              </div>
+
+              <!-- Experience Level -->
+              <div>
+                <label for="planLevel" class="block text-xs font-bold text-gray-300 uppercase tracking-wider mb-2">Training Experience</label>
+                <select id="planLevel" class="w-full bg-black/60 border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:border-lime-400 focus:outline-none transition">
+                  <option value="beginner">Beginner (Under 1 year)</option>
+                  <option value="intermediate" selected>Intermediate (1 - 3 years)</option>
+                  <option value="advanced">Advanced / Athlete (3+ years)</option>
+                </select>
+              </div>
+
+              <!-- Days Per Week -->
+              <div>
+                <label for="planDays" class="block text-xs font-bold text-gray-300 uppercase tracking-wider mb-2">Weekly Frequency</label>
+                <select id="planDays" class="w-full bg-black/60 border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:border-lime-400 focus:outline-none transition">
+                  <option value="3">3 Days / Week (Full Body)</option>
+                  <option value="4" selected>4 Days / Week (Upper / Lower)</option>
+                  <option value="5">5 Days / Week (Push / Pull / Legs)</option>
+                </select>
+              </div>
+
+              <!-- Dietary Framework -->
+              <div>
+                <label for="planDiet" class="block text-xs font-bold text-gray-300 uppercase tracking-wider mb-2">Dietary Protocol</label>
+                <select id="planDiet" class="w-full bg-black/60 border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:border-lime-400 focus:outline-none transition">
+                  <option value="high-protein" selected>High Protein Balanced</option>
+                  <option value="keto">Ketogenic / Low Carb</option>
+                  <option value="vegan">Plant-Based / High Protein Vegan</option>
+                </select>
+              </div>
+
+              <!-- Bodyweight -->
+              <div>
+                <label for="planWeight" class="block text-xs font-bold text-gray-300 uppercase tracking-wider mb-2">Current Bodyweight (kg)</label>
+                <input type="number" id="planWeight" value="76" min="40" max="160" class="w-full bg-black/60 border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:border-lime-400 focus:outline-none transition">
+              </div>
+
+              <!-- Generate CTA -->
+              <button type="submit" class="w-full py-4 rounded-xl bg-lime-400 hover:bg-lime-300 text-black font-extrabold text-sm uppercase tracking-wider glow-lime transition hover:scale-[1.02] flex items-center justify-center gap-2">
+                <i data-lucide="sparkles" class="w-4 h-4"></i> Generate Neural Plan
+              </button>
+            </form>
+          </div>
+        </div>
+
+        <!-- Output Results Container (8 Cols) -->
+        <div class="lg:col-span-8 relative">
+          
+          <!-- Loading Overlay State -->
+          <div id="plannerLoading" class="hidden absolute inset-0 bg-black/70 backdrop-blur-md rounded-3xl z-20 flex flex-col items-center justify-center text-center p-8">
+            <div class="w-16 h-16 rounded-full border-4 border-lime-400 border-t-transparent animate-spin mb-4"></div>
+            <p class="text-lg font-bold text-white">Synthesizing Biometric Data...</p>
+            <p class="text-xs text-gray-400 mt-1">Calibrating volume, intensity, and recovery windows</p>
+          </div>
+
+          <!-- Dynamic Plan Render Target -->
+          <div id="plannerResults"></div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- =====================================================================
+       INTERACTIVE MUSCLE TARGET EXPLORER
+       ===================================================================== -->
+  <section id="muscle-hub" class="py-24 relative bg-dark-800/40 border-t border-white/5">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- Section Header -->
+      <div class="text-center max-w-3xl mx-auto mb-14">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-400/10 border border-cyan-400/30 text-cyan-400 text-xs font-semibold uppercase tracking-wider mb-3">
+          <i data-lucide="target" class="w-3.5 h-3.5"></i> Anatomical Focus
+        </div>
+        <h2 class="font-display text-4xl sm:text-5xl text-white tracking-wide">
+          INTERACTIVE MUSCLE GROUP <span class="text-lime-400">EXPLORER</span>
+        </h2>
+        <p class="text-gray-400 text-sm sm:text-base mt-3">
+          Click any primary muscle zone to unlock biomechanically optimal compound movements, hypertrophy rep ranges, and AI coach execution cues.
+        </p>
+      </div>
+
+      <!-- Muscle Category Selectors -->
+      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 mb-10 max-w-4xl mx-auto">
+        <button data-muscle="chest" class="p-4 rounded-2xl border text-center transition flex flex-col items-center gap-2">
+          <i data-lucide="shield" class="w-6 h-6"></i>
+          <span class="text-xs font-bold uppercase tracking-wider">Chest</span>
+        </button>
+        <button data-muscle="back" class="p-4 rounded-2xl border text-center transition flex flex-col items-center gap-2">
+          <i data-lucide="layers" class="w-6 h-6"></i>
+          <span class="text-xs font-bold uppercase tracking-wider">Back & Lats</span>
+        </button>
+        <button data-muscle="legs" class="p-4 rounded-2xl border text-center transition flex flex-col items-center gap-2">
+          <i data-lucide="footprints" class="w-6 h-6"></i>
+          <span class="text-xs font-bold uppercase tracking-wider">Legs & Glutes</span>
+        </button>
+        <button data-muscle="shoulders" class="p-4 rounded-2xl border text-center transition flex flex-col items-center gap-2">
+          <i data-lucide="crosshair" class="w-6 h-6"></i>
+          <span class="text-xs font-bold uppercase tracking-wider">Shoulders</span>
+        </button>
+        <button data-muscle="arms" class="p-4 rounded-2xl border text-center transition flex flex-col items-center gap-2">
+          <i data-lucide="dumbbell" class="w-6 h-6"></i>
+          <span class="text-xs font-bold uppercase tracking-wider">Arms</span>
+        </button>
+        <button data-muscle="core" class="p-4 rounded-2xl border text-center transition flex flex-col items-center gap-2">
+          <i data-lucide="circle-dot" class="w-6 h-6"></i>
+          <span class="text-xs font-bold uppercase tracking-wider">Core & Abs</span>
+        </button>
+      </div>
+
+      <!-- Dynamic Muscle Details Card -->
+      <div class="glass-card rounded-3xl p-6 sm:p-10 border border-white/10 max-w-4xl mx-auto">
+        <div class="flex flex-wrap items-center justify-between gap-4 pb-6 border-b border-white/10">
+          <div>
+            <h3 id="muscleDetailTitle" class="text-2xl sm:text-3xl font-bold text-white">Pectoralis Major & Minor (Chest)</h3>
+            <p id="muscleDetailDesc" class="text-sm text-gray-400 mt-1 max-w-xl">Targeted horizontal pushing mechanics to build upper chest shelf density and overall pectoralis thickness.</p>
+          </div>
+          <div class="text-right">
+            <span class="text-xs text-gray-400 block uppercase font-medium">Optimal Stimulus Zone</span>
+            <span id="muscleZone" class="text-sm font-bold text-lime-400 font-mono">8 - 12 Reps @ RPE 8-9 (3-0-1-0 tempo)</span>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
+          <!-- Compounds -->
+          <div>
+            <h4 class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-3 flex items-center gap-2">
+              <i data-lucide="flame" class="w-4 h-4 text-lime-400"></i> Essential Compound Movements
+            </h4>
+            <div id="muscleCompounds" class="flex flex-wrap gap-2"></div>
+          </div>
+
+          <!-- Isolation -->
+          <div>
+            <h4 class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-3 flex items-center gap-2">
+              <i data-lucide="focus" class="w-4 h-4 text-cyan-400"></i> Hypertrophy Isolation
+            </h4>
+            <div id="muscleIsolation" class="flex flex-wrap gap-2"></div>
+          </div>
+        </div>
+
+        <!-- AI Biomechanics Cue -->
+        <div class="mt-8 p-4 rounded-2xl bg-black/60 border border-cyan-400/20 flex items-start gap-3.5">
+          <div class="w-8 h-8 rounded-xl bg-cyan-400/20 text-cyan-400 flex items-center justify-center shrink-0 mt-0.5">
+            <i data-lucide="cpu" class="w-4 h-4"></i>
+          </div>
+          <div>
+            <h5 class="text-xs font-bold text-cyan-400 uppercase tracking-wider">AI Biomechanics Execution Cue</h5>
+            <p id="muscleAiCue" class="text-xs sm:text-sm text-gray-200 mt-1 leading-relaxed">
+              Maintain slight scapular retraction and press in a slight inward arc to maximize peak pectoral contraction.
+            </p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- =====================================================================
+       LIVE BMI & TDEE METABOLIC CALCULATOR
+       ===================================================================== -->
+  <section id="calculator" class="py-24 relative bg-dark-900">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- Section Header -->
+      <div class="text-center max-w-3xl mx-auto mb-14">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-yellow-400/10 border border-yellow-400/30 text-yellow-400 text-xs font-semibold uppercase tracking-wider mb-3">
+          <i data-lucide="calculator" class="w-3.5 h-3.5"></i> Energy Balance
+        </div>
+        <h2 class="font-display text-4xl sm:text-5xl text-white tracking-wide">
+          LIVE BMI <span class="text-lime-400">&</span> METABOLIC TDEE CALCULATOR
+        </h2>
+        <p class="text-gray-400 text-sm sm:text-base mt-3">
+          Instant calculation using the clinically-validated Mifflin-St Jeor formula. Drag the sliders to view your Basal Metabolic Rate and caloric targets.
+        </p>
+      </div>
+
+      <!-- Calculator Card Grid -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 max-w-5xl mx-auto">
+        
+        <!-- Controls Column (6 Cols) -->
+        <div class="lg:col-span-6 glass-card rounded-3xl p-6 sm:p-8 border border-white/10 space-y-6">
+          
+          <!-- Gender Select -->
+          <div>
+            <label class="block text-xs font-bold text-gray-300 uppercase tracking-wider mb-2">Biological Sex</label>
+            <div class="grid grid-cols-2 gap-3">
+              <button id="calcGenderMale" type="button" class="py-2.5 rounded-xl text-xs font-bold bg-lime-400 text-black transition">
+                Male
+              </button>
+              <button id="calcGenderFemale" type="button" class="py-2.5 rounded-xl text-xs font-medium bg-gray-800 text-gray-300 hover:bg-gray-700 transition">
+                Female
+              </button>
+            </div>
+          </div>
+
+          <!-- Height Slider -->
+          <div>
+            <div class="flex items-center justify-between text-xs font-bold text-gray-300 uppercase tracking-wider mb-2">
+              <label for="calcHeight">Height</label>
+              <span id="calcHeightVal" class="text-lime-400 font-mono text-sm">178 cm</span>
+            </div>
+            <input type="range" id="calcHeight" min="130" max="220" value="178" class="w-full h-2 bg-gray-800 rounded-lg appearance-none">
+          </div>
+
+          <!-- Weight Slider -->
+          <div>
+            <div class="flex items-center justify-between text-xs font-bold text-gray-300 uppercase tracking-wider mb-2">
+              <label for="calcWeight">Body Weight</label>
+              <span id="calcWeightVal" class="text-lime-400 font-mono text-sm">76 kg</span>
+            </div>
+            <input type="range" id="calcWeight" min="40" max="150" value="76" class="w-full h-2 bg-gray-800 rounded-lg appearance-none">
+          </div>
+
+          <!-- Age Slider -->
+          <div>
+            <div class="flex items-center justify-between text-xs font-bold text-gray-300 uppercase tracking-wider mb-2">
+              <label for="calcAge">Age</label>
+              <span id="calcAgeVal" class="text-lime-400 font-mono text-sm">26 yrs</span>
+            </div>
+            <input type="range" id="calcAge" min="16" max="80" value="26" class="w-full h-2 bg-gray-800 rounded-lg appearance-none">
+          </div>
+
+          <!-- Activity Level -->
+          <div>
+            <label for="calcActivity" class="block text-xs font-bold text-gray-300 uppercase tracking-wider mb-2">Daily Activity Multiplier</label>
+            <select id="calcActivity" class="w-full bg-black/60 border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:border-lime-400 focus:outline-none transition">
+              <option value="1.2">Sedentary (Desk job, minimal training)</option>
+              <option value="1.375">Lightly Active (1-2 gym sessions/week)</option>
+              <option value="1.55" selected>Moderately Active (3-5 intense workouts/week)</option>
+              <option value="1.725">Very Active (6-7 workouts/week or physical job)</option>
+              <option value="1.9">Elite Competitive Athlete (2x training/day)</option>
+            </select>
+          </div>
+
+        </div>
+
+        <!-- Metric Output Results (6 Cols) -->
+        <div class="lg:col-span-6 glass-card rounded-3xl p-6 sm:p-8 border border-lime-400/20 flex flex-col justify-between space-y-6">
+          
+          <!-- BMI Display -->
+          <div>
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-bold text-gray-400 uppercase tracking-wider">Body Mass Index (BMI)</span>
+              <span id="calcBmiScore" class="font-display text-4xl text-lime-400">24.0</span>
+            </div>
+            <p id="calcBmiStatus" class="text-sm font-semibold text-lime-400 mt-1">Optimal Athletic Range</p>
+
+            <!-- Visual Bar Gauge -->
+            <div class="relative w-full h-3 rounded-full bg-gradient-to-r from-cyan-400 via-lime-400 to-red-400 mt-4 overflow-hidden">
+              <div id="calcBmiGauge" class="absolute top-0 bottom-0 w-2.5 bg-white shadow-md rounded-full -translate-x-1/2 transition-all duration-300" style="left: 45%;"></div>
+            </div>
+            <div class="flex justify-between text-[10px] text-gray-500 font-mono mt-1.5">
+              <span>18.5 (Under)</span>
+              <span>24.9 (Normal)</span>
+              <span>29.9 (Over)</span>
+              <span>35+</span>
+            </div>
+          </div>
+
+          <!-- BMR & TDEE Badges -->
+          <div class="grid grid-cols-2 gap-4">
+            <div class="p-4 rounded-2xl bg-black/50 border border-white/5">
+              <span class="text-xs text-gray-400 font-medium block">Basal Metabolic Rate</span>
+              <span id="calcBmrScore" class="text-2xl font-bold text-white mt-1 block">1750 kcal</span>
+              <span class="text-[11px] text-gray-500">Calories burned at pure rest</span>
+            </div>
+            <div class="p-4 rounded-2xl bg-black/50 border border-white/5">
+              <span class="text-xs text-gray-400 font-medium block">Maintenance (TDEE)</span>
+              <span id="calcTdeeScore" class="text-2xl font-bold text-cyan-400 mt-1 block">2713 kcal</span>
+              <span class="text-[11px] text-gray-500">Daily calorie burn balance</span>
+            </div>
+          </div>
+
+          <!-- Caloric Target Recommendation Cards -->
+          <div class="p-4 rounded-2xl bg-black/60 border border-white/10 space-y-3">
+            <h4 class="text-xs font-bold text-gray-300 uppercase tracking-wider flex items-center gap-1.5">
+              <i data-lucide="compass" class="w-4 h-4 text-lime-400"></i> Calorie Recommendation Directives
+            </h4>
+            <div class="flex items-center justify-between text-xs pt-1 border-t border-white/5">
+              <span class="text-gray-400">Fat Loss Deficit (-450 kcal):</span>
+              <span id="calcCutScore" class="font-bold text-lime-400 font-mono">2263 kcal/day</span>
+            </div>
+            <div class="flex items-center justify-between text-xs pt-1 border-t border-white/5">
+              <span class="text-gray-400">Lean Muscle Surplus (+350 kcal):</span>
+              <span id="calcBulkScore" class="font-bold text-cyan-400 font-mono">3063 kcal/day</span>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- =====================================================================
+       CLASSES & WEEKLY TIMETABLE
+       ===================================================================== -->
+  <section id="classes" class="py-24 relative bg-dark-800/40 border-t border-white/5">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- Section Header -->
+      <div class="text-center max-w-3xl mx-auto mb-14">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-lime-400/10 border border-lime-400/30 text-lime-400 text-xs font-semibold uppercase tracking-wider mb-3">
+          <i data-lucide="calendar" class="w-3.5 h-3.5"></i> Daily Schedule
+        </div>
+        <h2 class="font-display text-4xl sm:text-5xl text-white tracking-wide">
+          FILTERABLE CLASS <span class="text-cyan-400">TIMETABLE</span>
+        </h2>
+        <p class="text-gray-400 text-sm sm:text-base mt-3">
+          Led by elite coaches with biometric telemetry screens. Filter by day to reserve your spot.
+        </p>
+      </div>
+
+      <!-- Day Filter Tabs -->
+      <div class="flex flex-wrap items-center justify-center gap-2 mb-12">
+        <button data-schedule-day="all" class="px-5 py-2.5 rounded-xl text-xs font-bold bg-lime-400 text-black transition">All Sessions</button>
+        <button data-schedule-day="mon" class="px-5 py-2.5 rounded-xl text-xs font-medium bg-gray-900 text-gray-400 hover:text-white transition">Monday</button>
+        <button data-schedule-day="tue" class="px-5 py-2.5 rounded-xl text-xs font-medium bg-gray-900 text-gray-400 hover:text-white transition">Tuesday</button>
+        <button data-schedule-day="wed" class="px-5 py-2.5 rounded-xl text-xs font-medium bg-gray-900 text-gray-400 hover:text-white transition">Wednesday</button>
+        <button data-schedule-day="thu" class="px-5 py-2.5 rounded-xl text-xs font-medium bg-gray-900 text-gray-400 hover:text-white transition">Thursday</button>
+        <button data-schedule-day="fri" class="px-5 py-2.5 rounded-xl text-xs font-medium bg-gray-900 text-gray-400 hover:text-white transition">Friday</button>
+        <button data-schedule-day="sat" class="px-5 py-2.5 rounded-xl text-xs font-medium bg-gray-900 text-gray-400 hover:text-white transition">Saturday</button>
+      </div>
+
+      <!-- Class Schedule Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        
+        <!-- Class 1 -->
+        <div data-class-day="mon wed fri" data-class-title="AI Kinematic HIIT & Hyrox" class="glass-card glass-card-hover rounded-2xl p-6 border border-white/5 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between text-xs text-lime-400 font-semibold mb-3">
+              <span class="px-2.5 py-1 rounded-full bg-lime-400/10 border border-lime-400/20">HIIT / Metabolic</span>
+              <span class="text-gray-400">07:00 AM - 08:00 AM</span>
+            </div>
+            <h3 class="text-xl font-bold text-white">AI Kinematic HIIT & Hyrox</h3>
+            <p class="text-xs text-gray-400 mt-2 leading-relaxed">
+              High-output assault bikes, ski ergs, and sled pushes synced to the main studio telemetry board.
+            </p>
+            <div class="mt-4 flex items-center gap-3 text-xs text-gray-300">
+              <span class="flex items-center gap-1"><i data-lucide="user" class="w-3.5 h-3.5 text-lime-400"></i> Coach Marcus</span>
+              <span class="flex items-center gap-1"><i data-lucide="zap" class="w-3.5 h-3.5 text-cyan-400"></i> 650 kcal</span>
+            </div>
+          </div>
+          <div class="mt-6 pt-4 border-t border-white/10 flex items-center justify-between">
+            <span class="text-xs text-gray-400">3 Spots Left</span>
+            <button class="book-class-btn px-4 py-2 rounded-lg bg-white/10 hover:bg-lime-400 hover:text-black text-xs font-bold text-white transition">
+              Reserve Spot
+            </button>
+          </div>
+        </div>
+
+        <!-- Class 2 -->
+        <div data-class-day="tue thu sat" data-class-title="Apex Heavy Barbell Club" class="glass-card glass-card-hover rounded-2xl p-6 border border-white/5 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between text-xs text-cyan-400 font-semibold mb-3">
+              <span class="px-2.5 py-1 rounded-full bg-cyan-400/10 border border-cyan-400/20">Powerlifting</span>
+              <span class="text-gray-400">06:00 PM - 07:30 PM</span>
+            </div>
+            <h3 class="text-xl font-bold text-white">Apex Heavy Barbell Club</h3>
+            <p class="text-xs text-gray-400 mt-2 leading-relaxed">
+              Strict compound lifting (Squat, Bench, Deadlift) with bar-path velocity radar measurement cameras.
+            </p>
+            <div class="mt-4 flex items-center gap-3 text-xs text-gray-300">
+              <span class="flex items-center gap-1"><i data-lucide="user" class="w-3.5 h-3.5 text-lime-400"></i> Coach Elena</span>
+              <span class="flex items-center gap-1"><i data-lucide="shield" class="w-3.5 h-3.5 text-cyan-400"></i> Strength Focus</span>
+            </div>
+          </div>
+          <div class="mt-6 pt-4 border-t border-white/10 flex items-center justify-between">
+            <span class="text-xs text-gray-400">5 Spots Left</span>
+            <button class="book-class-btn px-4 py-2 rounded-lg bg-white/10 hover:bg-lime-400 hover:text-black text-xs font-bold text-white transition">
+              Reserve Spot
+            </button>
+          </div>
+        </div>
+
+        <!-- Class 3 -->
+        <div data-class-day="mon wed fri" data-class-title="AI Motion Form Clinic" class="glass-card glass-card-hover rounded-2xl p-6 border border-white/5 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between text-xs text-yellow-400 font-semibold mb-3">
+              <span class="px-2.5 py-1 rounded-full bg-yellow-400/10 border border-yellow-400/20">AI Bio-Pod</span>
+              <span class="text-gray-400">12:30 PM - 01:15 PM</span>
+            </div>
+            <h3 class="text-xl font-bold text-white">AI Motion Form Clinic</h3>
+            <p class="text-xs text-gray-400 mt-2 leading-relaxed">
+              Hands-on form correction utilizing computer vision mirrors to eradicate joint strain and maximize recruitment.
+            </p>
+            <div class="mt-4 flex items-center gap-3 text-xs text-gray-300">
+              <span class="flex items-center gap-1"><i data-lucide="user" class="w-3.5 h-3.5 text-lime-400"></i> Dr. Liam Scott</span>
+              <span class="flex items-center gap-1"><i data-lucide="crosshair" class="w-3.5 h-3.5 text-yellow-400"></i> Bio-Mechanics</span>
+            </div>
+          </div>
+          <div class="mt-6 pt-4 border-t border-white/10 flex items-center justify-between">
+            <span class="text-xs text-gray-400">2 Spots Left</span>
+            <button class="book-class-btn px-4 py-2 rounded-lg bg-white/10 hover:bg-lime-400 hover:text-black text-xs font-bold text-white transition">
+              Reserve Spot
+            </button>
+          </div>
+        </div>
+
+        <!-- Class 4 -->
+        <div data-class-day="tue thu" data-class-title="Hypertrophy Hyper-Drive" class="glass-card glass-card-hover rounded-2xl p-6 border border-white/5 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between text-xs text-lime-400 font-semibold mb-3">
+              <span class="px-2.5 py-1 rounded-full bg-lime-400/10 border border-lime-400/20">Bodybuilding</span>
+              <span class="text-gray-400">05:00 PM - 06:00 PM</span>
+            </div>
+            <h3 class="text-xl font-bold text-white">Hypertrophy Hyper-Drive</h3>
+            <p class="text-xs text-gray-400 mt-2 leading-relaxed">
+              High volume isolation sets, lengthened partials, and drop sets designed for maximum sarcoplasmic expansion.
+            </p>
+            <div class="mt-4 flex items-center gap-3 text-xs text-gray-300">
+              <span class="flex items-center gap-1"><i data-lucide="user" class="w-3.5 h-3.5 text-lime-400"></i> Coach Jordan</span>
+              <span class="flex items-center gap-1"><i data-lucide="dumbbell" class="w-3.5 h-3.5 text-lime-400"></i> High Volume</span>
+            </div>
+          </div>
+          <div class="mt-6 pt-4 border-t border-white/10 flex items-center justify-between">
+            <span class="text-xs text-gray-400">4 Spots Left</span>
+            <button class="book-class-btn px-4 py-2 rounded-lg bg-white/10 hover:bg-lime-400 hover:text-black text-xs font-bold text-white transition">
+              Reserve Spot
+            </button>
+          </div>
+        </div>
+
+        <!-- Class 5 -->
+        <div data-class-day="sat sun" data-class-title="Mobility, Breath & Ice Plunge" class="glass-card glass-card-hover rounded-2xl p-6 border border-white/5 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between text-xs text-cyan-400 font-semibold mb-3">
+              <span class="px-2.5 py-1 rounded-full bg-cyan-400/10 border border-cyan-400/20">Recovery</span>
+              <span class="text-gray-400">10:00 AM - 11:30 AM</span>
+            </div>
+            <h3 class="text-xl font-bold text-white">Mobility, Breath & Ice Plunge</h3>
+            <p class="text-xs text-gray-400 mt-2 leading-relaxed">
+              Deep tissue myofascial release followed by Wim Hof breathwork protocol and sub-40°F cold plunge contrast baths.
+            </p>
+            <div class="mt-4 flex items-center gap-3 text-xs text-gray-300">
+              <span class="flex items-center gap-1"><i data-lucide="user" class="w-3.5 h-3.5 text-lime-400"></i> Coach Maya</span>
+              <span class="flex items-center gap-1"><i data-lucide="heart-pulse" class="w-3.5 h-3.5 text-cyan-400"></i> Parasympathetic</span>
+            </div>
+          </div>
+          <div class="mt-6 pt-4 border-t border-white/10 flex items-center justify-between">
+            <span class="text-xs text-gray-400">6 Spots Left</span>
+            <button class="book-class-btn px-4 py-2 rounded-lg bg-white/10 hover:bg-lime-400 hover:text-black text-xs font-bold text-white transition">
+              Reserve Spot
+            </button>
+          </div>
+        </div>
+
+        <!-- Class 6 -->
+        <div data-class-day="mon wed fri" data-class-title="Night Owl Combat & Bag Drill" class="glass-card glass-card-hover rounded-2xl p-6 border border-white/5 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between text-xs text-red-400 font-semibold mb-3">
+              <span class="px-2.5 py-1 rounded-full bg-red-400/10 border border-red-400/20">Combat Conditioning</span>
+              <span class="text-gray-400">08:00 PM - 09:00 PM</span>
+            </div>
+            <h3 class="text-xl font-bold text-white">Night Owl Combat & Bag Drill</h3>
+            <p class="text-xs text-gray-400 mt-2 leading-relaxed">
+              Strike speed, footwork drills, and sensor-tracked heavy bag intervals under neon night-mode lighting.
+            </p>
+            <div class="mt-4 flex items-center gap-3 text-xs text-gray-300">
+              <span class="flex items-center gap-1"><i data-lucide="user" class="w-3.5 h-3.5 text-lime-400"></i> Coach Tyler</span>
+              <span class="flex items-center gap-1"><i data-lucide="flame" class="w-3.5 h-3.5 text-red-400"></i> 750 kcal</span>
+            </div>
+          </div>
+          <div class="mt-6 pt-4 border-t border-white/10 flex items-center justify-between">
+            <span class="text-xs text-gray-400">1 Spot Left</span>
+            <button class="book-class-btn px-4 py-2 rounded-lg bg-white/10 hover:bg-lime-400 hover:text-black text-xs font-bold text-white transition">
+              Reserve Spot
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- =====================================================================
+       MEMBERSHIPS & PRICING
+       ===================================================================== -->
+  <section id="pricing" class="py-24 relative bg-dark-900">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- Section Header -->
+      <div class="text-center max-w-3xl mx-auto mb-14">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-lime-400/10 border border-lime-400/30 text-lime-400 text-xs font-semibold uppercase tracking-wider mb-3">
+          <i data-lucide="tag" class="w-3.5 h-3.5"></i> Clear Transparent Pricing
+        </div>
+        <h2 class="font-display text-4xl sm:text-5xl text-white tracking-wide">
+          CHOOSE YOUR <span class="text-lime-400">TRAINING TIER</span>
+        </h2>
+        <p class="text-gray-400 text-sm sm:text-base mt-3">
+          Zero lock-in contracts. Upgrade, pause, or cancel anytime with one click in your athlete app.
+        </p>
+
+        <!-- Annual Billing Toggle -->
+        <div class="mt-8 inline-flex items-center gap-3 p-1.5 rounded-2xl bg-dark-800 border border-white/10">
+          <span class="text-xs font-bold text-gray-300 pl-3">Monthly</span>
+          <label class="relative inline-flex items-center cursor-pointer">
+            <input type="checkbox" id="billingToggle" class="sr-only peer">
+            <div class="w-11 h-6 bg-gray-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-lime-400"></div>
+          </label>
+          <span class="text-xs font-bold text-gray-300 pr-2 flex items-center gap-1.5">
+            Annual <span class="px-2 py-0.5 rounded-full bg-lime-400/20 text-lime-400 text-[10px] uppercase font-extrabold border border-lime-400/30">Save 20%</span>
+          </span>
+        </div>
+      </div>
+
+      <!-- Pricing Cards Grid -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch">
+        
+        <!-- Tier 1: Starter -->
+        <div class="glass-card rounded-3xl p-8 border border-white/10 flex flex-col justify-between">
+          <div>
+            <span class="text-xs font-bold uppercase tracking-wider text-gray-400 block mb-2">Basic Facility Access</span>
+            <h3 class="text-2xl font-bold text-white">Starter Pass</h3>
+            <p class="text-xs text-gray-400 mt-2">Perfect for independent lifters needing full facility access.</p>
+            
+            <div class="mt-6 flex items-baseline gap-1 pb-6 border-b border-white/10">
+              <span id="priceBasic" class="font-display text-5xl font-black text-white">$29</span>
+              <span class="text-xs text-gray-400 billing-cycle-label">/mo (billed monthly)</span>
+            </div>
+
+            <ul class="mt-6 space-y-3.5 text-xs text-gray-300">
+              <li class="flex items-center gap-2.5">
+                <i data-lucide="check" class="w-4 h-4 text-lime-400 shrink-0"></i> 24/7 Smart Gym Floor Access
+              </li>
+              <li class="flex items-center gap-2.5">
+                <i data-lucide="check" class="w-4 h-4 text-lime-400 shrink-0"></i> Locker Room & Sauna Access
+              </li>
+              <li class="flex items-center gap-2.5">
+                <i data-lucide="check" class="w-4 h-4 text-lime-400 shrink-0"></i> High-Speed Athlete Wi-Fi
+              </li>
+              <li class="flex items-center gap-2.5 text-gray-500 line-through">
+                <i data-lucide="x" class="w-4 h-4 shrink-0"></i> AI Motion Coach Pods
+              </li>
+              <li class="flex items-center gap-2.5 text-gray-500 line-through">
+                <i data-lucide="x" class="w-4 h-4 shrink-0"></i> Cold Plunge & Recovery Spa
+              </li>
+            </ul>
+          </div>
+
+          <div class="mt-8">
+            <button class="open-pass-modal w-full py-3.5 rounded-xl bg-white/10 hover:bg-white/20 text-white font-bold text-xs uppercase tracking-wider transition">
+              Select Starter
+            </button>
+          </div>
+        </div>
+
+        <!-- Tier 2: Pro AI (Most Popular) -->
+        <div class="glass-card rounded-3xl p-8 border-2 border-lime-400 glow-lime relative flex flex-col justify-between transform lg:-translate-y-2">
+          <div class="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-lime-400 text-black text-[11px] font-extrabold uppercase tracking-wider shadow-md">
+            MOST POPULAR TIER
+          </div>
+
+          <div>
+            <span class="text-xs font-bold uppercase tracking-wider text-lime-400 block mb-2">Neural Assisted Training</span>
+            <h3 class="text-2xl font-bold text-white">Pro AI Athlete</h3>
+            <p class="text-xs text-gray-300 mt-2">Unleash full computer vision coaching & automated progression.</p>
+            
+            <div class="mt-6 flex items-baseline gap-1 pb-6 border-b border-white/10">
+              <span id="pricePro" class="font-display text-5xl font-black text-lime-400">$59</span>
+              <span class="text-xs text-gray-400 billing-cycle-label">/mo (billed monthly)</span>
+            </div>
+
+            <ul class="mt-6 space-y-3.5 text-xs text-gray-200">
+              <li class="flex items-center gap-2.5">
+                <i data-lucide="check" class="w-4 h-4 text-lime-400 shrink-0"></i> Unlimited AI Motion Pod Sessions
+              </li>
+              <li class="flex items-center gap-2.5">
+                <i data-lucide="check" class="w-4 h-4 text-lime-400 shrink-0"></i> 24/7 Floor & Free Weight Access
+              </li>
+              <li class="flex items-center gap-2.5">
+                <i data-lucide="check" class="w-4 h-4 text-lime-400 shrink-0"></i> Real-Time Form Correction Audio
+              </li>
+              <li class="flex items-center gap-2.5">
+                <i data-lucide="check" class="w-4 h-4 text-lime-400 shrink-0"></i> AI Routine & Nutrition Engine
+              </li>
+              <li class="flex items-center gap-2.5">
+                <i data-lucide="check" class="w-4 h-4 text-lime-400 shrink-0"></i> All Weekly Group Classes Included
+              </li>
+            </ul>
+          </div>
+
+          <div class="mt-8">
+            <button class="open-pass-modal w-full py-4 rounded-xl bg-lime-400 hover:bg-lime-300 text-black font-extrabold text-xs uppercase tracking-wider glow-lime transition hover:scale-105">
+              Start 7-Day Free Trial
+            </button>
+          </div>
+        </div>
+
+        <!-- Tier 3: Elite Black Card -->
+        <div class="glass-card rounded-3xl p-8 border border-cyan-400/30 flex flex-col justify-between">
+          <div>
+            <span class="text-xs font-bold uppercase tracking-wider text-cyan-400 block mb-2">Total Human Optimization</span>
+            <h3 class="text-2xl font-bold text-white">Elite Black Card</h3>
+            <p class="text-xs text-gray-400 mt-2">Executive-tier amenities with personal physical therapy & recovery.</p>
+            
+            <div class="mt-6 flex items-baseline gap-1 pb-6 border-b border-white/10">
+              <span id="priceElite" class="font-display text-5xl font-black text-cyan-400">$99</span>
+              <span class="text-xs text-gray-400 billing-cycle-label">/mo (billed monthly)</span>
+            </div>
+
+            <ul class="mt-6 space-y-3.5 text-xs text-gray-300">
+              <li class="flex items-center gap-2.5">
+                <i data-lucide="check" class="w-4 h-4 text-cyan-400 shrink-0"></i> Everything in Pro AI Included
+              </li>
+              <li class="flex items-center gap-2.5">
+                <i data-lucide="check" class="w-4 h-4 text-cyan-400 shrink-0"></i> Unlimited Cryo & Cold Plunge Spa
+              </li>
+              <li class="flex items-center gap-2.5">
+                <i data-lucide="check" class="w-4 h-4 text-cyan-400 shrink-0"></i> Dedicated Human Biomechanic Coach
+              </li>
+              <li class="flex items-center gap-2.5">
+                <i data-lucide="check" class="w-4 h-4 text-cyan-400 shrink-0"></i> Private VIP Executive Locker & Shower
+              </li>
+              <li class="flex items-center gap-2.5">
+                <i data-lucide="check" class="w-4 h-4 text-cyan-400 shrink-0"></i> Monthly DEXA Body Scan
+              </li>
+            </ul>
+          </div>
+
+          <div class="mt-8">
+            <button class="open-pass-modal w-full py-3.5 rounded-xl bg-cyan-400/20 hover:bg-cyan-400/30 text-cyan-300 border border-cyan-400/30 font-bold text-xs uppercase tracking-wider transition">
+              Apply For Black Card
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- =====================================================================
+       FACILITIES & ATMOSPHERE GALLERY
+       ===================================================================== -->
+  <section class="py-24 relative bg-dark-800/60 border-t border-white/5">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- Section Header -->
+      <div class="text-center max-w-3xl mx-auto mb-14">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-400/10 border border-cyan-400/30 text-cyan-400 text-xs font-semibold uppercase tracking-wider mb-3">
+          <i data-lucide="map-pin" class="w-3.5 h-3.5"></i> World-Class Facility
+        </div>
+        <h2 class="font-display text-4xl sm:text-5xl text-white tracking-wide">
+          BUILT FOR <span class="text-lime-400">UNCOMPROMISING</span> ATHLETES
+        </h2>
+        <p class="text-gray-400 text-sm sm:text-base mt-3">
+          Over 25,000 sq ft of custom Eleiko platforms, specialized hypertrophy machinery, and isolated biometric research pods.
+        </p>
+      </div>
+
+      <!-- Image Grid -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="group relative rounded-3xl overflow-hidden aspect-[4/3] border border-white/10">
+          <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=800&auto=format&fit=crop" alt="Free Weights & Dumbbells" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+          <div class="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent p-6 flex flex-col justify-end">
+            <span class="text-xs font-bold text-lime-400 uppercase tracking-wider">Heavy Iron Zone</span>
+            <h4 class="text-lg font-bold text-white">Eleiko Racks & Custom Dumbbells to 150 lbs</h4>
+          </div>
+        </div>
+
+        <div class="group relative rounded-3xl overflow-hidden aspect-[4/3] border border-white/10">
+          <img src="https://images.unsplash.com/photo-1540497077202-7c8a3999166f?q=80&w=800&auto=format&fit=crop" alt="Cardio & HIIT Studio" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+          <div class="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent p-6 flex flex-col justify-end">
+            <span class="text-xs font-bold text-cyan-400 uppercase tracking-wider">Metabolic Arena</span>
+            <h4 class="text-lg font-bold text-white">Curved Treadmills, SkiErgs & Telemetry</h4>
+          </div>
+        </div>
+
+        <div class="group relative rounded-3xl overflow-hidden aspect-[4/3] border border-white/10">
+          <img src="https://images.unsplash.com/photo-1574680096145-d05b474e2155?q=80&w=800&auto=format&fit=crop" alt="Recovery & Cold Plunge" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+          <div class="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent p-6 flex flex-col justify-end">
+            <span class="text-xs font-bold text-yellow-400 uppercase tracking-wider">Contrast Therapy</span>
+            <h4 class="text-lg font-bold text-white">Sub-Zero Plunges & Cedar Infrared Sauna</h4>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- =====================================================================
+       MEMBER TRANSFORMATIONS & TESTIMONIALS
+       ===================================================================== -->
+  <section class="py-24 relative bg-dark-900 border-t border-white/5">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- Section Header -->
+      <div class="text-center max-w-3xl mx-auto mb-14">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-lime-400/10 border border-lime-400/30 text-lime-400 text-xs font-semibold uppercase tracking-wider mb-3">
+          <i data-lucide="star" class="w-3.5 h-3.5"></i> Verified Results
+        </div>
+        <h2 class="font-display text-4xl sm:text-5xl text-white tracking-wide">
+          ENGINEERED <span class="text-lime-400">TRANSFORMATIONS</span>
+        </h2>
+        <p class="text-gray-400 text-sm sm:text-base mt-3">
+          Real athletes, quantified improvements. See what happens when precision meets consistency.
+        </p>
+      </div>
+
+      <!-- Testimonial Cards -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        
+        <div class="glass-card rounded-3xl p-7 border border-white/10 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center gap-1 text-lime-400 mb-4">
+              <i data-lucide="star" class="w-4 h-4 fill-lime-400"></i>
+              <i data-lucide="star" class="w-4 h-4 fill-lime-400"></i>
+              <i data-lucide="star" class="w-4 h-4 fill-lime-400"></i>
+              <i data-lucide="star" class="w-4 h-4 fill-lime-400"></i>
+              <i data-lucide="star" class="w-4 h-4 fill-lime-400"></i>
+            </div>
+            <p class="text-xs sm:text-sm text-gray-300 leading-relaxed italic">
+              "The AI Form Coach fixed my hip shift on heavy squats within my first two weeks. I added 35kg to my squat and my lower back knee pain vanished completely."
+            </p>
+          </div>
+          <div class="mt-6 pt-4 border-t border-white/10 flex items-center justify-between">
+            <div>
+              <p class="text-sm font-bold text-white">David K.</p>
+              <p class="text-[11px] text-gray-400">Competitive Powerlifter</p>
+            </div>
+            <span class="px-2.5 py-1 rounded-full bg-lime-400/10 text-lime-400 text-[11px] font-mono font-bold">+35kg Squat</span>
+          </div>
+        </div>
+
+        <div class="glass-card rounded-3xl p-7 border border-white/10 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center gap-1 text-lime-400 mb-4">
+              <i data-lucide="star" class="w-4 h-4 fill-lime-400"></i>
+              <i data-lucide="star" class="w-4 h-4 fill-lime-400"></i>
+              <i data-lucide="star" class="w-4 h-4 fill-lime-400"></i>
+              <i data-lucide="star" class="w-4 h-4 fill-lime-400"></i>
+              <i data-lucide="star" class="w-4 h-4 fill-lime-400"></i>
+            </div>
+            <p class="text-xs sm:text-sm text-gray-300 leading-relaxed italic">
+              "As a software engineer sitting 10 hours a day, the AI posture feedback and personalized high-protein meal scheduler took all mental friction out of fitness. Dropped 12kg of fat."
+            </p>
+          </div>
+          <div class="mt-6 pt-4 border-t border-white/10 flex items-center justify-between">
+            <div>
+              <p class="text-sm font-bold text-white">Sarah M.</p>
+              <p class="text-[11px] text-gray-400">Tech Lead & Hyrox Competitor</p>
+            </div>
+            <span class="px-2.5 py-1 rounded-full bg-cyan-400/10 text-cyan-400 text-[11px] font-mono font-bold">-12kg Fat</span>
+          </div>
+        </div>
+
+        <div class="glass-card rounded-3xl p-7 border border-white/10 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center gap-1 text-lime-400 mb-4">
+              <i data-lucide="star" class="w-4 h-4 fill-lime-400"></i>
+              <i data-lucide="star" class="w-4 h-4 fill-lime-400"></i>
+              <i data-lucide="star" class="w-4 h-4 fill-lime-400"></i>
+              <i data-lucide="star" class="w-4 h-4 fill-lime-400"></i>
+              <i data-lucide="star" class="w-4 h-4 fill-lime-400"></i>
+            </div>
+            <p class="text-xs sm:text-sm text-gray-300 leading-relaxed italic">
+              "The combination of the cold plunge contrast lounge and auto-periodized workouts kept my recovery ahead of my training volume. Best fitness facility I've ever experienced."
+            </p>
+          </div>
+          <div class="mt-6 pt-4 border-t border-white/10 flex items-center justify-between">
+            <div>
+              <p class="text-sm font-bold text-white">Brandon R.</p>
+              <p class="text-[11px] text-gray-400">HYROX Pro Division</p>
+            </div>
+            <span class="px-2.5 py-1 rounded-full bg-yellow-400/10 text-yellow-400 text-[11px] font-mono font-bold">+5.2kg Muscle</span>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- =====================================================================
+       FAQ ACCORDION
+       ===================================================================== -->
+  <section id="faq" class="py-24 relative bg-dark-800/40 border-t border-white/5">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- Section Header -->
+      <div class="text-center mb-14">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-400/10 border border-cyan-400/30 text-cyan-400 text-xs font-semibold uppercase tracking-wider mb-3">
+          <i data-lucide="help-circle" class="w-3.5 h-3.5"></i> Clear Answers
+        </div>
+        <h2 class="font-display text-4xl sm:text-5xl text-white tracking-wide">
+          FREQUENTLY ASKED <span class="text-lime-400">QUESTIONS</span>
+        </h2>
+      </div>
+
+      <!-- Accordion List -->
+      <div class="space-y-4">
+        
+        <div data-faq-item class="glass-card rounded-2xl border border-white/10 overflow-hidden">
+          <button data-faq-trigger class="w-full p-6 text-left flex items-center justify-between font-bold text-sm sm:text-base text-white hover:text-lime-400 transition">
+            <span>How does the AI Motion Coach track my posture and reps?</span>
+            <i data-faq-icon data-lucide="chevron-down" class="w-5 h-5 text-gray-400 transition-transform duration-200"></i>
+          </button>
+          <div data-faq-content class="px-6 pb-6 text-xs sm:text-sm text-gray-400 leading-relaxed hidden">
+            Our vision engines map 33 three-dimensional skeletal landmarks at 60 FPS directly in the browser or on the studio camera mirrors. It calculates joint articulation angles (e.g. knee flexion during squats, elbow lockout on curls) to verify full range of motion before validating each rep.
+          </div>
+        </div>
+
+        <div data-faq-item class="glass-card rounded-2xl border border-white/10 overflow-hidden">
+          <button data-faq-trigger class="w-full p-6 text-left flex items-center justify-between font-bold text-sm sm:text-base text-white hover:text-lime-400 transition">
+            <span>Is my camera video recorded or saved?</span>
+            <i data-faq-icon data-lucide="chevron-down" class="w-5 h-5 text-gray-400 transition-transform duration-200"></i>
+          </button>
+          <div data-faq-content class="px-6 pb-6 text-xs sm:text-sm text-gray-400 leading-relaxed hidden">
+            No! All computer-vision analysis is executed client-side in RAM using WebGL/Canvas pipelines. Zero video streams or camera frames are ever transmitted to external servers or stored on disk, protecting member privacy 100%.
+          </div>
+        </div>
+
+        <div data-faq-item class="glass-card rounded-2xl border border-white/10 overflow-hidden">
+          <button data-faq-trigger class="w-full p-6 text-left flex items-center justify-between font-bold text-sm sm:text-base text-white hover:text-lime-400 transition">
+            <span>Can beginners use APEX AI Gym?</span>
+            <i data-faq-icon data-lucide="chevron-down" class="w-5 h-5 text-gray-400 transition-transform duration-200"></i>
+          </button>
+          <div data-faq-content class="px-6 pb-6 text-xs sm:text-sm text-gray-400 leading-relaxed hidden">
+            Absolutely. In fact, beginners benefit the most because the real-time AI audio cues prevent injury and teach correct motor mechanics from Day 1. Every new member also receives a complimentary 1-on-1 human coaching orientation.
+          </div>
+        </div>
+
+        <div data-faq-item class="glass-card rounded-2xl border border-white/10 overflow-hidden">
+          <button data-faq-trigger class="w-full p-6 text-left flex items-center justify-between font-bold text-sm sm:text-base text-white hover:text-lime-400 transition">
+            <span>What happens when I claim the 1-Day Free Pass?</span>
+            <i data-faq-icon data-lucide="chevron-down" class="w-5 h-5 text-gray-400 transition-transform duration-200"></i>
+          </button>
+          <div data-faq-content class="px-6 pb-6 text-xs sm:text-sm text-gray-400 leading-relaxed hidden">
+            You receive a digital QR pass valid for all facility zones, including the AI computer-vision motion pods, locker rooms, infrared sauna, and any group classes scheduled for that day. No credit card is required.
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- =====================================================================
+       VIP PASS CLAIM MODAL
+       ===================================================================== -->
+  <div id="vipPassModal" class="hidden fixed inset-0 z-50 bg-black/85 backdrop-blur-md items-center justify-center p-4">
+    <div class="glass-card rounded-3xl p-6 sm:p-8 border border-lime-400/40 max-w-md w-full relative shadow-2xl">
+      
+      <!-- Close Button -->
+      <button id="closePassModalBtn" class="absolute top-5 right-5 text-gray-400 hover:text-white transition">
+        <i data-lucide="x" class="w-6 h-6"></i>
+      </button>
+
+      <div class="text-center mb-6">
+        <div class="w-12 h-12 rounded-2xl bg-lime-400/20 text-lime-400 flex items-center justify-center mx-auto mb-3">
+          <i data-lucide="ticket" class="w-6 h-6"></i>
+        </div>
+        <h3 class="text-2xl font-bold text-white">Claim 1-Day Free Pass</h3>
+        <p class="text-xs text-gray-400 mt-1">Full access to gym floor, AI motion pods & recovery lounge.</p>
+      </div>
+
+      <form id="vipPassForm" class="space-y-4">
+        <div>
+          <label for="passName" class="block text-xs font-bold text-gray-300 uppercase tracking-wider mb-1.5">Full Name</label>
+          <input type="text" id="passName" required placeholder="e.g. Alex Rivera" class="w-full bg-black/60 border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:border-lime-400 focus:outline-none transition">
+        </div>
+
+        <div>
+          <label for="passEmail" class="block text-xs font-bold text-gray-300 uppercase tracking-wider mb-1.5">Email Address</label>
+          <input type="email" id="passEmail" required placeholder="alex@example.com" class="w-full bg-black/60 border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:border-lime-400 focus:outline-none transition">
+        </div>
+
+        <div>
+          <label for="passPhone" class="block text-xs font-bold text-gray-300 uppercase tracking-wider mb-1.5">Phone Number</label>
+          <input type="tel" id="passPhone" required placeholder="+1 (555) 000-0000" class="w-full bg-black/60 border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:border-lime-400 focus:outline-none transition">
+        </div>
+
+        <div>
+          <label for="passTime" class="block text-xs font-bold text-gray-300 uppercase tracking-wider mb-1.5">Estimated Visit Time</label>
+          <select id="passTime" class="w-full bg-black/60 border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:border-lime-400 focus:outline-none transition">
+            <option>Morning (06:00 AM - 11:00 AM)</option>
+            <option selected>Afternoon (12:00 PM - 05:00 PM)</option>
+            <option>Evening (05:00 PM - 10:00 PM)</option>
+          </select>
+        </div>
+
+        <button type="submit" class="w-full py-4 rounded-xl bg-lime-400 hover:bg-lime-300 text-black font-extrabold text-sm uppercase tracking-wider glow-lime transition hover:scale-[1.02] mt-4 flex items-center justify-center gap-2">
+          <i data-lucide="send" class="w-4 h-4"></i> Get Instant Digital Pass
+        </button>
+
+        <p class="text-[10px] text-gray-500 text-center mt-2">
+          No credit card required. Pass arrives instantly via SMS and email.
+        </p>
+      </form>
+    </div>
+  </div>
+
+
+  <!-- =====================================================================
+       FOOTER
+       ===================================================================== -->
+  <footer class="bg-black border-t border-white/10 pt-16 pb-12 text-gray-400 text-xs">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 pb-12 border-b border-white/10">
+        
+        <!-- Brand Info (2 Cols) -->
+        <div class="lg:col-span-2 space-y-4">
+          <div class="flex items-center gap-2.5">
+            <div class="w-8 h-8 rounded-lg bg-lime-400 flex items-center justify-center text-black">
+              <i data-lucide="zap" class="w-5 h-5 fill-black stroke-black"></i>
+            </div>
+            <span class="font-display text-2xl tracking-wider text-white">APEX <span class="text-lime-400">AI</span></span>
+          </div>
+          <p class="text-gray-400 max-w-sm leading-relaxed">
+            The world's premier neural-enhanced athletic training facility. Merging high-stakes bio-mechanics with computerized real-time form analytics.
+          </p>
+          <div class="flex items-center gap-4 text-gray-400 pt-2">
+            <a href="#" class="hover:text-lime-400 transition" aria-label="Instagram"><i data-lucide="instagram" class="w-5 h-5"></i></a>
+            <a href="#" class="hover:text-lime-400 transition" aria-label="Twitter"><i data-lucide="twitter" class="w-5 h-5"></i></a>
+            <a href="#" class="hover:text-lime-400 transition" aria-label="YouTube"><i data-lucide="youtube" class="w-5 h-5"></i></a>
+            <a href="https://github.com/ADI-KUMAR-gl/ai-fitness" target="_blank" rel="noopener noreferrer" class="hover:text-lime-400 transition" aria-label="GitHub"><i data-lucide="github" class="w-5 h-5"></i></a>
+          </div>
+        </div>
+
+        <!-- Quick Links -->
+        <div>
+          <h4 class="text-white font-bold uppercase tracking-wider mb-4">Navigation</h4>
+          <ul class="space-y-2.5">
+            <li><a href="#ai-coach" class="hover:text-lime-400 transition">AI Motion Coach</a></li>
+            <li><a href="#ai-planner" class="hover:text-lime-400 transition">Routine Generator</a></li>
+            <li><a href="#muscle-hub" class="hover:text-lime-400 transition">Muscle Explorer</a></li>
+            <li><a href="#calculator" class="hover:text-lime-400 transition">Metabolic Calculator</a></li>
+            <li><a href="#classes" class="hover:text-lime-400 transition">Class Timetable</a></li>
+          </ul>
+        </div>
+
+        <!-- Location & Hours -->
+        <div>
+          <h4 class="text-white font-bold uppercase tracking-wider mb-4">Location & Hours</h4>
+          <p class="text-gray-400 leading-relaxed mb-2">
+            742 Olympic Boulevard<br>
+            Silicon Performance District
+          </p>
+          <p class="text-lime-400 font-semibold mb-1">Floor: Open 24/7/365</p>
+          <p class="text-gray-500">Staff & Coaches: 06:00 - 22:00</p>
+        </div>
+
+        <!-- Newsletter -->
+        <div>
+          <h4 class="text-white font-bold uppercase tracking-wider mb-4">Athlete Newsletter</h4>
+          <p class="text-gray-400 text-xs mb-3">Weekly AI periodization tips, biomechanics research, and early class passes.</p>
+          <form id="newsletterForm" class="space-y-2">
+            <input type="email" required placeholder="athlete@example.com" class="w-full bg-dark-800 border border-white/10 rounded-xl px-3 py-2 text-xs text-white focus:border-lime-400 focus:outline-none">
+            <button type="submit" class="w-full py-2.5 rounded-xl bg-lime-400 hover:bg-lime-300 text-black font-bold text-xs uppercase tracking-wider transition">
+              Subscribe
+            </button>
+          </form>
+        </div>
+
+      </div>
+
+      <!-- Bottom Bar -->
+      <div class="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-gray-500 text-[11px]">
+        <p>&copy; 2026 APEX AI FITNESS INC. All Rights Reserved.</p>
+        <div class="flex items-center gap-6">
+          <a href="#" class="hover:text-gray-300 transition">Privacy Policy</a>
+          <a href="#" class="hover:text-gray-300 transition">Biometric Terms</a>
+          <a href="#" class="hover:text-gray-300 transition">Cookie Settings</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- App Scripts -->
+  <script src="js/ai-coach.js"></script>
+  <script src="js/ai-planner.js"></script>
+  <script src="js/calculator.js"></script>
+  <script src="js/app.js"></script>
+
+  <!-- Lucide Icons Initialization -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      if (window.lucide) {
+        window.lucide.createIcons();
+      }
+    });
+  </script>
+</body>
+</html>
