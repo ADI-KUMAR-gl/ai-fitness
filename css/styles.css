@@ -1,169 +1,286 @@
-/* Adi AI Fitness - Custom Styles & Animations */
+/* =========================================================================
+   APEX AI FITNESS — THE "BALANCED / TWILIGHT GLASSMORPHISM" DESIGN SYSTEM
+   Art Direction: Mid-tone slate grays, brushed metallic tones, muted twilight blues.
+   Accents: Laser Blue (#00F0FF) & Bio-Green (#00FF88) strictly for data telemetry.
+   ========================================================================= */
 
 :root {
-  --neon-lime: #ccff00;
-  --neon-cyan: #00f0ff;
-  --neon-coral: #ff4d4d;
-  --dark-bg: #0a0c10;
-  --card-bg: #12161f;
-  --card-border: rgba(255, 255, 255, 0.08);
+  /* Twilight Metallic Palette */
+  --twilight-base: #1e2638;
+  --twilight-mid: #2b354c;
+  --twilight-light: #3e4a68;
+  --slate-metallic: #7a8194;
+  --slate-brushed: #a3a8b8;
+  --slate-surface: rgba(255, 255, 255, 0.11);
+  --slate-surface-hover: rgba(255, 255, 255, 0.16);
+  --glass-border: rgba(255, 255, 255, 0.22);
+  --glass-border-subtle: rgba(255, 255, 255, 0.12);
+
+  /* High-Octane Telemetry Accents */
+  --laser-blue: #00f0ff;
+  --laser-blue-glow: rgba(0, 240, 255, 0.35);
+  --bio-green: #00ff88;
+  --bio-green-glow: rgba(0, 255, 136, 0.35);
+  --hyper-amber: #ffb800;
+  --hyper-amber-glow: rgba(255, 184, 0, 0.35);
+  --kinetic-coral: #ff4757;
+
+  /* Typography */
+  --text-primary: #f8fafc;
+  --text-secondary: #cbd5e1;
+  --text-muted: #94a3b8;
+  --text-charcoal: #1e293b;
 }
 
-/* Custom Scrollbar */
+/* Custom Balanced Twilight Scrollbar */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 9px;
+  height: 9px;
 }
 ::-webkit-scrollbar-track {
-  background: #0a0c10;
+  background: #182030;
 }
 ::-webkit-scrollbar-thumb {
-  background: #1e2433;
-  border-radius: 4px;
+  background: #3e4a68;
+  border-radius: 6px;
+  border: 2px solid #182030;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #ccff00;
+  background: var(--laser-blue);
 }
 
 /* Base Body Styles */
 body {
   font-family: 'Outfit', sans-serif;
-  background-color: #0a0c10;
-  color: #f3f4f6;
+  background-color: var(--twilight-base);
+  background-image: 
+    radial-gradient(at 15% 15%, rgba(0, 240, 255, 0.09) 0px, transparent 45%),
+    radial-gradient(at 85% 20%, rgba(0, 255, 136, 0.08) 0px, transparent 45%),
+    radial-gradient(at 50% 80%, rgba(62, 74, 104, 0.35) 0px, transparent 65%),
+    linear-gradient(135deg, #182030 0%, #252f44 50%, #1a2233 100%);
+  color: var(--text-primary);
+  min-height: 100vh;
   overflow-x: hidden;
-  selection-background-color: #ccff00;
-  selection-color: #000;
+  selection-background-color: var(--laser-blue);
+  selection-color: #0b111e;
 }
 
-/* Display Fonts */
+/* Display Font */
 .font-display {
   font-family: 'Bebas Neue', sans-serif;
   letter-spacing: 0.04em;
 }
 
-/* Glow & Neon Effects */
-.glow-lime {
-  box-shadow: 0 0 25px rgba(204, 255, 0, 0.35);
+.font-mono {
+  font-family: 'JetBrains Mono', monospace;
 }
 
-.glow-cyan {
-  box-shadow: 0 0 25px rgba(0, 240, 255, 0.35);
+/* =========================================================================
+   TWILIGHT GLASSMORPHISM SURFACES
+   ========================================================================= */
+
+.twilight-glass {
+  background: rgba(255, 255, 255, 0.10);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border);
+  box-shadow: 
+    0 10px 30px -5px rgba(10, 16, 28, 0.35),
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.25);
 }
 
-.glow-text-lime {
-  text-shadow: 0 0 12px rgba(204, 255, 0, 0.5);
+.twilight-glass-card {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0.05) 100%);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid var(--glass-border);
+  box-shadow: 
+    0 15px 35px -10px rgba(8, 14, 26, 0.45),
+    inset 0 1px 1px 0 rgba(255, 255, 255, 0.22);
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
 }
 
-.glow-text-cyan {
-  text-shadow: 0 0 12px rgba(0, 240, 255, 0.5);
+.twilight-glass-card:hover {
+  border-color: rgba(0, 240, 255, 0.4);
+  box-shadow: 
+    0 20px 40px -10px rgba(0, 240, 255, 0.15),
+    inset 0 1px 1px 0 rgba(255, 255, 255, 0.35);
 }
 
-.border-glow-lime:hover {
-  border-color: #ccff00;
-  box-shadow: 0 0 20px rgba(204, 255, 0, 0.25);
+.twilight-glass-subtle {
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border-subtle);
 }
 
-/* Radar Scanline Animation for AI Camera */
-@keyframes scanline {
-  0% {
-    top: 0%;
-    opacity: 0.8;
+/* Lighter Glass Surface with Charcoal Typography */
+.twilight-glass-light {
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  color: var(--text-charcoal);
+}
+
+/* =========================================================================
+   GLOWS & TELEMETRY HIGHLIGHTS
+   ========================================================================= */
+
+.glow-laser-blue {
+  box-shadow: 0 0 25px var(--laser-blue-glow);
+}
+
+.glow-bio-green {
+  box-shadow: 0 0 25px var(--bio-green-glow);
+}
+
+.glow-hyper-amber {
+  box-shadow: 0 0 25px var(--hyper-amber-glow);
+}
+
+.text-laser-blue {
+  color: var(--laser-blue);
+}
+
+.text-bio-green {
+  color: var(--bio-green);
+}
+
+.text-hyper-amber {
+  color: var(--hyper-amber);
+}
+
+.border-laser-blue {
+  border-color: var(--laser-blue);
+}
+
+.border-bio-green {
+  border-color: var(--bio-green);
+}
+
+/* Pulsing Baseline CTA Button */
+@keyframes pulseBaseline {
+  0%, 100% {
+    box-shadow: 0 0 15px rgba(0, 240, 255, 0.3), 0 0 30px rgba(0, 255, 136, 0.2);
   }
   50% {
-    opacity: 0.3;
-  }
-  100% {
-    top: 96%;
-    opacity: 0.8;
+    box-shadow: 0 0 30px rgba(0, 240, 255, 0.6), 0 0 50px rgba(0, 255, 136, 0.45);
   }
 }
 
-.ai-scanline {
+.animate-pulse-baseline {
+  animation: pulseBaseline 3s infinite ease-in-out;
+}
+
+/* =========================================================================
+   CAMERA VIEWPORT OVERLAY (SMARTPHONE FRAME)
+   ========================================================================= */
+
+.phone-viewport-frame {
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 
+    0 25px 60px -15px rgba(5, 10, 20, 0.6),
+    0 0 0 1px rgba(0, 240, 255, 0.25),
+    inset 0 0 40px rgba(0, 0, 0, 0.4);
+}
+
+/* Radar Scanline */
+@keyframes radarScan {
+  0% { top: 4%; opacity: 0.85; }
+  50% { opacity: 0.35; }
+  100% { top: 94%; opacity: 0.85; }
+}
+
+.hud-scanline {
   position: absolute;
   left: 0;
   width: 100%;
-  height: 3px;
-  background: linear-gradient(90deg, transparent, #00f0ff, #ccff00, transparent);
-  box-shadow: 0 0 15px #00f0ff, 0 0 25px #ccff00;
-  animation: scanline 3s ease-in-out infinite alternate;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--laser-blue), var(--bio-green), transparent);
+  box-shadow: 0 0 12px var(--laser-blue), 0 0 20px var(--bio-green);
+  animation: radarScan 3.5s ease-in-out infinite alternate;
   pointer-events: none;
 }
 
-/* Pulse Keyframes */
-@keyframes pulseGlow {
-  0%, 100% {
-    box-shadow: 0 0 15px rgba(204, 255, 0, 0.2);
-  }
-  50% {
-    box-shadow: 0 0 30px rgba(204, 255, 0, 0.6);
-  }
+/* =========================================================================
+   SVG CHARTS & CIRCULAR DIALS
+   ========================================================================= */
+
+.svg-chart-grid line {
+  stroke: rgba(255, 255, 255, 0.08);
+  stroke-dasharray: 4, 4;
 }
 
-.animate-pulse-glow {
-  animation: pulseGlow 2.5s infinite ease-in-out;
+.svg-chart-axis text {
+  fill: #94a3b8;
+  font-size: 11px;
+  font-family: 'JetBrains Mono', monospace;
 }
 
-/* Glassmorphism Classes */
-.glass-card {
-  background: rgba(18, 22, 31, 0.75);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.07);
+.svg-mvt-line {
+  stroke: var(--laser-blue);
+  stroke-width: 3.5;
+  stroke-linecap: round;
+  filter: drop-shadow(0 0 8px rgba(0, 240, 255, 0.6));
 }
 
-.glass-card-hover {
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+.svg-mvt-threshold {
+  stroke: var(--hyper-amber);
+  stroke-width: 2;
+  stroke-dasharray: 6, 4;
 }
 
-.glass-card-hover:hover {
-  background: rgba(24, 30, 42, 0.85);
-  border-color: rgba(204, 255, 0, 0.3);
-  transform: translateY(-4px);
+/* Circular Dials */
+.cns-dial-bg {
+  stroke: rgba(255, 255, 255, 0.1);
 }
 
-/* Custom Range Input Styling */
-input[type="range"] {
-  accent-color: #ccff00;
-  cursor: pointer;
+.cns-dial-progress {
+  stroke: var(--bio-green);
+  filter: drop-shadow(0 0 8px rgba(0, 255, 136, 0.5));
+  stroke-linecap: round;
+  transition: stroke-dashoffset 1s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-input[type="range"]::-webkit-slider-thumb {
-  background-color: #ccff00;
-  box-shadow: 0 0 10px #ccff00;
-  cursor: pointer;
+.adherence-dial-progress {
+  stroke: var(--laser-blue);
+  filter: drop-shadow(0 0 8px rgba(0, 240, 255, 0.5));
+  stroke-linecap: round;
 }
 
-/* Marquee / Ticker text */
-@keyframes ticker {
-  0% { transform: translate3d(0, 0, 0); }
-  100% { transform: translate3d(-50%, 0, 0); }
+/* =========================================================================
+   PERIODIZATION TIMELINE STYLING
+   ========================================================================= */
+
+.timeline-track-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
 }
 
-.ticker-track {
-  display: flex;
-  width: 200%;
-  animation: ticker 25s linear infinite;
+.day-pill-past {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #64748b;
 }
 
-.ticker-track:hover {
-  animation-play-state: paused;
+.day-pill-today {
+  background: linear-gradient(135deg, rgba(0, 240, 255, 0.25) 0%, rgba(0, 255, 136, 0.25) 100%);
+  border: 1.5px solid var(--laser-blue);
+  box-shadow: 0 0 20px rgba(0, 240, 255, 0.35);
+  color: #ffffff;
 }
 
-/* Grid Pattern Background */
-.bg-grid-pattern {
+.day-pill-future-adapted {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px dashed rgba(0, 240, 255, 0.4);
+  color: #cbd5e1;
+}
+
+/* Grid Pattern */
+.twilight-grid-pattern {
   background-size: 40px 40px;
   background-image: 
-    linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-}
-
-/* Toast Notifications */
-.toast-enter {
-  transform: translateY(100%);
-  opacity: 0;
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.toast-show {
-  transform: translateY(0);
-  opacity: 1;
+    linear-gradient(to right, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
 }
