@@ -4,10 +4,11 @@
  * =========================================================================
  * Clinical Bio-Mechanics Engine:
  * - Real-Time Barbell Velocity tracking (Mean Concentric Velocity in m/s)
- * - Velocity-Loss based RPE estimation
+ * - Velocity-Loss based RPE estimation (RPE 6.0 to 10.0)
+ * - Kinematic movements: Barbell Back Squat, Bench Press, Deadlift
  * - Occlusion-resistant 33-point skeletal keypoint HUD overlay
  * - Webcam mode or cinematic simulated barbell athlete
- * - Audio synthesis beeps & achievement feedback
+ * - Web Audio synthesis beeps & milestone chimes
  * =========================================================================
  */
 
@@ -26,19 +27,17 @@ class AICoach {
     this.exercise = 'squat'; // 'squat' | 'bench' | 'deadlift'
     this.reps = 0;
     this.barVelocity = 0.38; // Current velocity in m/s
-    this.firstRepVelocity = 0.48; // Baseline 1st rep velocity
     this.velocityLossPct = 20.8;
     this.currentRpe = 8.2;
-    this.formScore = 96;
     this.isMuted = false;
     this.phase = 'eccentric'; // 'eccentric', 'inflection', 'concentric'
     this.currentAngle = 170;
     this.animationId = null;
     this.cameraStream = null;
 
-    // Simulation kinematics parameters
+    // Kinematics parameters
     this.simTime = 0;
-    this.simSpeed = 0.032;
+    this.simSpeed = 0.034;
 
     // Web Audio context
     this.audioCtx = null;
@@ -80,19 +79,19 @@ class AICoach {
       const gain = this.audioCtx.createGain();
 
       osc.type = 'sine';
-      osc.frequency.setValueAtTime(isMilestone ? 920 : 680, now);
-      osc.frequency.exponentialRampToValueAtTime(isMilestone ? 1350 : 960, now + 0.1);
+      osc.frequency.setValueAtTime(isMilestone ? 880 : 640, now);
+      osc.frequency.exponentialRampToValueAtTime(isMilestone ? 1320 : 920, now + 0.1);
 
       gain.gain.setValueAtTime(0.18, now);
-      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.18);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.16);
 
       osc.connect(gain);
       gain.connect(this.audioCtx.destination);
 
       osc.start(now);
-      osc.stop(now + 0.18);
+      osc.stop(now + 0.16);
     } catch (e) {
-      // Autoplay policy fallback
+      // Audio autoplay policy fallback
     }
   }
 
@@ -109,8 +108,8 @@ class AICoach {
       soundBtn.addEventListener('click', () => {
         this.isMuted = !this.isMuted;
         soundBtn.innerHTML = this.isMuted
-          ? '<i data-lucide="volume-x" class="w-4 h-4"></i> Audio Muted'
-          : '<i data-lucide="volume-2" class="w-4 h-4 text-laser-blue"></i> Audio Telemetry';
+          ? '<i data-lucide="volume-x" class="w-3.5 h-3.5"></i> Audio Muted'
+          : '<i data-lucide="volume-2" class="w-3.5 h-3.5 text-electric-blue"></i> Audio Telemetry';
         if (window.lucide) window.lucide.createIcons();
       });
     }
@@ -133,7 +132,7 @@ class AICoach {
       resetBtn.addEventListener('click', () => this.resetSession());
     }
 
-    // Exercise selector
+    // Exercise selector buttons
     const exBtns = document.querySelectorAll('[data-coach-exercise]');
     exBtns.forEach(btn => {
       btn.addEventListener('click', (e) => {
@@ -151,17 +150,17 @@ class AICoach {
     document.querySelectorAll('[data-coach-exercise]').forEach(btn => {
       const isSelected = btn.getAttribute('data-coach-exercise') === ex;
       if (isSelected) {
-        btn.classList.add('bg-laser-blue/20', 'border-laser-blue', 'text-laser-blue');
-        btn.classList.remove('bg-white/5', 'border-white/10', 'text-gray-400');
+        btn.className = 'px-3 py-1.5 rounded-lg border border-sky-500 bg-sky-50 text-sky-700 font-bold';
       } else {
-        btn.classList.remove('bg-laser-blue/20', 'border-laser-blue', 'text-laser-blue');
-        btn.classList.add('bg-white/5', 'border-white/10', 'text-gray-400');
+        btn.className = 'px-3 py-1.5 rounded-lg border border-slate-200 bg-slate-100 text-slate-600 hover:text-slate-900';
       }
     });
 
     const titleEl = document.getElementById('viewportExerciseLabel');
     if (titleEl) {
-      titleEl.textContent = ex === 'squat' ? 'Back Squat (140 kg)' : ex === 'bench' ? 'Bench Press (100 kg)' : 'Deadlift (180 kg)';
+      if (ex === 'squat') titleEl.textContent = 'Back Squat (140 kg)';
+      else if (ex === 'bench') titleEl.textContent = 'Bench Press (100 kg)';
+      else titleEl.textContent = 'Deadlift (180 kg)';
     }
   }
 
@@ -172,7 +171,7 @@ class AICoach {
     if (this.mode === 'simulated') {
       try {
         if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-          alert('Webcam is not supported or permitted in this environment. Operating in high-precision simulated kinematics mode!');
+          alert('Webcam is not supported in this browser. Running in high-precision simulated kinematics mode!');
           return;
         }
 
@@ -186,15 +185,15 @@ class AICoach {
 
         this.mode = 'camera';
         if (camBtn) {
-          camBtn.innerHTML = '<i data-lucide="cpu" class="w-4 h-4 text-bio-green"></i> Switch to Kinematics Sim';
+          camBtn.innerHTML = '<i data-lucide="cpu" class="w-3.5 h-3.5 text-emerald-600"></i> Switch to Kinematics Sim';
         }
         if (badge) {
-          badge.innerHTML = '<span class="w-2 h-2 rounded-full bg-laser-blue animate-ping mr-1"></span> LIVE CAM CV';
-          badge.className = 'px-2.5 py-1 rounded-full bg-laser-blue/20 text-laser-blue border border-laser-blue/40 text-[10px] font-mono font-bold flex items-center';
+          badge.innerHTML = '<span class="w-1.5 h-1.5 rounded-full bg-sky-500 animate-ping mr-1"></span> LIVE CAM CV';
+          badge.className = 'px-2.5 py-1 rounded-full bg-sky-100 text-sky-700 border border-sky-300 text-[10px] font-mono font-bold flex items-center';
         }
       } catch (err) {
-        console.warn('Camera permission unavailable:', err);
-        alert('Webcam access was not granted. Running in high-fidelity simulated kinematics mode!');
+        console.warn('Camera access unavailable:', err);
+        alert('Camera access was not granted. Running in high-fidelity simulated kinematics mode!');
         this.mode = 'simulated';
       }
     } else {
@@ -204,11 +203,11 @@ class AICoach {
       }
       this.mode = 'simulated';
       if (camBtn) {
-        camBtn.innerHTML = '<i data-lucide="camera" class="w-4 h-4 text-laser-blue"></i> Switch to Live Camera';
+        camBtn.innerHTML = '<i data-lucide="camera" class="w-3.5 h-3.5 text-sky-600"></i> Switch to Live Camera';
       }
       if (badge) {
-        badge.innerHTML = '<span class="w-2 h-2 rounded-full bg-bio-green animate-ping mr-1"></span> SYNTHETIC CV';
-        badge.className = 'px-2.5 py-1 rounded-full bg-bio-green/20 text-bio-green border border-bio-green/40 text-[10px] font-mono font-bold flex items-center';
+        badge.innerHTML = '<span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping mr-1"></span> SYNTHETIC CV';
+        badge.className = 'px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-700 border border-emerald-300 text-[10px] font-mono font-bold flex items-center';
       }
     }
 
@@ -236,7 +235,7 @@ class AICoach {
 
   resetSession() {
     this.reps = 0;
-    this.barVelocity = 0.44;
+    this.barVelocity = 0.38;
     this.velocityLossPct = 0.0;
     this.currentRpe = 6.0;
     this.updateHUDValues();
@@ -261,34 +260,29 @@ class AICoach {
       ctx.drawImage(this.video, 0, 0, canvas.width, canvas.height);
       ctx.restore();
 
-      // Atmospheric twilight tint over camera
-      ctx.fillStyle = 'rgba(24, 32, 48, 0.45)';
+      ctx.fillStyle = 'rgba(15, 23, 42, 0.35)';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
     } else {
-      this.drawTwilightBackdrop();
+      this.drawStudioBackdrop();
     }
 
-    // Kinematic calculations & velocity estimation
     this.updateKinematics();
-
-    // Draw skeletal wireframe overlay
     this.drawSkeletonHUD();
   }
 
-  drawTwilightBackdrop() {
+  drawStudioBackdrop() {
     const { ctx, canvas } = this;
     const W = canvas.width;
     const H = canvas.height;
 
-    // Deep metallic gradient
-    const grad = ctx.createRadialGradient(W / 2, H / 2, 30, W / 2, H / 2, W / 1.2);
-    grad.addColorStop(0, '#2b354c');
-    grad.addColorStop(1, '#151c2a');
+    // Cinematic deep studio stage for optimal laser skeleton visibility
+    const grad = ctx.createRadialGradient(W / 2, H / 2, 40, W / 2, H / 2, W / 1.1);
+    grad.addColorStop(0, '#1e293b');
+    grad.addColorStop(1, '#0f172a');
     ctx.fillStyle = grad;
     ctx.fillRect(0, 0, W, H);
 
-    // Subtle coordinate grid lines
-    ctx.strokeStyle = 'rgba(255, 255, 255, 0.05)';
+    ctx.strokeStyle = 'rgba(255, 255, 255, 0.07)';
     ctx.lineWidth = 1;
     for (let x = 0; x < W; x += 40) {
       ctx.beginPath();
@@ -303,8 +297,7 @@ class AICoach {
       ctx.stroke();
     }
 
-    // Floor horizon line
-    ctx.strokeStyle = 'rgba(0, 240, 255, 0.25)';
+    ctx.strokeStyle = 'rgba(2, 132, 199, 0.35)';
     ctx.lineWidth = 2;
     ctx.beginPath();
     ctx.moveTo(30, 410);
@@ -314,30 +307,19 @@ class AICoach {
 
   updateKinematics() {
     this.simTime += this.simSpeed;
-
-    // Sinusoidal cycle: 0 = top, 1 = bottom
     const cycle = (1 - Math.cos(this.simTime)) / 2;
 
-    // Calculate instantaneous velocity as absolute derivative of cosine: |sin(t)|
-    const rawVelocity = Math.abs(Math.sin(this.simTime)) * 0.52;
+    const rawVelocity = Math.abs(Math.sin(this.simTime)) * 0.54;
     this.barVelocity = parseFloat(Math.max(0.18, rawVelocity).toFixed(2));
-
-    // Knee/Hip angle
     this.currentAngle = Math.round(170 - (cycle * 92));
 
-    // Rep inflection state machine
     if (cycle > 0.90 && this.phase !== 'inflection') {
       this.phase = 'inflection';
     } else if (cycle < 0.12 && this.phase === 'inflection') {
-      // Rep completed!
       this.phase = 'eccentric';
       this.reps++;
 
-      // Velocity loss increases slightly with fatigue
-      this.velocityLossPct = Math.min(38.5, parseFloat((15.0 + (this.reps * 3.2)).toFixed(1)));
-      
-      // Calculate RPE based on velocity loss:
-      // <10% = RPE 6-7, 20% = RPE 8, 30% = RPE 9, 40%+ = RPE 10
+      this.velocityLossPct = Math.min(38.0, parseFloat((14.0 + (this.reps * 2.8)).toFixed(1)));
       this.currentRpe = Math.min(10.0, parseFloat((6.5 + (this.velocityLossPct * 0.09)).toFixed(1)));
 
       this.playRepSound(this.reps % 5 === 0);
@@ -346,11 +328,9 @@ class AICoach {
   }
 
   updateHUDValues() {
-    // Current bar velocity
     const velEl = document.getElementById('telemetryBarVelocity');
     if (velEl) velEl.textContent = this.barVelocity.toFixed(2);
 
-    // Dynamic RPE
     const rpeEl = document.getElementById('telemetryRpeVal');
     const rpeFill = document.getElementById('telemetryRpeBarFill');
     if (rpeEl) rpeEl.textContent = this.currentRpe.toFixed(1);
@@ -359,11 +339,9 @@ class AICoach {
       rpeFill.style.width = `${pct}%`;
     }
 
-    // Velocity loss
     const lossEl = document.getElementById('telemetryVelLoss');
     if (lossEl) lossEl.textContent = `${this.velocityLossPct.toFixed(1)}%`;
 
-    // Reps
     const repsEl = document.getElementById('viewportRepCount');
     if (repsEl) repsEl.textContent = this.reps;
   }
@@ -375,51 +353,102 @@ class AICoach {
     const cx = W / 2;
     const cycle = (1 - Math.cos(this.simTime)) / 2;
 
-    // Kinematics position offsets
-    const dip = cycle * 70;
-    const kneeSpread = 22 + (cycle * 24);
+    let headY, barbellY, barLeft, barRight;
+    let rShoulder, lShoulder, rElbow, lElbow, rWrist, lWrist;
+    let rHip, lHip, rKnee, lKnee, rAnkle, lAnkle;
 
-    const headY = 110 + dip;
-    const neckY = 140 + dip;
+    if (this.exercise === 'bench') {
+      const benchDip = cycle * 45;
+      headY = 240;
+      barbellY = 195 + benchDip;
+      barLeft = { x: cx - 130, y: barbellY };
+      barRight = { x: cx + 130, y: barbellY };
 
-    const rShoulder = { x: cx - 40, y: 155 + dip };
-    const lShoulder = { x: cx + 40, y: 155 + dip };
+      rShoulder = { x: cx - 35, y: 250 };
+      lShoulder = { x: cx + 35, y: 250 };
 
-    // Barbell coordinates across shoulders
-    const barbellY = 150 + dip;
-    const barLeft = { x: cx - 120, y: barbellY };
-    const barRight = { x: cx + 120, y: barbellY };
+      rElbow = { x: cx - 75, y: 260 + (benchDip * 0.7) };
+      lElbow = { x: cx + 75, y: 260 + (benchDip * 0.7) };
 
-    const rElbow = { x: cx - 55, y: 190 + dip };
-    const lElbow = { x: cx + 55, y: 190 + dip };
-    const rWrist = { x: cx - 45, y: 152 + dip };
-    const lWrist = { x: cx + 45, y: 152 + dip };
+      rWrist = { x: cx - 55, y: barbellY };
+      lWrist = { x: cx + 55, y: barbellY };
 
-    const rHip = { x: cx - 28, y: 235 + dip };
-    const lHip = { x: cx + 28, y: 235 + dip };
+      rHip = { x: cx - 25, y: 320 };
+      lHip = { x: cx + 25, y: 320 };
 
-    const rKnee = { x: cx - 28 - kneeSpread, y: 310 + (dip * 0.45) };
-    const lKnee = { x: cx + 28 + kneeSpread, y: 310 + (dip * 0.45) };
+      rKnee = { x: cx - 45, y: 370 };
+      lKnee = { x: cx + 45, y: 370 };
 
-    const rAnkle = { x: cx - 45, y: 395 };
-    const lAnkle = { x: cx + 45, y: 395 };
+      rAnkle = { x: cx - 55, y: 410 };
+      lAnkle = { x: cx + 55, y: 410 };
 
-    // 1. Draw Barbell Bar with Laser Glow
+    } else if (this.exercise === 'deadlift') {
+      const hinge = cycle * 65;
+      headY = 130 + hinge;
+      barbellY = 270 + (hinge * 1.5);
+      barLeft = { x: cx - 125, y: barbellY };
+      barRight = { x: cx + 125, y: barbellY };
+
+      rShoulder = { x: cx - 38, y: 165 + hinge };
+      lShoulder = { x: cx + 38, y: 165 + hinge };
+
+      rElbow = { x: cx - 45, y: 220 + hinge };
+      lElbow = { x: cx + 45, y: 220 + hinge };
+
+      rWrist = { x: cx - 45, y: barbellY };
+      lWrist = { x: cx + 45, y: barbellY };
+
+      rHip = { x: cx - 25, y: 240 + (hinge * 0.6) };
+      lHip = { x: cx + 25, y: 240 + (hinge * 0.6) };
+
+      rKnee = { x: cx - 30, y: 320 + (hinge * 0.3) };
+      lKnee = { x: cx + 30, y: 320 + (hinge * 0.3) };
+
+      rAnkle = { x: cx - 35, y: 410 };
+      lAnkle = { x: cx + 35, y: 410 };
+
+    } else {
+      const dip = cycle * 70;
+      const kneeSpread = 22 + (cycle * 24);
+
+      headY = 110 + dip;
+      barbellY = 150 + dip;
+      barLeft = { x: cx - 120, y: barbellY };
+      barRight = { x: cx + 120, y: barbellY };
+
+      rShoulder = { x: cx - 40, y: 155 + dip };
+      lShoulder = { x: cx + 40, y: 155 + dip };
+
+      rElbow = { x: cx - 55, y: 190 + dip };
+      lElbow = { x: cx + 55, y: 190 + dip };
+      rWrist = { x: cx - 45, y: 152 + dip };
+      lWrist = { x: cx + 45, y: 152 + dip };
+
+      rHip = { x: cx - 28, y: 235 + dip };
+      lHip = { x: cx + 28, y: 235 + dip };
+
+      rKnee = { x: cx - 28 - kneeSpread, y: 310 + (dip * 0.45) };
+      lKnee = { x: cx + 28 + kneeSpread, y: 310 + (dip * 0.45) };
+
+      rAnkle = { x: cx - 45, y: 395 };
+      lAnkle = { x: cx + 45, y: 395 };
+    }
+
+    // 1. Draw Barbell Bar & Weight Plates
     ctx.save();
-    ctx.strokeStyle = '#00f0ff';
+    ctx.strokeStyle = '#0284c7';
     ctx.lineWidth = 4.5;
     ctx.beginPath();
     ctx.moveTo(barLeft.x, barLeft.y);
     ctx.lineTo(barRight.x, barRight.y);
     ctx.stroke();
 
-    // Weight plates on each side
-    ctx.fillStyle = 'rgba(0, 240, 255, 0.4)';
+    ctx.fillStyle = 'rgba(2, 132, 199, 0.4)';
     ctx.fillRect(barLeft.x - 12, barLeft.y - 35, 12, 70);
     ctx.fillRect(barRight.x, barRight.y - 35, 12, 70);
     ctx.restore();
 
-    // 2. Draw Skeleton Connectors (Occlusion-Resistant Bio-Lines)
+    // 2. Draw Skeleton Bones
     const bones = [
       [rShoulder, lShoulder],
       [rShoulder, rElbow],
@@ -440,8 +469,8 @@ class AICoach {
 
     bones.forEach(([p1, p2]) => {
       const grad = ctx.createLinearGradient(p1.x, p1.y, p2.x, p2.y);
-      grad.addColorStop(0, '#00f0ff');
-      grad.addColorStop(1, '#00ff88');
+      grad.addColorStop(0, '#0284c7');
+      grad.addColorStop(1, '#10b981');
       ctx.strokeStyle = grad;
       ctx.beginPath();
       ctx.moveTo(p1.x, p1.y);
@@ -449,41 +478,40 @@ class AICoach {
       ctx.stroke();
     });
 
-    // 3. Draw Head Ring
+    // 3. Head Ring
     ctx.beginPath();
-    ctx.strokeStyle = '#00ff88';
+    ctx.strokeStyle = '#10b981';
     ctx.lineWidth = 2;
     ctx.arc(cx, headY, 20, 0, Math.PI * 2);
-    ctx.fillStyle = 'rgba(0, 255, 136, 0.15)';
+    ctx.fillStyle = 'rgba(16, 185, 129, 0.2)';
     ctx.fill();
     ctx.stroke();
 
-    // 4. Draw Joint Keypoints with Laser Core
+    // 4. Joint Keypoints
     const keypoints = [
       rShoulder, lShoulder, rElbow, lElbow, rWrist, lWrist,
       rHip, lHip, rKnee, lKnee, rAnkle, lAnkle
     ];
 
     keypoints.forEach(pt => {
-      // Glow circle
       ctx.beginPath();
       ctx.arc(pt.x, pt.y, 6, 0, Math.PI * 2);
-      ctx.fillStyle = 'rgba(0, 240, 255, 0.35)';
+      ctx.fillStyle = 'rgba(2, 132, 199, 0.35)';
       ctx.fill();
 
-      // Sharp core
       ctx.beginPath();
       ctx.arc(pt.x, pt.y, 3, 0, Math.PI * 2);
       ctx.fillStyle = '#ffffff';
       ctx.fill();
     });
 
-    // 5. Active Knee Angle Reticle
-    this.drawAngleArc(lKnee.x, lKnee.y, this.currentAngle);
+    // 5. Active Joint Angle Tag
+    const targetJoint = this.exercise === 'bench' ? rElbow : lKnee;
+    this.drawAngleArc(targetJoint.x, targetJoint.y, this.currentAngle);
 
-    // 6. Clinical Velocity Trajectory Vector
+    // 6. Velocity Trajectory Vector
     ctx.save();
-    ctx.strokeStyle = 'rgba(0, 240, 255, 0.8)';
+    ctx.strokeStyle = 'rgba(2, 132, 199, 0.85)';
     ctx.lineWidth = 2;
     ctx.setLineDash([3, 3]);
     ctx.beginPath();
@@ -491,9 +519,9 @@ class AICoach {
     ctx.lineTo(cx, barbellY - 45);
     ctx.stroke();
 
-    ctx.fillStyle = '#00f0ff';
+    ctx.fillStyle = '#38bdf8';
     ctx.font = 'bold 11px monospace';
-    ctx.fillText(`v: ${this.barVelocity.toFixed(2)} m/s`, cx + 8, barbellY - 25);
+    ctx.fillText(`v: ${this.barVelocity.toFixed(2)} m/s`, cx + 8, barbellY - 24);
     ctx.restore();
   }
 
@@ -502,26 +530,30 @@ class AICoach {
     ctx.save();
     ctx.beginPath();
     ctx.arc(x, y, 24, 0, Math.PI * 2);
-    ctx.strokeStyle = 'rgba(0, 255, 136, 0.65)';
+    ctx.strokeStyle = 'rgba(16, 185, 129, 0.7)';
     ctx.setLineDash([3, 3]);
     ctx.lineWidth = 1.5;
     ctx.stroke();
     ctx.setLineDash([]);
 
-    // Angle Tag
-    ctx.fillStyle = 'rgba(24, 32, 48, 0.88)';
+    ctx.fillStyle = 'rgba(15, 23, 42, 0.9)';
     ctx.fillRect(x + 16, y - 16, 50, 22);
-    ctx.strokeStyle = '#00ff88';
+    ctx.strokeStyle = '#10b981';
     ctx.lineWidth = 1;
     ctx.strokeRect(x + 16, y - 16, 50, 22);
 
-    ctx.fillStyle = '#00ff88';
+    ctx.fillStyle = '#10b981';
     ctx.font = 'bold 11px monospace';
     ctx.fillText(`${angle}°`, x + 24, y - 1);
     ctx.restore();
   }
 }
 
-window.addEventListener('DOMContentLoaded', () => {
+// Global initialization
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', () => {
+    window.aiCoachInstance = new AICoach();
+  });
+} else {
   window.aiCoachInstance = new AICoach();
-});
+}
