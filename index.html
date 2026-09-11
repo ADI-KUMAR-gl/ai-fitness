@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>APEX AI FITNESS — Zero-Click Logging. Clinical AI.</title>
-  <meta name="description" content="Next-generation biomechanical AI fitness platform. Real-time barbell velocity tracking, automated RPE calculations, and dynamic periodization algorithms.">
-  <meta name="theme-color" content="#f8fafc">
+  <title>APEX AI FITNESS — Luminous Clinical Suite & Single-Athlete Vision</title>
+  <meta name="description" content="Next-generation clinical AI fitness platform. Single-athlete camera target lock, Web Bluetooth smartwatch ECG sync, velocity-based training, and auto-regulated periodization.">
+  <meta name="theme-color" content="#fcfdff">
 
   <!-- Google Fonts: Outfit, Bebas Neue, JetBrains Mono -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -14,685 +14,397 @@
 
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      darkMode: 'class',
-      theme: {
-        extend: {
-          colors: {
-            brand: {
-              50: '#f0f9ff',
-              100: '#e0f2fe',
-              500: '#0284c7',
-              600: '#0369a1',
-              700: '#075985',
-            },
-            bio: {
-              50: '#ecfdf5',
-              100: '#d1fae5',
-              500: '#10b981',
-              600: '#059669',
-            }
-          },
-          fontFamily: {
-            sans: ['Outfit', 'sans-serif'],
-            display: ['Bebas Neue', 'sans-serif'],
-            mono: ['JetBrains Mono', 'monospace'],
-          }
-        }
-      }
-    }
-  </script>
-
   <!-- Lucide Icons CDN -->
   <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- Anime.js CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
 
-  <!-- Anime.js CDN (Physics & Animation Engine) -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.2/anime.min.js"></script>
-
-  <!-- Light Theme Custom Stylesheet -->
+  <!-- Luminous Opal Custom Stylesheet -->
   <link rel="stylesheet" href="css/styles.css">
 </head>
 
-<body class="bg-slate-50 text-slate-900 selection:bg-sky-400 selection:text-white">
+<body class="selection:bg-sky-400 selection:text-white flex flex-col justify-between min-h-screen">
 
   <!-- =====================================================================
-       TOP NAVIGATION BAR (LIGHT FROSTED GLASS)
+       TOP NAVIGATION BAR (LUMINOUS OPAL GLASS)
        ===================================================================== -->
-  <header class="sticky top-0 z-40 w-full light-glass border-b border-slate-200/80 transition-all duration-300">
+  <header class="sticky top-0 z-50 w-full light-glass border-b border-slate-200/80 transition-all duration-300">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
       
       <!-- Brand & Clinical Badge -->
-      <a href="#" class="flex items-center gap-3 group">
-        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-sky-500 to-emerald-500 p-0.5 shadow-md shadow-sky-500/20 group-hover:scale-105 transition-transform">
-          <div class="w-full h-full bg-white rounded-[10px] flex items-center justify-center text-sky-600">
-            <i data-lucide="activity" class="w-5 h-5"></i>
-          </div>
+      <a href="index.html" class="flex items-center gap-3 group">
+        <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-sky-500 via-teal-500 to-emerald-400 p-0.5 shadow-md shadow-sky-500/20 group-hover:scale-105 transition-transform flex items-center justify-center text-white">
+          <i data-lucide="crosshair" class="w-5 h-5"></i>
         </div>
         <div>
           <div class="flex items-center gap-2">
             <span class="font-display text-2xl tracking-wider text-slate-900">APEX <span class="text-sky-600">AI</span></span>
-            <span class="px-2 py-0.5 rounded text-[9px] font-mono font-bold bg-emerald-50 text-emerald-700 border border-emerald-300 uppercase">v2.4 Clinical</span>
+            <span class="px-2 py-0.5 rounded-full text-[9px] font-mono font-bold bg-emerald-50 text-emerald-700 border border-emerald-300 uppercase">Luminous Suite</span>
           </div>
-          <span class="block text-[9px] uppercase tracking-widest text-slate-500 font-medium -mt-1">Biomechanical Physics Engine</span>
+          <span class="block text-[9px] uppercase tracking-widest text-slate-500 font-medium -mt-0.5">Clinical Vision & Telemetry</span>
         </div>
       </a>
 
-      <!-- Desktop Nav Items -->
-      <nav class="hidden md:flex items-center gap-7 text-xs font-semibold uppercase tracking-wider text-slate-600">
-        <a href="#camera-viewport" class="hover:text-sky-600 transition flex items-center gap-1.5">
-          <span class="w-2 h-2 rounded-full bg-sky-500 animate-ping"></span> Live Viewport
-        </a>
-        <a href="#mvt-widget" class="hover:text-emerald-600 transition">MVT Profile</a>
-        <a href="#readiness-widget" class="hover:text-emerald-600 transition">CNS Readiness</a>
-        <a href="#periodization" class="hover:text-sky-600 transition">Periodization</a>
+      <!-- Desktop Nav Links -->
+      <nav class="hidden md:flex items-center gap-1.5 p-1 rounded-2xl bg-slate-100/80 border border-slate-200/80">
+        <a href="index.html" data-nav-link class="px-4 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:text-slate-900 transition-colors">Overview</a>
+        <a href="dashboard.html" data-nav-link class="px-4 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:text-slate-900 transition-colors">Studio Console</a>
+        <a href="wearables.html" data-nav-link class="px-4 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:text-slate-900 transition-colors">Wearables Lab</a>
+        <a href="analytics.html" data-nav-link class="px-4 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:text-slate-900 transition-colors">VBT Analytics</a>
+        <a href="periodization.html" data-nav-link class="px-4 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:text-slate-900 transition-colors">Mesocycle Planner</a>
       </nav>
 
-      <!-- Action Button & Mobile Toggle -->
+      <!-- Launch Studio CTA & Mobile Drawer Toggle -->
       <div class="flex items-center gap-3">
-        <button class="open-baseline-btn spring-btn hidden sm:flex px-5 py-2.5 rounded-xl bg-gradient-to-r from-sky-600 to-emerald-600 hover:from-sky-700 hover:to-emerald-700 text-white font-bold text-xs uppercase tracking-wider shadow-md shadow-sky-500/20 items-center gap-2 transition">
-          <i data-lucide="sparkles" class="w-4 h-4 text-emerald-200"></i> Initialize Baseline
-        </button>
+        <a href="dashboard.html" class="hidden sm:inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-sky-600 to-teal-500 text-white font-bold text-xs shadow-md shadow-sky-500/20 hover:from-sky-500 hover:to-teal-400 transition animate-pulse-luminous">
+          <i data-lucide="play" class="w-3.5 h-3.5 fill-current"></i> Launch Studio
+        </a>
 
-        <!-- Mobile Hamburger -->
-        <button id="mobileMenuToggle" class="md:hidden p-2.5 rounded-xl light-glass text-slate-700 hover:text-slate-900 border border-slate-200" aria-label="Toggle navigation">
-          <i data-lucide="menu" class="w-6 h-6"></i>
+        <button id="mobileMenuToggle" class="md:hidden p-2 rounded-xl border border-slate-200 text-slate-600 hover:bg-slate-100">
+          <i data-lucide="menu" class="w-5 h-5"></i>
         </button>
       </div>
-
     </div>
   </header>
 
-  <!-- Mobile Drawer Menu Overlay -->
-  <div id="mobileDrawerMenu" class="hidden fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-md items-center justify-end">
-    <div id="mobileDrawerContent" class="w-4/5 max-w-sm h-full bg-white border-l border-slate-200 p-6 flex flex-col justify-between shadow-2xl">
+  <!-- Mobile Drawer -->
+  <div id="mobileNavDrawer" class="hidden fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-sm flex justify-end">
+    <div class="w-72 bg-white h-full p-6 shadow-2xl flex flex-col justify-between">
       <div>
-        <div class="flex items-center justify-between pb-6 border-b border-slate-100 mb-6">
-          <span class="font-display text-2xl tracking-wider text-slate-900">APEX <span class="text-sky-600">AI</span></span>
-          <button id="closeMobileDrawer" class="p-2 text-slate-500 hover:text-slate-900">
-            <i data-lucide="x" class="w-6 h-6"></i>
-          </button>
+        <div class="flex items-center justify-between pb-6 border-b border-slate-100">
+          <span class="font-display text-xl">APEX SUITE</span>
+          <button id="mobileNavClose" class="p-1 rounded-lg text-slate-400 hover:text-slate-700"><i data-lucide="x" class="w-5 h-5"></i></button>
         </div>
-
-        <nav class="flex flex-col gap-3 text-sm font-mono uppercase tracking-wider text-slate-700">
-          <a href="#camera-viewport" class="p-3 rounded-xl hover:bg-slate-100 transition flex items-center gap-2">
-            <i data-lucide="scan" class="w-4 h-4 text-sky-600"></i> Live Camera Viewport
-          </a>
-          <a href="#mvt-widget" class="p-3 rounded-xl hover:bg-slate-100 transition flex items-center gap-2">
-            <i data-lucide="trending-down" class="w-4 h-4 text-emerald-600"></i> MVT Velocity Curve
-          </a>
-          <a href="#readiness-widget" class="p-3 rounded-xl hover:bg-slate-100 transition flex items-center gap-2">
-            <i data-lucide="heart-pulse" class="w-4 h-4 text-sky-600"></i> CNS Readiness
-          </a>
-          <a href="#periodization" class="p-3 rounded-xl hover:bg-slate-100 transition flex items-center gap-2">
-            <i data-lucide="calendar" class="w-4 h-4 text-emerald-600"></i> 4-Week Mesocycle
-          </a>
+        <nav class="mt-6 flex flex-col gap-2">
+          <a href="index.html" class="px-4 py-3 rounded-xl text-sm font-semibold text-sky-600 bg-sky-50 font-bold">Overview</a>
+          <a href="dashboard.html" class="px-4 py-3 rounded-xl text-sm font-semibold text-slate-700 hover:bg-slate-100">Studio Console</a>
+          <a href="wearables.html" class="px-4 py-3 rounded-xl text-sm font-semibold text-slate-700 hover:bg-slate-100">Wearables Lab</a>
+          <a href="analytics.html" class="px-4 py-3 rounded-xl text-sm font-semibold text-slate-700 hover:bg-slate-100">VBT Analytics</a>
+          <a href="periodization.html" class="px-4 py-3 rounded-xl text-sm font-semibold text-slate-700 hover:bg-slate-100">Mesocycle Planner</a>
         </nav>
       </div>
-
-      <div class="pt-6 border-t border-slate-100">
-        <button class="open-baseline-btn w-full py-3.5 rounded-xl bg-gradient-to-r from-sky-600 to-emerald-600 text-white font-extrabold text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg">
-          <i data-lucide="zap" class="w-4 h-4 fill-white"></i> Initialize Baseline
-        </button>
-      </div>
+      <div class="text-xs text-slate-400 font-mono text-center">Luminous Opal v3.4</div>
     </div>
   </div>
 
-
   <!-- =====================================================================
-       HERO SECTION: ZERO-CLICK LOGGING. CLINICAL AI.
+       HERO SECTION WITH HIGH-DOPAMINE JEWEL TELEMETRY
        ===================================================================== -->
-  <section class="relative pt-20 pb-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto light-grid-pattern">
-    <div class="text-center max-w-4xl mx-auto">
+  <section class="relative pt-12 pb-16 overflow-hidden">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       
-      <!-- Micro Telemetry Pill -->
-      <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white border border-slate-200 text-xs font-mono text-slate-600 mb-8 shadow-sm">
-        <span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
-        <span>OPTICAL OCCLUSION SHIELD: <strong class="text-emerald-600 font-bold">ACTIVE</strong></span>
-        <span class="text-slate-300">|</span>
-        <span>LATENCY: <strong class="text-sky-600 font-bold">12.4ms</strong></span>
-      </div>
-
-      <!-- Headline -->
-      <h1 class="font-display text-5xl sm:text-7xl lg:text-8xl tracking-tight uppercase leading-[0.92] text-slate-900">
-        ZERO-CLICK LOGGING.<br>
-        <span class="bg-clip-text text-transparent bg-gradient-to-r from-sky-600 via-teal-600 to-emerald-600">CLINICAL AI.</span>
-      </h1>
-
-      <!-- Sub-headline -->
-      <p class="mt-6 text-lg sm:text-xl text-slate-600 max-w-2xl mx-auto font-light leading-relaxed">
-        Just lift. Our physics engine tracks your velocity, calculates your RPE, and dynamically rewrites your periodization.
-      </p>
-
-      <!-- Pulsing Action CTA -->
-      <div class="mt-10 flex flex-wrap items-center justify-center gap-4">
-        <button class="open-baseline-btn spring-btn animate-pulse-baseline-light px-9 py-4 rounded-2xl bg-gradient-to-r from-sky-600 via-teal-600 to-emerald-600 hover:from-sky-700 hover:to-emerald-700 text-white font-extrabold text-sm uppercase tracking-wider flex items-center gap-2.5 shadow-xl transition-all">
-          <i data-lucide="play" class="w-5 h-5 fill-white"></i> Initialize Baseline
-        </button>
-        <a href="#camera-viewport" class="spring-btn px-7 py-4 rounded-2xl bg-white hover:bg-slate-50 text-slate-800 font-semibold text-sm border border-slate-200 shadow-sm flex items-center gap-2 transition">
-          <i data-lucide="scan" class="w-4 h-4 text-sky-600"></i> View Live Overlay
-        </a>
-      </div>
-
-      <!-- Quick Metrics Bar -->
-      <div class="mt-14 grid grid-cols-2 sm:grid-cols-4 gap-4 max-w-3xl mx-auto pt-8 border-t border-slate-200 text-left">
-        <div class="p-3.5 rounded-xl bg-white border border-slate-200 shadow-sm">
-          <p class="text-[10px] font-mono uppercase text-slate-500 font-medium">Velocity Accuracy</p>
-          <p class="font-display text-2xl sm:text-3xl text-slate-900">±0.02 <span class="text-xs font-mono text-sky-600">m/s</span></p>
+      <!-- Center Hero Header -->
+      <div class="text-center max-w-3xl mx-auto mb-12">
+        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-sky-50 border border-sky-200 text-sky-800 text-xs font-mono font-bold mb-4 shadow-sm">
+          <span class="w-2 h-2 rounded-full bg-sky-500 animate-pulse"></span>
+          NEXT-GENERATION BIOMECHANICAL SUITE
         </div>
-        <div class="p-3.5 rounded-xl bg-white border border-slate-200 shadow-sm">
-          <p class="text-[10px] font-mono uppercase text-slate-500 font-medium">Auto RPE Calibration</p>
-          <p class="font-display text-2xl sm:text-3xl text-slate-900">99.1<span class="text-xs font-mono text-emerald-600">%</span></p>
-        </div>
-        <div class="p-3.5 rounded-xl bg-white border border-slate-200 shadow-sm">
-          <p class="text-[10px] font-mono uppercase text-slate-500 font-medium">Sensor Requirement</p>
-          <p class="font-display text-2xl sm:text-3xl text-sky-600">Zero <span class="text-xs font-mono text-slate-500">Wearables</span></p>
-        </div>
-        <div class="p-3.5 rounded-xl bg-white border border-slate-200 shadow-sm">
-          <p class="text-[10px] font-mono uppercase text-slate-500 font-medium">Sampling Rate</p>
-          <p class="font-display text-2xl sm:text-3xl text-slate-900">60 <span class="text-xs font-mono text-emerald-600">FPS HD</span></p>
+        <h1 class="text-4xl sm:text-6xl font-extrabold tracking-tight text-slate-900 leading-[1.1] mb-4">
+          Zero-Click Logging.<br>
+          <span class="bg-gradient-to-r from-sky-600 via-teal-500 to-emerald-500 bg-clip-text text-transparent">Single-Athlete Crowd Lock.</span>
+        </h1>
+        <p class="text-base sm:text-lg text-slate-600 leading-relaxed max-w-2xl mx-auto">
+          Solving the 4 critical flaws of fitness tech: manual app logging, camera crowd failures, dangerous maximal 1RM testing, and rigid overtraining schedules.
+        </p>
+
+        <!-- CTAs -->
+        <div class="mt-8 flex flex-wrap items-center justify-center gap-4">
+          <a href="dashboard.html" class="px-6 py-3.5 rounded-2xl bg-gradient-to-r from-sky-600 to-teal-600 hover:from-sky-500 hover:to-teal-500 text-white font-bold text-sm shadow-lg shadow-sky-500/25 flex items-center gap-2 transition animate-pulse-luminous">
+            <i data-lucide="crosshair" class="w-4 h-4"></i> Open Vision Studio Console
+          </a>
+          <a href="wearables.html" class="px-6 py-3.5 rounded-2xl bg-white hover:bg-slate-50 border border-slate-200 text-slate-800 font-bold text-sm shadow-sm flex items-center gap-2 transition">
+            <i data-lucide="bluetooth" class="w-4 h-4 text-emerald-600"></i> Pair Watch / Band
+          </a>
         </div>
       </div>
 
-    </div>
-  </section>
-
-
-  <!-- =====================================================================
-       BIOMECHANICAL DASHBOARD (3-COLUMN ASYMMETRIC GRID ON DESKTOP)
-       ===================================================================== -->
-  <section id="biomechanical-dashboard" class="py-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-    
-    <!-- Dashboard Section Header -->
-    <div class="flex flex-wrap items-end justify-between gap-4 pb-6 mb-8 border-b border-slate-200">
-      <div>
-        <div class="inline-flex items-center gap-1.5 text-xs font-mono text-sky-600 font-bold uppercase tracking-wider mb-1">
-          <i data-lucide="cpu" class="w-3.5 h-3.5"></i> Kinetic Telemetry Dashboard
-        </div>
-        <h2 class="font-display text-3xl sm:text-4xl text-slate-900 tracking-wide">
-          LIVE BIOMECHANICAL <span class="text-sky-600">DATA LAYER</span>
-        </h2>
-      </div>
-      
-      <!-- Telemetry Status Pills -->
-      <div class="flex items-center gap-3 text-xs font-mono">
-        <span class="px-3 py-1 rounded-lg bg-white text-slate-700 border border-slate-200 shadow-sm flex items-center gap-2 font-medium">
-          <span class="w-2 h-2 rounded-full bg-emerald-500"></span> SYNCED
-        </span>
-        <span class="px-3 py-1 rounded-lg bg-white text-slate-600 border border-slate-200 shadow-sm hidden sm:inline-block font-medium">
-          PROTOCOL: LINEAR REGRESSION MVT
-        </span>
-      </div>
-    </div>
-
-    <!-- 3-Column Asymmetric Grid Layout -->
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-
-      <!-- =================================================================
-           COLUMN A (Cols 1-7): THE 'LIVE CAMERA' VIEWPORT OVERLAY
-           ================================================================= -->
-      <div id="camera-viewport" class="lg:col-span-7 space-y-6">
+      <!-- Live Telemetry Interactive Showcase (4 Floating Jewel Widgets) -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
         
-        <!-- Smartphone Viewport Frame Container -->
-        <div class="dashboard-card anti-gravity-card light-glass-card rounded-3xl p-5 sm:p-7 border border-slate-200 phone-viewport-frame relative overflow-hidden">
-          
-          <!-- Viewport Header Toolbar -->
-          <div class="flex items-center justify-between pb-4 mb-4 border-b border-slate-200 relative z-10">
-            <div class="flex items-center gap-3">
-              <div class="w-3 h-3 rounded-full bg-red-500 animate-pulse"></div>
-              <div>
-                <span id="viewportExerciseLabel" class="text-xs font-mono font-bold text-slate-900 uppercase tracking-wider block">
-                  Back Squat (140 kg)
-                </span>
-                <span class="text-[10px] text-slate-500 font-mono font-medium">Mean Concentric Phase</span>
-              </div>
-            </div>
-
-            <!-- Badges & Mode Switch -->
-            <div class="flex items-center gap-2">
-              <span id="viewportSourceBadge" class="px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-300 text-[10px] font-mono font-bold flex items-center">
-                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping mr-1"></span> SYNTHETIC CV
-              </span>
-              <button id="coachCamBtn" class="spring-btn px-3 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-[11px] font-mono text-slate-700 border border-slate-200 flex items-center gap-1.5 transition">
-                <i data-lucide="camera" class="w-3.5 h-3.5 text-sky-600"></i> Switch to Live Camera
-              </button>
-            </div>
+        <!-- 1. AI Camera Workout Tracker Preview -->
+        <div class="light-glass-card p-5 rounded-3xl dashboard-card anti-gravity-card flex flex-col justify-between">
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-[11px] font-bold text-sky-800 uppercase tracking-wide">Computer Vision</span>
+            <span class="px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 text-[10px] font-mono font-bold">LOCKED</span>
           </div>
-
-          <!-- Video Viewport Canvas Stage with Scanline & Reticles -->
-          <div class="relative rounded-2xl overflow-hidden bg-slate-900 border border-slate-800 aspect-[4/3] flex items-center justify-center shadow-inner">
-            <canvas id="aiCoachCanvas" class="w-full h-full object-contain block"></canvas>
-            
-            <!-- Futuristic Radar Scanline -->
-            <div class="hud-scanline"></div>
-
-            <!-- Viewport Corner Brackets (High-Tech HUD) -->
-            <div class="absolute top-4 left-4 w-6 h-6 border-t-2 border-l-2 border-sky-400 pointer-events-none"></div>
-            <div class="absolute top-4 right-4 w-6 h-6 border-t-2 border-r-2 border-sky-400 pointer-events-none"></div>
-            <div class="absolute bottom-4 left-4 w-6 h-6 border-b-2 border-l-2 border-emerald-400 pointer-events-none"></div>
-            <div class="absolute bottom-4 right-4 w-6 h-6 border-b-2 border-r-2 border-emerald-400 pointer-events-none"></div>
-
-            <!-- In-Viewport Telemetry Floater (Top-Left) -->
-            <div class="absolute top-5 left-5 bg-slate-900/80 backdrop-blur-md rounded-xl p-3 border border-white/15 text-left pointer-events-none shadow-lg">
-              <span class="text-[9px] font-mono text-slate-400 uppercase tracking-wider block">Current Bar Velocity</span>
-              <div class="flex items-baseline gap-1 mt-0.5">
-                <span id="telemetryBarVelocity" class="font-mono text-2xl font-black text-sky-400">0.38</span>
-                <span class="text-xs font-mono text-slate-300">m/s</span>
-              </div>
+          <div class="relative bg-slate-950 rounded-2xl aspect-[4/3] overflow-hidden flex items-center justify-center border border-slate-800">
+            <div class="hud-radar-line"></div>
+            <!-- Target Lock holographic corners -->
+            <div class="absolute inset-4 border border-emerald-400/80 rounded-lg pointer-events-none flex flex-col justify-between p-2 shadow-[0_0_12px_rgba(16,185,129,0.4)]">
+              <span class="text-[9px] font-mono text-emerald-400 font-bold">TARGET: ATHLETE #01</span>
+              <span class="text-[9px] font-mono text-sky-400 self-end">v: 0.54 m/s</span>
             </div>
-
-            <!-- In-Viewport Rep Badge (Top-Right) -->
-            <div class="absolute top-5 right-5 bg-slate-900/80 backdrop-blur-md rounded-xl px-3.5 py-2 border border-white/15 text-center pointer-events-none shadow-lg">
-              <span class="text-[9px] font-mono text-slate-400 uppercase tracking-wider block">Set Reps</span>
-              <span id="viewportRepCount" class="font-display text-2xl text-white">0</span>
-            </div>
-
-            <!-- In-Viewport Dynamic RPE Gauge Bar (Bottom Bar) -->
-            <div class="absolute bottom-4 left-4 right-4 bg-slate-900/85 backdrop-blur-md rounded-xl p-3 border border-white/15 flex items-center justify-between gap-4 shadow-xl">
-              <div class="flex-1">
-                <div class="flex items-center justify-between text-[10px] font-mono text-slate-300 mb-1">
-                  <span>VELOCITY LOSS RPE DIAL:</span>
-                  <span class="text-amber-400 font-bold font-mono"><span id="telemetryRpeVal">8.2</span> / 10.0</span>
-                </div>
-                <div class="w-full h-2 rounded-full bg-white/10 overflow-hidden">
-                  <div id="telemetryRpeBarFill" class="h-full bg-gradient-to-r from-emerald-400 via-sky-400 to-amber-400 rounded-full transition-all duration-300" style="width: 82%;"></div>
-                </div>
-              </div>
-              <div class="text-right pl-3 border-l border-white/15">
-                <span class="text-[9px] font-mono text-slate-400 block">Velocity Loss</span>
-                <span id="telemetryVelLoss" class="text-xs font-mono font-bold text-amber-400">20.8%</span>
-              </div>
-            </div>
+            <i data-lucide="user" class="w-16 h-16 text-slate-700"></i>
           </div>
-
-          <!-- Bottom Control Bar -->
-          <div class="mt-4 flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-slate-100 text-xs font-mono">
-            <div class="flex items-center gap-2">
-              <button data-coach-exercise="squat" class="px-3 py-1.5 rounded-lg border border-sky-500 bg-sky-50 text-sky-700 font-bold">Squat</button>
-              <button data-coach-exercise="bench" class="px-3 py-1.5 rounded-lg border border-slate-200 bg-slate-100 text-slate-600 hover:text-slate-900">Bench</button>
-              <button data-coach-exercise="deadlift" class="px-3 py-1.5 rounded-lg border border-slate-200 bg-slate-100 text-slate-600 hover:text-slate-900">Deadlift</button>
-            </div>
-            
-            <div class="flex items-center gap-2">
-              <button id="coachToggleBtn" class="spring-btn px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 flex items-center gap-1.5">
-                <i data-lucide="pause" class="w-3.5 h-3.5"></i> Pause Feed
-              </button>
-              <button id="coachSoundBtn" class="spring-btn px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-sky-700 border border-slate-200 flex items-center gap-1.5">
-                <i data-lucide="volume-2" class="w-3.5 h-3.5 text-sky-600"></i> Audio Telemetry
-              </button>
-              <button id="coachResetBtn" class="spring-btn px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-500 flex items-center gap-1.5">
-                <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i> Reset
-              </button>
-            </div>
+          <div class="mt-3 flex items-center justify-between text-xs">
+            <span class="text-slate-500 font-mono">Re-ID Confidence</span>
+            <span class="font-mono font-bold text-emerald-600">99.4%</span>
           </div>
-
         </div>
 
-      </div>
+        <!-- 2. Apple Activity-Style Biometric Rings Card -->
+        <div class="light-glass-card p-5 rounded-3xl dashboard-card anti-gravity-card flex flex-col justify-between ring-glow-emerald">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-[11px] font-bold text-emerald-800 uppercase tracking-wide">Biometric Jewel Rings</span>
+            <i data-lucide="heart" class="w-4 h-4 text-rose-500 animate-cardiac"></i>
+          </div>
 
-
-      <!-- =================================================================
-           COLUMN B & C (Cols 8-12): BIOMECHANICAL DATA LAYER WIDGETS
-           ================================================================= -->
-      <div class="lg:col-span-5 space-y-6">
-        
-        <!-- WIDGET 1: VELOCITY PROFILE (MVT) LINE REGRESSION CHART -->
-        <div id="mvt-widget" class="dashboard-card anti-gravity-card light-glass-card rounded-3xl p-6 border border-slate-200">
-          <div class="flex items-center justify-between pb-3 mb-4 border-b border-slate-100">
-            <div>
-              <span class="text-[10px] font-mono uppercase text-sky-600 font-bold tracking-wider block">Widget 1 • Bio-Mechanics</span>
-              <h3 class="text-lg font-bold text-slate-900 flex items-center gap-2">
-                Velocity Profile (MVT)
-              </h3>
+          <div class="my-2 flex flex-col gap-3">
+            <!-- Heart Rate Ring -->
+            <div class="flex items-center justify-between p-2 rounded-xl bg-emerald-50/70 border border-emerald-200">
+              <div class="flex items-center gap-2">
+                <span class="w-3 h-3 rounded-full bg-emerald-500"></span>
+                <span class="text-xs font-semibold text-emerald-900">Heart Rate</span>
+              </div>
+              <span class="font-display text-xl text-emerald-600 leading-none">142 <span class="text-[10px] font-mono">BPM</span></span>
             </div>
-            <div class="text-right">
-              <span class="text-[10px] font-mono text-slate-500 block">Calculated MVT</span>
-              <span id="telemetryMvtVal" class="text-xs font-mono font-bold text-amber-600 bg-amber-50 px-2 py-0.5 rounded border border-amber-200">0.18 m/s</span>
+
+            <!-- Bar Velocity Ring -->
+            <div class="flex items-center justify-between p-2 rounded-xl bg-sky-50/70 border border-sky-200">
+              <div class="flex items-center gap-2">
+                <span class="w-3 h-3 rounded-full bg-sky-500"></span>
+                <span class="text-xs font-semibold text-sky-900">Mean Velocity</span>
+              </div>
+              <span class="font-display text-xl text-sky-600 leading-none">0.54 <span class="text-[10px] font-mono">m/s</span></span>
+            </div>
+
+            <!-- CNS Strain Ring -->
+            <div class="flex items-center justify-between p-2 rounded-xl bg-rose-50/70 border border-rose-200">
+              <div class="flex items-center gap-2">
+                <span class="w-3 h-3 rounded-full bg-rose-500"></span>
+                <span class="text-xs font-semibold text-rose-900">CNS Strain</span>
+              </div>
+              <span class="font-display text-xl text-rose-600 leading-none">78%</span>
             </div>
           </div>
 
-          <p class="text-xs text-slate-600 mb-4 leading-relaxed">
-            Linear regression model of <strong class="text-slate-900">Load (kg) vs. Mean Concentric Velocity (m/s)</strong> determining athlete absolute failure threshold.
-          </p>
+          <span class="text-[10px] text-slate-400 font-mono text-center">Apple Watch & Polar BLE Sync</span>
+        </div>
 
-          <!-- SVG MVT Regression Line Chart -->
-          <div class="w-full rounded-2xl bg-slate-50 p-3 border border-slate-200">
-            <svg viewBox="0 0 500 260" class="w-full h-auto block overflow-visible">
-              <!-- Grid Lines -->
-              <g class="svg-chart-grid">
-                <line x1="60" y1="40" x2="470" y2="40" />
-                <line x1="60" y1="100" x2="470" y2="100" />
-                <line x1="60" y1="160" x2="470" y2="160" />
-                <line x1="60" y1="220" x2="470" y2="220" />
-              </g>
+        <!-- 3. Medical ECG Sweep Card -->
+        <div class="light-glass-card p-5 rounded-3xl dashboard-card anti-gravity-card flex flex-col justify-between">
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-[11px] font-bold text-slate-800 uppercase tracking-wide">P-QRS-T Oscilloscope</span>
+            <span class="px-2 py-0.5 rounded-full bg-slate-100 text-slate-600 text-[10px] font-mono">Lead II</span>
+          </div>
 
-              <!-- Axis Labels -->
-              <g class="svg-chart-axis">
-                <text x="15" y="45">1.0 m/s</text>
-                <text x="15" y="105">0.7 m/s</text>
-                <text x="15" y="165">0.4 m/s</text>
-                <text x="15" y="225">0.1 m/s</text>
-
-                <text x="80" y="248">60kg</text>
-                <text x="180" y="248">100kg</text>
-                <text x="280" y="248">140kg</text>
-                <text x="380" y="248">180kg</text>
-              </g>
-
-              <!-- Minimum Velocity Threshold Cutoff (Dashed Amber Line) -->
-              <line id="mvtThresholdLine" x1="60" y1="210" x2="470" y2="210" class="svg-mvt-threshold" />
-              <text x="340" y="204" fill="#d97706" font-size="10" font-family="JetBrains Mono" font-weight="bold">MVT Floor: 0.18 m/s</text>
-
-              <!-- Animated Linear Regression SVG Path (Electric Blue) -->
-              <line id="mvtRegressionLine" x1="70" y1="50" x2="450" y2="230" class="svg-mvt-line" />
-
-              <!-- Key Load Points along regression -->
-              <circle cx="85" cy="58" r="5" fill="#0284c7" class="mvt-point" />
-              <circle cx="185" cy="105" r="5" fill="#0284c7" class="mvt-point" />
-              <circle cx="285" cy="152" r="5" fill="#0284c7" class="mvt-point" />
-              <circle cx="385" cy="199" r="5" fill="#10b981" class="mvt-point stroke-white stroke-2" />
+          <div class="ecg-screen-box p-3 h-28 relative flex items-center justify-center">
+            <!-- Simulated ECG Wave SVG -->
+            <svg viewBox="0 0 200 80" class="w-full h-full stroke-emerald-400 fill-none" style="filter: drop-shadow(0 0 6px rgba(16,185,129,0.8));">
+              <path d="M 0 40 L 40 40 L 50 36 L 58 40 L 70 40 L 76 48 L 84 10 L 92 60 L 98 40 L 110 40 L 125 32 L 140 40 L 200 40" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
             </svg>
           </div>
 
-          <!-- Formula & Correlation Footnote -->
-          <div class="mt-3 flex items-center justify-between text-[11px] font-mono text-slate-500 pt-2 border-t border-slate-100">
-            <span>Regression: <strong class="text-sky-700">v = -0.0054·L + 1.15</strong></span>
-            <span>R² = <strong class="text-emerald-600 font-bold">0.988</strong></span>
+          <div class="mt-3 flex items-center justify-between text-xs">
+            <span class="text-slate-500 font-mono">HRV Spectrum</span>
+            <span class="font-mono font-bold text-sky-600">64 ms (RMSSD)</span>
           </div>
         </div>
 
-
-        <!-- WIDGET 3: READINESS & ADHERENCE CIRCULAR PROGRESS DIALS -->
-        <div id="readiness-widget" class="dashboard-card anti-gravity-card light-glass-card rounded-3xl p-6 border border-slate-200">
-          <div class="flex items-center justify-between pb-3 mb-4 border-b border-slate-100">
-            <div>
-              <span class="text-[10px] font-mono uppercase text-emerald-600 font-bold tracking-wider block">Widget 2 • Neuromuscular</span>
-              <h3 class="text-lg font-bold text-slate-900">Readiness & Adherence</h3>
-            </div>
-            <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">
-              PRIME STATE
-            </span>
+        <!-- 4. VBT Linear Regression Card -->
+        <div class="light-glass-card p-5 rounded-3xl dashboard-card anti-gravity-card flex flex-col justify-between ring-glow-coral">
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-[11px] font-bold text-rose-800 uppercase tracking-wide">VBT Linear Regression</span>
+            <span class="px-2 py-0.5 rounded-full bg-rose-50 text-rose-700 text-[10px] font-mono font-bold">MVT 0.18</span>
           </div>
 
-          <div class="grid grid-cols-2 gap-4">
-            
-            <!-- Dial 1: CNS Fatigue Baseline -->
-            <div class="bg-slate-50 rounded-2xl p-4 text-center flex flex-col items-center border border-slate-200">
-              <div class="relative w-28 h-28 flex items-center justify-center">
-                <svg class="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
-                  <circle cx="50" cy="50" r="44" stroke-width="8" fill="none" class="cns-dial-bg" />
-                  <circle id="cnsCircleProgress" cx="50" cy="50" r="44" stroke-width="8" fill="none" class="cns-dial-progress" />
-                </svg>
-                <div class="absolute inset-0 flex flex-col items-center justify-center">
-                  <span id="telemetryCnsScore" class="font-mono text-xl font-bold text-emerald-600">92%</span>
-                  <span class="text-[8px] font-mono uppercase text-slate-500 font-bold">CNS Level</span>
-                </div>
-              </div>
-              <p class="text-xs font-semibold text-slate-900 mt-2">CNS Readiness</p>
-              <p class="text-[10px] text-slate-500 font-mono mt-0.5">HRV: 82ms (Optimal)</p>
+          <div class="bg-slate-50 rounded-2xl p-2 h-28 flex flex-col justify-center border border-slate-200">
+            <div class="flex items-baseline justify-between mb-1">
+              <span class="text-xs text-slate-500 font-semibold">Predicted 1RM:</span>
+              <span class="font-display text-2xl text-rose-600 leading-none">182.5 kg</span>
             </div>
-
-            <!-- Dial 2: 7-Day Adherence Score -->
-            <div class="bg-slate-50 rounded-2xl p-4 text-center flex flex-col items-center border border-slate-200">
-              <div class="relative w-28 h-28 flex items-center justify-center">
-                <svg class="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
-                  <circle cx="50" cy="50" r="44" stroke-width="8" fill="none" class="cns-dial-bg" />
-                  <circle id="adherenceCircleProgress" cx="50" cy="50" r="44" stroke-width="8" fill="none" class="adherence-dial-progress" />
-                </svg>
-                <div class="absolute inset-0 flex flex-col items-center justify-center">
-                  <span id="telemetryAdherenceScore" class="font-mono text-xl font-bold text-sky-600">98.4%</span>
-                  <span class="text-[8px] font-mono uppercase text-slate-500 font-bold">Adherence</span>
-                </div>
-              </div>
-              <p class="text-xs font-semibold text-slate-900 mt-2">7-Day Consistency</p>
-              <p class="text-[10px] text-slate-500 font-mono mt-0.5">6 of 6 Sessions Met</p>
+            <div class="text-[10px] font-mono text-slate-600 mb-2">v = -0.0072 · L + 1.45 (R² = 0.994)</div>
+            <div class="w-full h-1.5 rounded-full bg-slate-200 overflow-hidden">
+              <div class="h-full bg-sky-500" style="width: 82%"></div>
             </div>
-
           </div>
+
+          <a href="analytics.html" class="mt-3 text-xs font-bold text-sky-600 hover:text-sky-700 flex items-center justify-between">
+            <span>Explore Regression Curve</span>
+            <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
+          </a>
         </div>
 
       </div>
 
     </div>
-
-    <!-- ===================================================================
-         WIDGET 2: DYNAMIC PERIODIZATION TIMELINE (FULL WIDTH 4-WEEK MESOCYCLE)
-         =================================================================== -->
-    <div id="periodization" class="mt-8 dashboard-card anti-gravity-card light-glass-card rounded-3xl p-6 sm:p-8 border border-slate-200">
-      
-      <div class="flex flex-wrap items-center justify-between gap-4 pb-4 mb-6 border-b border-slate-100">
-        <div>
-          <span class="text-[10px] font-mono uppercase text-sky-600 font-bold tracking-wider block">Widget 3 • Adaptive Periodization</span>
-          <h3 class="text-xl font-bold text-slate-900 flex items-center gap-2">
-            Dynamic Periodization Timeline: 4-Week Strength Mesocycle
-          </h3>
-          <p class="text-xs text-slate-600 mt-1">
-            Past days in gray, today live highlighted, and future days adapting automatically to bar velocity loss.
-          </p>
-        </div>
-
-        <!-- Interactive Fatigue Simulator Toggle -->
-        <div class="flex items-center gap-2 bg-slate-50 p-2 rounded-xl border border-slate-200 text-xs font-mono">
-          <label for="periodizationFatigueSelect" class="text-slate-600 text-[11px] font-medium">Simulate Fatigue:</label>
-          <select id="periodizationFatigueSelect" class="bg-white text-sky-700 border border-slate-200 rounded-lg px-3 py-1.5 text-xs font-semibold focus:outline-none focus:border-sky-500 shadow-sm">
-            <option value="normal" selected>Normal Adaptation (Baseline)</option>
-            <option value="high_fatigue">High Velocity Loss (>20% Deload)</option>
-            <option value="super_comp">Super-Compensation (+2.5kg Advance)</option>
-          </select>
-        </div>
-      </div>
-
-      <!-- Horizontal Mesocycle Track (4 Weeks) -->
-      <div class="overflow-x-auto timeline-track-scroll pb-4">
-        <div class="min-w-[780px] grid grid-cols-4 gap-4">
-          
-          <!-- Week 1: Accustomization (Past Days in Gray) -->
-          <div class="space-y-2.5">
-            <div class="flex items-center justify-between text-[11px] font-mono text-slate-500 pb-1 border-b border-slate-200">
-              <span>WEEK 1: ACCUSTOMIZATION</span>
-              <span class="text-slate-400 font-bold">COMPLETED</span>
-            </div>
-            <div class="p-3 rounded-xl day-pill-past text-xs font-mono flex items-center justify-between">
-              <span>Day 1 • Squat 120kg</span>
-              <span class="text-[10px]">0.52 m/s ✓</span>
-            </div>
-            <div class="p-3 rounded-xl day-pill-past text-xs font-mono flex items-center justify-between">
-              <span>Day 2 • Bench 90kg</span>
-              <span class="text-[10px]">0.48 m/s ✓</span>
-            </div>
-            <div class="p-3 rounded-xl day-pill-past text-xs font-mono flex items-center justify-between">
-              <span>Day 3 • Pull / Mobility</span>
-              <span class="text-[10px]">Recovery ✓</span>
-            </div>
-          </div>
-
-          <!-- Week 2: Progressive Loading (Today Highlighted) -->
-          <div class="space-y-2.5">
-            <div class="flex items-center justify-between text-[11px] font-mono text-sky-600 pb-1 border-b border-sky-300 font-bold">
-              <span>WEEK 2: PROGRESSIVE LOAD</span>
-              <span class="text-sky-600 animate-pulse">ACTIVE NOW</span>
-            </div>
-            <div class="p-3 rounded-xl day-pill-past text-xs font-mono flex items-center justify-between">
-              <span>Day 8 • Squat 135kg</span>
-              <span class="text-[10px]">0.44 m/s ✓</span>
-            </div>
-            
-            <!-- TODAY LIVE HIGHLIGHTED -->
-            <div class="p-3.5 rounded-xl day-pill-today text-xs font-mono flex items-center justify-between">
-              <div class="flex items-center gap-2">
-                <span class="w-2 h-2 rounded-full bg-sky-600 animate-ping"></span>
-                <span class="font-bold text-slate-900">Day 9 • Squat 140kg</span>
-              </div>
-              <span class="text-[10px] font-bold text-sky-700 bg-white/80 px-2 py-0.5 rounded shadow-sm">TODAY (0.38 m/s)</span>
-            </div>
-
-            <div class="p-3 rounded-xl day-pill-future-adapted text-xs font-mono flex items-center justify-between shadow-sm">
-              <span>Day 10 • Bench 97.5kg</span>
-              <span class="text-[10px] text-slate-500 font-medium">Target: 0.42 m/s</span>
-            </div>
-          </div>
-
-          <!-- Week 3: Overreach / Peak Load (Adaptive Future Days) -->
-          <div class="space-y-2.5">
-            <div class="flex items-center justify-between text-[11px] font-mono text-emerald-700 pb-1 border-b border-emerald-300 font-bold">
-              <span>WEEK 3: ADAPTIVE PEAK</span>
-              <span class="text-emerald-600">AI TUNED</span>
-            </div>
-            <div class="p-3 rounded-xl day-pill-future-adapted text-xs font-mono flex items-center justify-between shadow-sm">
-              <span>Day 15 • Squat 145kg</span>
-              <span class="text-[10px] text-emerald-700 font-bold bg-emerald-50 px-1.5 py-0.5 rounded">RPE 8.5 Auto</span>
-            </div>
-            <div class="p-3 rounded-xl day-pill-future-adapted text-xs font-mono flex items-center justify-between shadow-sm">
-              <span>Day 16 • Bench 102.5kg</span>
-              <span class="text-[10px] text-slate-700 font-bold bg-slate-50 px-1.5 py-0.5 rounded">RPE 8.5 Auto</span>
-            </div>
-            <div class="p-3 rounded-xl day-pill-future-adapted text-xs font-mono flex items-center justify-between shadow-sm">
-              <span>Day 17 • Deadlift 180kg</span>
-              <span class="text-[10px] text-emerald-700 font-bold bg-emerald-50 px-1.5 py-0.5 rounded">Peak Vector</span>
-            </div>
-          </div>
-
-          <!-- Week 4: Dynamic Deload & Supercompensation -->
-          <div class="space-y-2.5">
-            <div class="flex items-center justify-between text-[11px] font-mono text-slate-500 pb-1 border-b border-slate-200">
-              <span>WEEK 4: ACTIVE DELOAD</span>
-              <span class="text-slate-400 font-bold">PLANNED</span>
-            </div>
-            <div class="p-3 rounded-xl day-pill-future-adapted text-xs font-mono flex items-center justify-between opacity-85">
-              <span>Day 22 • Velocity Recovery</span>
-              <span class="text-[10px] text-amber-700 font-bold">-40% Volume</span>
-            </div>
-            <div class="p-3 rounded-xl day-pill-future-adapted text-xs font-mono flex items-center justify-between opacity-85">
-              <span>Day 23 • Dynamic Speed Sets</span>
-              <span class="text-[10px] text-sky-700 font-bold">>0.75 m/s</span>
-            </div>
-            <div class="p-3 rounded-xl day-pill-future-adapted text-xs font-mono flex items-center justify-between opacity-85">
-              <span>Day 24 • Re-Test Baseline</span>
-              <span class="text-[10px] text-sky-700 font-bold">New MVT</span>
-            </div>
-          </div>
-
-        </div>
-      </div>
-
-      <!-- Real-Time Adaptation Callout Banner -->
-      <div id="periodizationNotice" class="mt-4 p-3.5 rounded-xl bg-sky-50 border border-sky-200 text-xs text-sky-900 leading-relaxed font-mono">
-        <span class="text-sky-700 font-bold">🎯 TARGET VELOCITY MAINTAINED:</span>
-        Periodization microcycle progressing normally along planned linear load increments.
-      </div>
-
-    </div>
-
   </section>
 
-
   <!-- =====================================================================
-       INITIALIZE BASELINE DIAGNOSTIC MODAL (SPRING PHYSICS)
+       THE 4 INDUSTRY GAPS SOLVED SECTION
        ===================================================================== -->
-  <div id="baselineModal" class="hidden fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-md items-center justify-center p-4">
-    <div id="baselineModalCard" class="bg-white rounded-3xl p-6 sm:p-8 border border-sky-300 max-w-lg w-full relative shadow-2xl">
+  <section class="py-16 border-t border-slate-200/80 bg-white/60">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       
-      <!-- Close Button -->
-      <button id="closeBaselineModalBtn" class="absolute top-5 right-5 text-slate-400 hover:text-slate-800 transition">
-        <i data-lucide="x" class="w-6 h-6"></i>
-      </button>
-
-      <div class="text-left mb-6">
-        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-sky-50 text-sky-700 border border-sky-200 text-[10px] font-mono font-bold mb-3">
-          <i data-lucide="crosshair" class="w-3.5 h-3.5 text-sky-600"></i> CLINICAL CALIBRATION PROTOCOL
-        </div>
-        <h3 class="text-2xl font-bold text-slate-900">Initialize Athlete Baseline</h3>
-        <p class="text-xs text-slate-600 mt-1 leading-relaxed">
-          Zero manual logging. Calibrate your optical camera to calculate individual Minimum Velocity Thresholds (MVT).
-        </p>
+      <div class="text-center max-w-3xl mx-auto mb-12">
+        <h2 class="text-xs font-mono font-bold uppercase tracking-widest text-sky-600 mb-2">Systemic Innovations</h2>
+        <h3 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
+          How APEX Closes The Gaps In Existing Fitness Apps
+        </h3>
       </div>
 
-      <form id="baselineInitForm" class="space-y-4 text-xs font-mono">
-        <div>
-          <label for="baseExercise" class="block text-slate-700 uppercase tracking-wider mb-1.5 font-bold">Primary Movement Anchor</label>
-          <select id="baseExercise" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-slate-900 focus:border-sky-500 focus:outline-none">
-            <option>Barbell Back Squat (Recommended)</option>
-            <option>Barbell Conventional Deadlift</option>
-            <option>Flat Barbell Bench Press</option>
-          </select>
-        </div>
-
-        <div class="grid grid-cols-2 gap-3">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        
+        <!-- Breakthrough 1: Single-Athlete Target Lock & Crowd Filter -->
+        <div class="light-glass-card p-8 rounded-3xl flex flex-col justify-between">
           <div>
-            <label for="base1rm" class="block text-slate-700 uppercase tracking-wider mb-1.5 font-bold">Estimated 1RM (kg)</label>
-            <input type="number" id="base1rm" value="160" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-slate-900 focus:border-sky-500 focus:outline-none">
+            <div class="w-12 h-12 rounded-2xl bg-sky-50 border border-sky-200 flex items-center justify-center text-sky-600 mb-4 shadow-sm">
+              <i data-lucide="user-check" class="w-6 h-6"></i>
+            </div>
+            <h4 class="text-xl font-bold text-slate-900 mb-2">1. Single-Athlete Crowd-Proof Target Lock</h4>
+            <p class="text-sm text-slate-600 leading-relaxed">
+              Standard phone-vision apps fail completely in commercial gyms because background gymgoers walking past trigger false reps. APEX uses Optical Centroid Re-ID to lock strictly onto <strong class="text-slate-900">Athlete #01</strong>, filtering crowd bystanders with IoU rejection.
+            </p>
           </div>
+          <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between">
+            <span class="text-xs font-mono text-slate-500">Feature: js/ai-coach.js</span>
+            <a href="dashboard.html" class="text-xs font-bold text-sky-600 hover:text-sky-700 flex items-center gap-1">
+              Try Studio Console <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- Breakthrough 2: Web Bluetooth Heart Rate & Live ECG Oscilloscope -->
+        <div class="light-glass-card p-8 rounded-3xl flex flex-col justify-between">
           <div>
-            <label for="baseCutoff" class="block text-slate-700 uppercase tracking-wider mb-1.5 font-bold">Velocity Loss Stop</label>
-            <select id="baseCutoff" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-slate-900 focus:border-sky-500 focus:outline-none">
-              <option selected>20% (Strength Hypertrophy)</option>
-              <option>10% (Pure Neural Power)</option>
-              <option>30% (Metabolic Overload)</option>
-            </select>
+            <div class="w-12 h-12 rounded-2xl bg-emerald-50 border border-emerald-200 flex items-center justify-center text-emerald-600 mb-4 shadow-sm">
+              <i data-lucide="heart-pulse" class="w-6 h-6"></i>
+            </div>
+            <h4 class="text-xl font-bold text-slate-900 mb-2">2. Hardware Silos Eradicated via Web Bluetooth API</h4>
+            <p class="text-sm text-slate-600 leading-relaxed">
+              Proprietary wearable platforms trap your data inside isolated ecosystems. APEX connects directly to Polar H10, Garmin, Apple Watch, and Whoop over Bluetooth GATT (`0x180D`), streaming live heartbeats onto a medical P-QRS-T oscilloscope sweep.
+            </p>
+          </div>
+          <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between">
+            <span class="text-xs font-mono text-slate-500">Feature: js/ble-heartrate.js</span>
+            <a href="wearables.html" class="text-xs font-bold text-emerald-600 hover:text-emerald-700 flex items-center gap-1">
+              Open Wearables Lab <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+            </a>
           </div>
         </div>
 
-        <div>
-          <label class="block text-slate-700 uppercase tracking-wider mb-1.5 font-bold">Camera Sensor Source</label>
-          <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between">
-            <span class="text-slate-800 font-medium">Device Front Facing 60 FPS</span>
-            <span class="text-emerald-600 font-bold">READY</span>
+        <!-- Breakthrough 3: Submaximal Velocity-Based Training -->
+        <div class="light-glass-card p-8 rounded-3xl flex flex-col justify-between">
+          <div>
+            <div class="w-12 h-12 rounded-2xl bg-rose-50 border border-rose-200 flex items-center justify-center text-rose-600 mb-4 shadow-sm">
+              <i data-lucide="trending-up" class="w-6 h-6"></i>
+            </div>
+            <h4 class="text-xl font-bold text-slate-900 mb-2">3. Zero-Injury Submaximal 1RM Extrapolation</h4>
+            <p class="text-sm text-slate-600 leading-relaxed">
+              Traditional apps tell lifters to test their true 1RM until failure, causing acute spinal and tendon injuries. APEX computes the individual load-velocity regression line ($v = m \cdot L + c$) to predict exact 1RM strength from submaximal warm-up sets.
+            </p>
+          </div>
+          <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between">
+            <span class="text-xs font-mono text-slate-500">Feature: js/vbt-analytics.js</span>
+            <a href="analytics.html" class="text-xs font-bold text-rose-600 hover:text-rose-700 flex items-center gap-1">
+              View VBT Regression <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+            </a>
           </div>
         </div>
 
-        <button type="submit" class="spring-btn w-full py-4 rounded-xl bg-gradient-to-r from-sky-600 to-emerald-600 hover:from-sky-700 hover:to-emerald-700 text-white font-extrabold text-sm uppercase tracking-wider flex items-center justify-center gap-2 mt-4 shadow-lg transition">
-          <i data-lucide="zap" class="w-4 h-4 fill-white"></i> Calibrate Clinical Baseline
-        </button>
-      </form>
+        <!-- Breakthrough 4: Auto-Regulated Mesocycle vs. Static Spreadsheets -->
+        <div class="light-glass-card p-8 rounded-3xl flex flex-col justify-between">
+          <div>
+            <div class="w-12 h-12 rounded-2xl bg-purple-50 border border-purple-200 flex items-center justify-center text-purple-600 mb-4 shadow-sm">
+              <i data-lucide="calendar" class="w-6 h-6"></i>
+            </div>
+            <h4 class="text-xl font-bold text-slate-900 mb-2">4. Dynamic Mesocycle Auto-Regulation</h4>
+            <p class="text-sm text-slate-600 leading-relaxed">
+              Static PDF workout programs cannot anticipate poor sleep, illness, or systemic CNS fatigue. When APEX detects suppressed HRV and high bar velocity loss, it automatically triggers compensatory deload protocols to prevent overtraining.
+            </p>
+          </div>
+          <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between">
+            <span class="text-xs font-mono text-slate-500">Feature: periodization.html</span>
+            <a href="periodization.html" class="text-xs font-bold text-purple-600 hover:text-purple-700 flex items-center gap-1">
+              Inspect Mesocycle <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+            </a>
+          </div>
+        </div>
+
+      </div>
 
     </div>
-  </div>
-
+  </section>
 
   <!-- =====================================================================
-       FOOTER (CLEAN LIGHT THEME)
+       COMPARISON MATRIX TABLE
        ===================================================================== -->
-  <footer class="bg-white border-t border-slate-200 py-12 mt-20 text-xs font-mono text-slate-500">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-6">
+  <section class="py-16">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
       
-      <div class="flex items-center gap-3">
-        <div class="w-8 h-8 rounded-lg bg-sky-50 border border-sky-200 flex items-center justify-center text-sky-600 shadow-sm">
-          <i data-lucide="activity" class="w-4 h-4"></i>
+      <div class="text-center mb-10">
+        <h3 class="text-2xl sm:text-3xl font-extrabold text-slate-900">Traditional Fitness Apps vs. APEX AI Suite</h3>
+        <p class="text-xs sm:text-sm text-slate-500 mt-1">Direct clinical comparison across sensor telemetry and biomechanical precision.</p>
+      </div>
+
+      <div class="light-glass-card rounded-3xl overflow-hidden shadow-sm">
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-xs">
+            <thead>
+              <tr class="border-b border-slate-200/80 bg-slate-50/80 text-slate-500 font-mono uppercase">
+                <th class="py-3.5 px-5">Capability</th>
+                <th class="py-3.5 px-5 text-slate-400">Legacy Fitness Apps</th>
+                <th class="py-3.5 px-5 text-sky-600 font-bold bg-sky-50/50">APEX AI Clinical Suite</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-100">
+              <tr>
+                <td class="py-3 px-5 font-bold text-slate-800">Rep & Weight Logging</td>
+                <td class="py-3 px-5 text-slate-500">Manual typing between sets</td>
+                <td class="py-3 px-5 font-bold text-emerald-600 bg-sky-50/30">Zero-Click Automated Computer Vision</td>
+              </tr>
+              <tr>
+                <td class="py-3 px-5 font-bold text-slate-800">Commercial Gym Vision</td>
+                <td class="py-3 px-5 text-rose-500">Fails when bystanders walk past</td>
+                <td class="py-3 px-5 font-bold text-emerald-600 bg-sky-50/30">Single-Athlete Lock (99.4% Re-ID)</td>
+              </tr>
+              <tr>
+                <td class="py-3 px-5 font-bold text-slate-800">Wearable Integration</td>
+                <td class="py-3 px-5 text-slate-500">Siloed inside Apple/Garmin cloud</td>
+                <td class="py-3 px-5 font-bold text-emerald-600 bg-sky-50/30">Direct Web Bluetooth (0x180D) + Live ECG</td>
+              </tr>
+              <tr>
+                <td class="py-3 px-5 font-bold text-slate-800">1RM Strength Profiling</td>
+                <td class="py-3 px-5 text-rose-500">Dangerous maximal lift to failure</td>
+                <td class="py-3 px-5 font-bold text-emerald-600 bg-sky-50/30">Submaximal Linear Regression (v = m·L + c)</td>
+              </tr>
+              <tr>
+                <td class="py-3 px-5 font-bold text-slate-800">Periodization Adaptation</td>
+                <td class="py-3 px-5 text-slate-500">Rigid PDF / Spreadsheet plans</td>
+                <td class="py-3 px-5 font-bold text-emerald-600 bg-sky-50/30">Dynamic Mesocycle with Auto-Deload Rules</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
-        <div>
-          <span class="text-slate-900 font-bold font-display text-lg tracking-wider">APEX <span class="text-sky-600">AI</span></span>
-          <span class="block text-[10px] text-slate-400">Engineered for Vercel & GitHub</span>
-        </div>
       </div>
 
-      <div class="flex items-center gap-6 text-[11px] font-semibold text-slate-600">
-        <a href="#camera-viewport" class="hover:text-sky-600 transition">Live Viewport</a>
-        <a href="#mvt-widget" class="hover:text-emerald-600 transition">MVT Linear Regression</a>
-        <a href="#periodization" class="hover:text-sky-600 transition">Mesocycle Timeline</a>
-        <a href="https://github.com/ADI-KUMAR-gl/ai-fitness" target="_blank" rel="noopener noreferrer" class="hover:text-slate-900 transition flex items-center gap-1">
-          <i data-lucide="github" class="w-4 h-4"></i> GitHub Repo
-        </a>
-      </div>
+    </div>
+  </section>
 
-      <div class="text-[10px] text-slate-400">
-        &copy; 2026 APEX AI FITNESS INC. ZERO-CLICK LOGGING.
+  <!-- =====================================================================
+       GLOBAL FOOTER
+       ===================================================================== -->
+  <footer class="mt-16 py-8 border-t border-slate-200 light-glass">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
+      <div class="flex items-center gap-2">
+        <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+        <span>APEX AI Suite v3.4 • Multi-Page Clinical Platform Active</span>
       </div>
-
+      <div class="flex items-center gap-6 font-semibold">
+        <a href="dashboard.html" class="hover:underline">Studio Console</a>
+        <a href="wearables.html" class="hover:underline">Wearables Lab</a>
+        <a href="analytics.html" class="hover:underline">VBT Analytics</a>
+        <a href="periodization.html" class="hover:underline">Mesocycle Planner</a>
+      </div>
     </div>
   </footer>
 
-  <!-- Application & Anime.js Scripts -->
-  <script src="js/ai-coach.js"></script>
+  <!-- Scripts -->
   <script src="js/anime-engine.js"></script>
-
-  <!-- Lucide Icons Initialization -->
   <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      if (window.lucide) {
-        window.lucide.createIcons();
-      }
-    });
+    if (window.lucide) {
+      window.lucide.createIcons();
+    }
   </script>
-
 </body>
 </html>

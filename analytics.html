@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>APEX AI — Velocity-Based Training & MVT Analytics Lab</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Anime.js CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=JetBrains+Mono:wght@400;500;700&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="min-h-screen text-slate-900 antialiased flex flex-col justify-between">
+
+  <!-- =========================================================================
+       GLOBAL NAVIGATION HEADER
+       ========================================================================= -->
+  <header class="sticky top-0 z-50 light-glass border-b border-slate-200/80">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-18 flex items-center justify-between">
+      
+      <!-- Brand Logo -->
+      <a href="index.html" class="flex items-center gap-3 group">
+        <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-sky-600 via-indigo-500 to-purple-400 flex items-center justify-center text-white shadow-md shadow-sky-500/20 group-hover:scale-105 transition-transform">
+          <i data-lucide="line-chart" class="w-5 h-5 text-white"></i>
+        </div>
+        <div>
+          <span class="font-display text-2xl tracking-wider text-slate-900 block leading-none">APEX <span class="text-sky-600">ANALYTICS</span></span>
+          <span class="text-[10px] font-mono font-bold tracking-widest text-slate-500 uppercase">VBT & MVT Bio-Mechanics</span>
+        </div>
+      </a>
+
+      <!-- Desktop Nav Links -->
+      <nav class="hidden md:flex items-center gap-1.5 p-1 rounded-2xl bg-slate-100/80 border border-slate-200/80">
+        <a href="index.html" data-nav-link class="px-4 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:text-slate-900 transition-colors">Overview</a>
+        <a href="dashboard.html" data-nav-link class="px-4 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:text-slate-900 transition-colors">Studio Console</a>
+        <a href="wearables.html" data-nav-link class="px-4 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:text-slate-900 transition-colors">Wearables Lab</a>
+        <a href="analytics.html" data-nav-link class="px-4 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:text-slate-900 transition-colors">VBT Analytics</a>
+        <a href="periodization.html" data-nav-link class="px-4 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:text-slate-900 transition-colors">Mesocycle Planner</a>
+      </nav>
+
+      <div class="flex items-center gap-3">
+        <span class="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-sky-50 border border-sky-200 text-sky-800 text-xs font-mono font-bold">
+          <i data-lucide="cpu" class="w-3.5 h-3.5 text-sky-600"></i> Regression v = m·L + c
+        </span>
+
+        <button id="mobileMenuToggle" class="md:hidden p-2 rounded-xl border border-slate-200 text-slate-600 hover:bg-slate-100">
+          <i data-lucide="menu" class="w-5 h-5"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer -->
+  <div id="mobileNavDrawer" class="hidden fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-sm flex justify-end">
+    <div class="w-72 bg-white h-full p-6 shadow-2xl flex flex-col justify-between">
+      <div>
+        <div class="flex items-center justify-between pb-6 border-b border-slate-100">
+          <span class="font-display text-xl">APEX SUITE</span>
+          <button id="mobileNavClose" class="p-1 rounded-lg text-slate-400 hover:text-slate-700"><i data-lucide="x" class="w-5 h-5"></i></button>
+        </div>
+        <nav class="mt-6 flex flex-col gap-2">
+          <a href="index.html" class="px-4 py-3 rounded-xl text-sm font-semibold text-slate-700 hover:bg-slate-100">Overview</a>
+          <a href="dashboard.html" class="px-4 py-3 rounded-xl text-sm font-semibold text-slate-700 hover:bg-slate-100">Studio Console</a>
+          <a href="wearables.html" class="px-4 py-3 rounded-xl text-sm font-semibold text-slate-700 hover:bg-slate-100">Wearables Lab</a>
+          <a href="analytics.html" class="px-4 py-3 rounded-xl text-sm font-semibold text-sky-600 bg-sky-50 font-bold">VBT Analytics</a>
+          <a href="periodization.html" class="px-4 py-3 rounded-xl text-sm font-semibold text-slate-700 hover:bg-slate-100">Mesocycle Planner</a>
+        </nav>
+      </div>
+      <div class="text-xs text-slate-400 font-mono text-center">Linear MVT Solver</div>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       MAIN ANALYTICS WORKSPACE
+       ========================================================================= -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
+    
+    <!-- Top Ribbon & Exercise Selector -->
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
+      <div>
+        <h1 class="text-2xl sm:text-3xl font-bold tracking-tight text-slate-900">Velocity-Based Training & MVT Lab</h1>
+        <p class="text-xs sm:text-sm text-slate-500 mt-1 max-w-2xl">
+          Linear regression load-velocity profiling eliminates the injury risk of maximal 1RM testing. Predict your daily 1RM from submaximal warmup lifts.
+        </p>
+      </div>
+
+      <!-- Exercise Switcher -->
+      <div class="flex items-center gap-2 p-1.5 rounded-2xl bg-white border border-slate-200/80 shadow-sm self-start sm:self-auto">
+        <button data-vbt-exercise="squat" class="px-4 py-2 rounded-xl bg-sky-600 text-white font-semibold text-sm shadow-sm flex items-center gap-2 transition">
+          <i data-lucide="dumbbell" class="w-4 h-4"></i> Squat
+        </button>
+        <button data-vbt-exercise="bench" class="px-4 py-2 rounded-xl bg-white border border-slate-200 text-slate-600 hover:text-slate-900 font-semibold text-sm flex items-center gap-2 transition">
+          <i data-lucide="activity" class="w-4 h-4"></i> Bench
+        </button>
+        <button data-vbt-exercise="deadlift" class="px-4 py-2 rounded-xl bg-white border border-slate-200 text-slate-600 hover:text-slate-900 font-semibold text-sm flex items-center gap-2 transition">
+          <i data-lucide="flame" class="w-4 h-4"></i> Deadlift
+        </button>
+      </div>
+    </div>
+
+    <!-- Top Metric Cards: e1RM, R², Formula, MVT -->
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+      
+      <!-- Predicted 1RM -->
+      <div class="light-glass-card p-5 rounded-3xl ring-glow-coral">
+        <span class="text-[11px] font-bold text-rose-800 uppercase tracking-wide block mb-1">Submaximal e1RM</span>
+        <div class="flex items-baseline gap-1">
+          <span id="vbtPredicted1RM" class="font-display text-4xl sm:text-5xl text-rose-600 leading-none">182.5 kg</span>
+        </div>
+        <span class="text-[10px] text-slate-500 mt-2 block">Extrapolated at MVT cutoff</span>
+      </div>
+
+      <!-- Goodness-of-Fit R² -->
+      <div class="light-glass-card p-5 rounded-3xl ring-glow-cyan">
+        <span class="text-[11px] font-bold text-sky-800 uppercase tracking-wide block mb-1">R² Correlation Fit</span>
+        <div class="flex items-baseline gap-1">
+          <span id="vbtRSquared" class="font-display text-4xl sm:text-5xl text-sky-600 leading-none">0.994</span>
+        </div>
+        <span class="text-[10px] text-emerald-600 font-semibold mt-2 block">● Clinical grade consistency</span>
+      </div>
+
+      <!-- Linear Regression Equation -->
+      <div class="light-glass-card p-5 rounded-3xl ring-glow-emerald">
+        <span class="text-[11px] font-bold text-emerald-800 uppercase tracking-wide block mb-1">Kinematic Formula</span>
+        <div class="my-1">
+          <span id="vbtFormula" class="font-mono text-sm sm:text-base font-bold text-emerald-700">v = -0.0072 · L + 1.45</span>
+        </div>
+        <span class="text-[10px] text-slate-500 mt-2 block">Linear least-squares regression</span>
+      </div>
+
+      <!-- Minimum Velocity Threshold -->
+      <div class="light-glass-card p-5 rounded-3xl">
+        <span class="text-[11px] font-bold text-amber-800 uppercase tracking-wide block mb-1">Exercise MVT</span>
+        <div class="flex items-baseline gap-1">
+          <span id="vbtMvtValue" class="font-display text-4xl sm:text-5xl text-amber-600 leading-none">0.18 m/s</span>
+        </div>
+        <span class="text-[10px] text-slate-500 mt-2 block">Terminal concentric limit</span>
+      </div>
+
+    </div>
+
+    <!-- Main Chart & Data Points Table Grid -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+      <!-- LEFT: Interactive SVG Chart (8 Cols) -->
+      <div class="lg:col-span-8 light-glass-card p-6 rounded-3xl flex flex-col">
+        <div class="flex items-center justify-between mb-4">
+          <div>
+            <h2 class="text-base font-bold text-slate-900 flex items-center gap-2">
+              <i data-lucide="trending-down" class="w-5 h-5 text-sky-600"></i>
+              <span id="vbtExerciseTitle">Barbell Back Squat</span> Load-Velocity Curve
+            </h2>
+            <p class="text-xs text-slate-500">Circles represent recorded submaximal sets. Orange dashed line represents the individual MVT cutoff.</p>
+          </div>
+          <button id="vbtResetBtn" class="text-xs text-slate-500 hover:text-slate-800 font-semibold flex items-center gap-1 p-1">
+            <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i> Reset Defaults
+          </button>
+        </div>
+
+        <!-- SVG Chart Viewport -->
+        <div class="w-full aspect-[16/9] max-h-[380px] bg-slate-50/50 rounded-2xl border border-slate-200/80 p-2 flex items-center justify-center">
+          <svg id="vbtInteractiveSvg" viewBox="0 0 640 340" class="w-full h-full block select-none"></svg>
+        </div>
+
+        <div class="mt-4 flex flex-wrap items-center justify-between gap-3 text-xs text-slate-500">
+          <div class="flex items-center gap-4">
+            <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-full bg-sky-500"></span> Measured Sets</span>
+            <span class="flex items-center gap-1.5"><span class="w-4 h-0.5 bg-sky-600"></span> Regression Projection</span>
+            <span class="flex items-center gap-1.5"><span class="w-4 h-0.5 border-t-2 border-dashed border-amber-500"></span> MVT Cutoff</span>
+            <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-full bg-rose-500"></span> Extrapolated 1RM</span>
+          </div>
+          <span class="font-mono text-[11px] text-slate-400">Zero maximal lifts required</span>
+        </div>
+      </div>
+
+      <!-- RIGHT: Interactive Points Manager & Velocity Loss Zones (4 Cols) -->
+      <div class="lg:col-span-4 flex flex-col gap-6">
+        
+        <!-- Add Data Point Form Card -->
+        <div class="light-glass-card p-5 rounded-3xl">
+          <h2 class="text-sm font-bold tracking-wide uppercase text-slate-500 mb-3 flex items-center gap-2">
+            <i data-lucide="plus-circle" class="w-4 h-4 text-emerald-600"></i> Add Warm-Up Set Point
+          </h2>
+          <div class="grid grid-cols-2 gap-3 mb-3">
+            <div>
+              <label class="block text-[10px] font-mono text-slate-500 uppercase mb-1">Load (kg)</label>
+              <input type="number" id="vbtInputLoad" placeholder="e.g. 110" class="w-full px-3 py-2 rounded-xl bg-slate-50 border border-slate-200 text-sm font-mono text-slate-900 focus:outline-none focus:border-sky-500">
+            </div>
+            <div>
+              <label class="block text-[10px] font-mono text-slate-500 uppercase mb-1">Velocity (m/s)</label>
+              <input type="number" step="0.01" id="vbtInputVel" placeholder="e.g. 0.62" class="w-full px-3 py-2 rounded-xl bg-slate-50 border border-slate-200 text-sm font-mono text-slate-900 focus:outline-none focus:border-sky-500">
+            </div>
+          </div>
+          <button id="vbtAddPointBtn" class="w-full py-2.5 rounded-xl bg-sky-600 hover:bg-sky-500 text-white font-bold text-xs shadow-sm transition flex items-center justify-center gap-2">
+            <i data-lucide="plus" class="w-4 h-4"></i> Add Point to Curve
+          </button>
+        </div>
+
+        <!-- Plotted Data Points Table -->
+        <div class="light-glass-card p-5 rounded-3xl flex-1 flex flex-col">
+          <h2 class="text-sm font-bold tracking-wide uppercase text-slate-500 mb-3 flex items-center gap-2">
+            <i data-lucide="table" class="w-4 h-4 text-sky-600"></i> Active Dataset Sets
+          </h2>
+          <div class="overflow-y-auto max-h-48">
+            <table class="w-full text-left">
+              <thead>
+                <tr class="border-b border-slate-200 text-[10px] font-mono text-slate-400 uppercase">
+                  <th class="pb-1.5 px-3">Set</th>
+                  <th class="pb-1.5 px-3">Load</th>
+                  <th class="pb-1.5 px-3">Velocity</th>
+                  <th class="pb-1.5 px-3 text-right">Action</th>
+                </tr>
+              </thead>
+              <tbody id="vbtPointsTableBody">
+                <!-- Dynamically filled via vbt-analytics.js -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Velocity Loss Neuromuscular Fatigue Zones -->
+        <div class="light-glass-card p-5 rounded-3xl">
+          <h2 class="text-sm font-bold tracking-wide uppercase text-slate-500 mb-3 flex items-center gap-2">
+            <i data-lucide="zap" class="w-4 h-4 text-amber-500"></i> Fatigue Cutoff Guidelines
+          </h2>
+          <div class="space-y-2 text-xs">
+            <div class="p-2 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-900">
+              <strong class="font-semibold block text-emerald-800">0% – 10% Velocity Loss</strong>
+              Maximal Speed & Power. Minimal systemic fatigue.
+            </div>
+            <div class="p-2 rounded-xl bg-sky-50 border border-sky-200 text-sky-900">
+              <strong class="font-semibold block text-sky-800">10% – 20% Velocity Loss</strong>
+              Optimal Hypertrophy & Strength. Low failure risk.
+            </div>
+            <div class="p-2 rounded-xl bg-rose-50 border border-rose-200 text-rose-900">
+              <strong class="font-semibold block text-rose-800">&gt;20% Velocity Loss</strong>
+              High Metabolic Fatigue. Cease set to avoid injury.
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- =========================================================================
+       FOOTER
+       ========================================================================= -->
+  <footer class="mt-12 py-6 border-t border-slate-200 light-glass">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
+      <div class="flex items-center gap-2">
+        <span class="w-2 h-2 rounded-full bg-sky-500"></span>
+        <span>Velocity-Based Training Engine Active • Submaximal e1RM Extrapolation</span>
+      </div>
+      <div class="flex items-center gap-4 font-semibold">
+        <a href="dashboard.html" class="hover:underline">Studio Console</a>
+        <a href="wearables.html" class="hover:underline">Wearables Lab</a>
+        <a href="analytics.html" class="text-sky-600 hover:underline">VBT Analytics</a>
+        <a href="periodization.html" class="hover:underline">Mesocycle Planner</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/vbt-analytics.js"></script>
+  <script src="js/anime-engine.js"></script>
+  <script>
+    if (window.lucide) {
+      window.lucide.createIcons();
+    }
+  </script>
+</body>
+</html>

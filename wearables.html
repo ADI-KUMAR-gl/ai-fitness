@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>APEX AI — Wearable Biometric Lab & Live ECG Oscilloscope</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Anime.js CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=JetBrains+Mono:wght@400;500;700&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="min-h-screen text-slate-900 antialiased flex flex-col justify-between">
+
+  <!-- =========================================================================
+       GLOBAL NAVIGATION HEADER
+       ========================================================================= -->
+  <header class="sticky top-0 z-50 light-glass border-b border-slate-200/80">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-18 flex items-center justify-between">
+      
+      <!-- Brand Logo -->
+      <a href="index.html" class="flex items-center gap-3 group">
+        <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-emerald-600 via-teal-500 to-sky-400 flex items-center justify-center text-white shadow-md shadow-emerald-500/20 group-hover:scale-105 transition-transform">
+          <i data-lucide="heart-pulse" class="w-5 h-5 text-white"></i>
+        </div>
+        <div>
+          <span class="font-display text-2xl tracking-wider text-slate-900 block leading-none">APEX <span class="text-emerald-600">CARDIAC</span></span>
+          <span class="text-[10px] font-mono font-bold tracking-widest text-slate-500 uppercase">Wearable Biometric Lab</span>
+        </div>
+      </a>
+
+      <!-- Desktop Nav Links -->
+      <nav class="hidden md:flex items-center gap-1.5 p-1 rounded-2xl bg-slate-100/80 border border-slate-200/80">
+        <a href="index.html" data-nav-link class="px-4 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:text-slate-900 transition-colors">Overview</a>
+        <a href="dashboard.html" data-nav-link class="px-4 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:text-slate-900 transition-colors">Studio Console</a>
+        <a href="wearables.html" data-nav-link class="px-4 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:text-slate-900 transition-colors">Wearables Lab</a>
+        <a href="analytics.html" data-nav-link class="px-4 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:text-slate-900 transition-colors">VBT Analytics</a>
+        <a href="periodization.html" data-nav-link class="px-4 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:text-slate-900 transition-colors">Mesocycle Planner</a>
+      </nav>
+
+      <!-- Web Bluetooth Connection Status Pill -->
+      <div class="flex items-center gap-3">
+        <div class="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-100 border border-slate-200 text-xs font-mono">
+          <span id="bleConnectionDot" class="w-2.5 h-2.5 rounded-full bg-sky-500"></span>
+          <span id="bleDeviceName" class="font-semibold text-slate-700">Synthetic ECG / PPG Simulator</span>
+        </div>
+
+        <button id="mobileMenuToggle" class="md:hidden p-2 rounded-xl border border-slate-200 text-slate-600 hover:bg-slate-100">
+          <i data-lucide="menu" class="w-5 h-5"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer -->
+  <div id="mobileNavDrawer" class="hidden fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-sm flex justify-end">
+    <div class="w-72 bg-white h-full p-6 shadow-2xl flex flex-col justify-between">
+      <div>
+        <div class="flex items-center justify-between pb-6 border-b border-slate-100">
+          <span class="font-display text-xl">APEX SUITE</span>
+          <button id="mobileNavClose" class="p-1 rounded-lg text-slate-400 hover:text-slate-700"><i data-lucide="x" class="w-5 h-5"></i></button>
+        </div>
+        <nav class="mt-6 flex flex-col gap-2">
+          <a href="index.html" class="px-4 py-3 rounded-xl text-sm font-semibold text-slate-700 hover:bg-slate-100">Overview</a>
+          <a href="dashboard.html" class="px-4 py-3 rounded-xl text-sm font-semibold text-slate-700 hover:bg-slate-100">Studio Console</a>
+          <a href="wearables.html" class="px-4 py-3 rounded-xl text-sm font-semibold text-emerald-600 bg-emerald-50 font-bold">Wearables Lab</a>
+          <a href="analytics.html" class="px-4 py-3 rounded-xl text-sm font-semibold text-slate-700 hover:bg-slate-100">VBT Analytics</a>
+          <a href="periodization.html" class="px-4 py-3 rounded-xl text-sm font-semibold text-slate-700 hover:bg-slate-100">Mesocycle Planner</a>
+        </nav>
+      </div>
+      <div class="text-xs text-slate-400 font-mono text-center">Web Bluetooth GATT • 0x180D</div>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       MAIN WEARABLES WORKSPACE
+       ========================================================================= -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
+    
+    <!-- Top Hardware Pairing Banner -->
+    <div class="light-glass-card p-6 rounded-3xl mb-8 flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+      <div>
+        <div class="flex items-center gap-2 mb-1">
+          <span class="px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-300 text-[10px] font-mono font-bold">
+            WEB BLUETOOTH GATT 0x180D
+          </span>
+          <span id="bleConnectionStatus" class="text-xs text-slate-500 font-mono">Sensors active • Ready to pair</span>
+        </div>
+        <h1 class="text-2xl sm:text-3xl font-bold tracking-tight text-slate-900">Cardiovascular Wearable Sync</h1>
+        <p class="text-xs sm:text-sm text-slate-500 mt-1 max-w-2xl">
+          Pair any smart band, Apple Watch (via BLE bridge), Polar H10, Garmin, Whoop, or Wahoo chest strap directly to your browser with zero plugins.
+        </p>
+      </div>
+
+      <!-- Pairing & Test Controls -->
+      <div class="flex flex-wrap items-center gap-3">
+        <button id="bleConnectBtn" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 text-white font-bold text-xs shadow-md shadow-emerald-500/20 hover:from-emerald-500 hover:to-teal-500 flex items-center gap-2 transition animate-pulse-luminous">
+          <i data-lucide="bluetooth" class="w-4 h-4"></i> Pair Smartwatch / Band
+        </button>
+        <button id="bleDisconnectBtn" class="px-3.5 py-2.5 rounded-xl bg-slate-100 border border-slate-200 hover:bg-slate-200 text-slate-600 text-xs font-semibold transition">
+          Disconnect
+        </button>
+      </div>
+    </div>
+
+    <!-- Main Grid: Live ECG Oscilloscope + Biometric Rings -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+      <!-- LEFT: Real-Time ECG/PPG Oscilloscope (7 Cols) -->
+      <div class="lg:col-span-7 flex flex-col gap-6">
+        
+        <!-- Live Oscilloscope Screen -->
+        <div class="light-glass-card p-6 rounded-3xl flex flex-col gap-4">
+          <div class="flex items-center justify-between">
+            <div>
+              <h2 class="text-sm font-bold tracking-wide uppercase text-slate-500 flex items-center gap-2">
+                <i data-lucide="activity" class="w-4 h-4 text-emerald-600"></i> P-QRS-T Real-Time ECG Sweep
+              </h2>
+              <span class="text-[10px] text-slate-400 font-mono">Lead II (Ventricular Depolarization) • 25 mm/s Sweep</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="px-2.5 py-1 rounded-full bg-slate-100 text-slate-700 border border-slate-200 text-[10px] font-mono">
+                1.0 mV / 10mm
+              </span>
+            </div>
+          </div>
+
+          <!-- CRT Oscilloscope Screen Box -->
+          <div class="ecg-screen-box p-3 h-52 relative flex items-center justify-center">
+            <canvas id="ecgOscilloscope" class="w-full h-full block"></canvas>
+            
+            <!-- Voltage Markers Overlay -->
+            <div class="absolute left-4 top-4 text-[9px] font-mono text-emerald-500/70 pointer-events-none">
+              +1.0 mV (R-PEAK)
+            </div>
+            <div class="absolute left-4 bottom-4 text-[9px] font-mono text-emerald-500/70 pointer-events-none">
+              -0.5 mV (S-WAVE)
+            </div>
+          </div>
+
+          <!-- Physiological Presets (Allows users to simulate scenarios anytime) -->
+          <div class="flex items-center justify-between pt-2">
+            <span class="text-xs font-semibold text-slate-500">Test Cardiac Load:</span>
+            <div class="flex items-center gap-2">
+              <button id="blePresetRest" class="px-3 py-1 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold transition">
+                Rest (62 BPM)
+              </button>
+              <button id="blePresetCardio" class="px-3 py-1 rounded-xl bg-sky-50 hover:bg-sky-100 text-sky-700 border border-sky-200 text-xs font-semibold transition">
+                Cardio (142 BPM)
+              </button>
+              <button id="blePresetPeak" class="px-3 py-1 rounded-xl bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 text-xs font-semibold transition">
+                Sprint (174 BPM)
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 60-Second Inter-Set Autonomic Recovery Timer Card -->
+        <div class="light-glass-card p-6 rounded-3xl">
+          <div class="flex items-center justify-between mb-4">
+            <div>
+              <h2 class="text-sm font-bold tracking-wide uppercase text-slate-500 flex items-center gap-2">
+                <i data-lucide="timer" class="w-4 h-4 text-sky-600"></i> Autonomic Parasympathetic Recovery Test
+              </h2>
+              <span class="text-xs text-slate-500">Measures the 60-second post-set heart rate drop (ΔHR) to evaluate vagal nerve reactivation.</span>
+            </div>
+            <button id="bleRecoveryTestBtn" class="px-4 py-2 rounded-xl bg-sky-600 hover:bg-sky-500 text-white font-bold text-xs shadow-sm transition">
+              Run 60s Test
+            </button>
+          </div>
+
+          <div id="bleRecoveryStatus" class="hidden p-4 rounded-2xl bg-sky-50 border border-sky-200 text-xs text-sky-900 flex items-center justify-between mb-2">
+            <span>Stand still and breathe calmly. Measuring autonomic deceleration...</span>
+            <span id="bleRecoveryCountdown" class="font-display text-2xl text-sky-600 leading-none">60s</span>
+          </div>
+
+          <div id="bleRecoveryResult" class="hidden p-4 rounded-2xl bg-emerald-50 border border-emerald-300 font-mono text-xs text-emerald-800 font-bold">
+            <!-- Populated via JS -->
+          </div>
+        </div>
+
+      </div>
+
+      <!-- RIGHT: Activity Rings Jewel Metrics & 5-Zone Distribution (5 Cols) -->
+      <div class="lg:col-span-5 flex flex-col gap-6">
+
+        <!-- Jewel Activity Cards: Heart Rate, HRV, CNS Strain -->
+        <div class="grid grid-cols-2 gap-4">
+          
+          <!-- Live Heartbeat Card (Hyper Neon Lime Activity Style) -->
+          <div class="light-glass-card p-5 rounded-3xl flex flex-col justify-between ring-glow-emerald">
+            <div class="flex items-center justify-between">
+              <span class="text-[11px] font-bold text-emerald-800 uppercase tracking-wide">Live Heart Rate</span>
+              <i data-lucide="heart" class="w-5 h-5 text-rose-500 cardiac-pulse-icon animate-cardiac"></i>
+            </div>
+            <div class="my-3 flex items-baseline gap-1.5">
+              <span data-ble-bpm class="font-display text-5xl text-emerald-600 leading-none">138</span>
+              <span class="text-xs font-mono font-bold text-emerald-700">BPM</span>
+            </div>
+            <div class="flex items-center justify-between text-[10px] text-slate-500 font-mono">
+              <span>Peak: <strong id="blePeakBpm" class="text-slate-800">162</strong></span>
+              <span>Rest: <strong id="bleRestBpm" class="text-slate-800">54</strong></span>
+            </div>
+          </div>
+
+          <!-- Heart Rate Variability (HRV in ms) -->
+          <div class="light-glass-card p-5 rounded-3xl flex flex-col justify-between ring-glow-cyan">
+            <div class="flex items-center justify-between">
+              <span class="text-[11px] font-bold text-sky-800 uppercase tracking-wide">HRV (RMSSD)</span>
+              <i data-lucide="pulse" class="w-5 h-5 text-sky-500"></i>
+            </div>
+            <div class="my-3 flex items-baseline gap-1.5">
+              <span data-ble-hrv class="font-display text-5xl text-sky-600 leading-none">64 ms</span>
+            </div>
+            <span class="text-[10px] text-slate-500 block">Autonomic Readiness: High</span>
+          </div>
+
+          <!-- CNS Cardiovascular Strain Gauge -->
+          <div class="col-span-2 light-glass-card p-5 rounded-3xl ring-glow-coral">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-[11px] font-bold text-rose-800 uppercase tracking-wide">Cardiovascular Strain</span>
+              <span data-ble-cns class="font-mono text-sm font-bold text-rose-600">72%</span>
+            </div>
+            <div class="w-full h-3 rounded-full bg-slate-100 overflow-hidden">
+              <div id="bleCnsProgressBar" class="h-full bg-gradient-to-r from-emerald-400 via-sky-400 to-rose-500 transition-all duration-300" style="width: 72%"></div>
+            </div>
+            <div class="flex justify-between text-[10px] text-slate-400 font-mono mt-1.5">
+              <span>50% (Aerobic)</span>
+              <span>80% (Threshold)</span>
+              <span>100% (Maximal)</span>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- 5-Zone Metabolic Distribution Card -->
+        <div class="light-glass-card p-6 rounded-3xl">
+          <div class="flex items-center justify-between mb-4">
+            <h2 class="text-sm font-bold tracking-wide uppercase text-slate-500 flex items-center gap-2">
+              <i data-lucide="flame" class="w-4 h-4 text-amber-500"></i> 5-Zone Metabolic Strain
+            </h2>
+            <span id="bleZoneBadge" class="text-xs font-mono font-bold text-sky-600">Zone 3: Tempo</span>
+          </div>
+
+          <div class="space-y-3 text-xs">
+            <!-- Zone 1 -->
+            <div>
+              <div class="flex justify-between mb-1 font-semibold">
+                <span class="text-emerald-700">Zone 1: Active Recovery (&lt;60%)</span>
+                <span id="bleZone1Time" class="font-mono text-slate-600">2m 00s</span>
+              </div>
+              <div class="w-full h-2 rounded-full bg-slate-100 overflow-hidden">
+                <div id="bleZone1Bar" class="h-full bg-emerald-500 transition-all duration-500" style="width: 10%"></div>
+              </div>
+            </div>
+
+            <!-- Zone 2 -->
+            <div>
+              <div class="flex justify-between mb-1 font-semibold">
+                <span class="text-sky-700">Zone 2: Aerobic Base (60-70%)</span>
+                <span id="bleZone2Time" class="font-mono text-slate-600">5m 10s</span>
+              </div>
+              <div class="w-full h-2 rounded-full bg-slate-100 overflow-hidden">
+                <div id="bleZone2Bar" class="h-full bg-sky-500 transition-all duration-500" style="width: 25%"></div>
+              </div>
+            </div>
+
+            <!-- Zone 3 -->
+            <div>
+              <div class="flex justify-between mb-1 font-semibold">
+                <span class="text-cyan-700">Zone 3: Tempo / Aerobic Power (70-80%)</span>
+                <span id="bleZone3Time" class="font-mono text-slate-600">8m 00s</span>
+              </div>
+              <div class="w-full h-2 rounded-full bg-slate-100 overflow-hidden">
+                <div id="bleZone3Bar" class="h-full bg-cyan-500 transition-all duration-500" style="width: 40%"></div>
+              </div>
+            </div>
+
+            <!-- Zone 4 -->
+            <div>
+              <div class="flex justify-between mb-1 font-semibold">
+                <span class="text-amber-700">Zone 4: Threshold / Glycolytic (80-90%)</span>
+                <span id="bleZone4Time" class="font-mono text-slate-600">4m 20s</span>
+              </div>
+              <div class="w-full h-2 rounded-full bg-slate-100 overflow-hidden">
+                <div id="bleZone4Bar" class="h-full bg-amber-500 transition-all duration-500" style="width: 20%"></div>
+              </div>
+            </div>
+
+            <!-- Zone 5 -->
+            <div>
+              <div class="flex justify-between mb-1 font-semibold">
+                <span class="text-rose-700">Zone 5: Neuromuscular / Peak (&gt;90%)</span>
+                <span id="bleZone5Time" class="font-mono text-slate-600">0m 45s</span>
+              </div>
+              <div class="w-full h-2 rounded-full bg-slate-100 overflow-hidden">
+                <div id="bleZone5Bar" class="h-full bg-rose-500 transition-all duration-500" style="width: 5%"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- =========================================================================
+       FOOTER
+       ========================================================================= -->
+  <footer class="mt-12 py-6 border-t border-slate-200 light-glass">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
+      <div class="flex items-center gap-2">
+        <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+        <span>BLE GATT Service 0x180D Synced • Compatible with Polar, Garmin, Apple Watch</span>
+      </div>
+      <div class="flex items-center gap-4 font-semibold">
+        <a href="dashboard.html" class="hover:underline">Studio Console</a>
+        <a href="wearables.html" class="text-emerald-600 hover:underline">Wearables Lab</a>
+        <a href="analytics.html" class="hover:underline">VBT Analytics</a>
+        <a href="periodization.html" class="hover:underline">Mesocycle Planner</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/ble-heartrate.js"></script>
+  <script src="js/anime-engine.js"></script>
+  <script>
+    if (window.lucide) {
+      window.lucide.createIcons();
+    }
+  </script>
+</body>
+</html>

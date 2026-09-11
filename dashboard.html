@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>APEX AI — Computer Vision Studio & Single-Athlete Lock</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Anime.js CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=JetBrains+Mono:wght@400;500;700&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="min-h-screen text-slate-900 antialiased flex flex-col justify-between">
+
+  <!-- =========================================================================
+       GLOBAL NAVIGATION HEADER
+       ========================================================================= -->
+  <header class="sticky top-0 z-50 light-glass border-b border-slate-200/80">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-18 flex items-center justify-between">
+      
+      <!-- Brand Logo -->
+      <a href="index.html" class="flex items-center gap-3 group">
+        <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-sky-600 via-sky-500 to-emerald-400 flex items-center justify-center text-white shadow-md shadow-sky-500/20 group-hover:scale-105 transition-transform">
+          <i data-lucide="crosshair" class="w-5 h-5 text-white"></i>
+        </div>
+        <div>
+          <span class="font-display text-2xl tracking-wider text-slate-900 block leading-none">APEX <span class="text-sky-600">VISION</span></span>
+          <span class="text-[10px] font-mono font-bold tracking-widest text-slate-500 uppercase">Single-Athlete Studio</span>
+        </div>
+      </a>
+
+      <!-- Desktop Nav Links -->
+      <nav class="hidden md:flex items-center gap-1.5 p-1 rounded-2xl bg-slate-100/80 border border-slate-200/80">
+        <a href="index.html" data-nav-link class="px-4 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:text-slate-900 transition-colors">Overview</a>
+        <a href="dashboard.html" data-nav-link class="px-4 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:text-slate-900 transition-colors">Studio Console</a>
+        <a href="wearables.html" data-nav-link class="px-4 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:text-slate-900 transition-colors">Wearables Lab</a>
+        <a href="analytics.html" data-nav-link class="px-4 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:text-slate-900 transition-colors">VBT Analytics</a>
+        <a href="periodization.html" data-nav-link class="px-4 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:text-slate-900 transition-colors">Mesocycle Planner</a>
+      </nav>
+
+      <!-- Live Cardiac Stream Indicator & Controls -->
+      <div class="flex items-center gap-3">
+        <a href="wearables.html" class="hidden sm:flex items-center gap-2.5 px-3 py-1.5 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-mono font-bold shadow-sm hover:bg-emerald-100 transition">
+          <i data-lucide="heart" class="w-4 h-4 text-rose-500 animate-cardiac"></i>
+          <span id="viewportLiveBpm">138</span> BPM
+          <span class="text-emerald-500 font-normal">|</span>
+          <span id="viewportLiveZone" class="text-emerald-600">Zone 3</span>
+        </a>
+
+        <!-- Mobile Drawer Toggle -->
+        <button id="mobileMenuToggle" class="md:hidden p-2 rounded-xl border border-slate-200 text-slate-600 hover:bg-slate-100">
+          <i data-lucide="menu" class="w-5 h-5"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer -->
+  <div id="mobileNavDrawer" class="hidden fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-sm flex justify-end">
+    <div class="w-72 bg-white h-full p-6 shadow-2xl flex flex-col justify-between">
+      <div>
+        <div class="flex items-center justify-between pb-6 border-b border-slate-100">
+          <span class="font-display text-xl">APEX SUITE</span>
+          <button id="mobileNavClose" class="p-1 rounded-lg text-slate-400 hover:text-slate-700"><i data-lucide="x" class="w-5 h-5"></i></button>
+        </div>
+        <nav class="mt-6 flex flex-col gap-2">
+          <a href="index.html" class="px-4 py-3 rounded-xl text-sm font-semibold text-slate-700 hover:bg-slate-100">Overview</a>
+          <a href="dashboard.html" class="px-4 py-3 rounded-xl text-sm font-semibold text-sky-600 bg-sky-50 font-bold">Studio Console</a>
+          <a href="wearables.html" class="px-4 py-3 rounded-xl text-sm font-semibold text-slate-700 hover:bg-slate-100">Wearables Lab</a>
+          <a href="analytics.html" class="px-4 py-3 rounded-xl text-sm font-semibold text-slate-700 hover:bg-slate-100">VBT Analytics</a>
+          <a href="periodization.html" class="px-4 py-3 rounded-xl text-sm font-semibold text-slate-700 hover:bg-slate-100">Mesocycle Planner</a>
+        </nav>
+      </div>
+      <div class="text-xs text-slate-400 font-mono text-center">Clinical Vision v3.4</div>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       MAIN DASHBOARD WORKSPACE
+       ========================================================================= -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
+    
+    <!-- Top Action Ribbon -->
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+      <div>
+        <div class="flex items-center gap-2">
+          <h1 class="text-2xl sm:text-3xl font-bold tracking-tight text-slate-900">Live AI Vision Studio</h1>
+          <span id="viewportLockBadge" class="px-3 py-1 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-300 text-xs font-mono font-bold flex items-center shadow-sm">
+            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse mr-1.5"></span> LOCKED: ATHLETE #01 (99.4%)
+          </span>
+        </div>
+        <p class="text-xs sm:text-sm text-slate-500 mt-1">Spatial Re-ID isolates the lifter. Peripheral gym bystanders are filtered automatically.</p>
+      </div>
+
+      <!-- Exercise Kinematic Switcher -->
+      <div class="flex items-center gap-2 p-1.5 rounded-2xl bg-white border border-slate-200/80 shadow-sm self-start sm:self-auto">
+        <button data-coach-exercise="squat" class="px-3.5 py-1.5 rounded-xl border border-sky-500 bg-sky-50 text-sky-700 font-bold text-xs shadow-sm flex items-center gap-1.5">
+          <i data-lucide="dumbbell" class="w-3.5 h-3.5"></i> Squat
+        </button>
+        <button data-coach-exercise="bench" class="px-3.5 py-1.5 rounded-xl border border-slate-200 bg-white text-slate-600 hover:text-slate-900 font-semibold text-xs flex items-center gap-1.5">
+          <i data-lucide="activity" class="w-3.5 h-3.5"></i> Bench
+        </button>
+        <button data-coach-exercise="deadlift" class="px-3.5 py-1.5 rounded-xl border border-slate-200 bg-white text-slate-600 hover:text-slate-900 font-semibold text-xs flex items-center gap-1.5">
+          <i data-lucide="flame" class="w-3.5 h-3.5"></i> Deadlift
+        </button>
+      </div>
+    </div>
+
+    <!-- Main Grid: Viewport + Telemetry Columns -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+      <!-- LEFT: Camera HUD Viewport (7 Cols) -->
+      <div class="lg:col-span-7 flex flex-col gap-4">
+        
+        <!-- Viewport Container -->
+        <div class="camera-viewport-frame relative bg-slate-950 aspect-[4/3] flex items-center justify-center">
+          
+          <!-- Animated Radar Scanline -->
+          <div class="hud-radar-line"></div>
+
+          <!-- HTML5 Computer Vision Canvas -->
+          <canvas id="aiCoachCanvas" class="w-full h-full object-cover"></canvas>
+
+          <!-- Top Overlay Badges -->
+          <div class="absolute top-3 left-3 right-3 flex items-center justify-between pointer-events-none">
+            <div class="flex items-center gap-2">
+              <span id="viewportSourceBadge" class="px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-300 text-[10px] font-mono font-bold flex items-center shadow-sm">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse mr-1"></span> SYNTHETIC CV
+              </span>
+              <span id="viewportExerciseLabel" class="px-2.5 py-1 rounded-full bg-slate-900/80 text-white border border-slate-700 text-[10px] font-mono">
+                Barbell Back Squat (140 kg)
+              </span>
+            </div>
+
+            <!-- Big Reps Counter HUD Overlay -->
+            <div class="flex items-center gap-1.5 px-3 py-1 rounded-xl bg-slate-900/90 border border-slate-700 text-white shadow-lg">
+              <span class="text-[10px] font-mono text-slate-400">REPS</span>
+              <span id="viewportRepCount" class="font-display text-2xl text-emerald-400 leading-none">0</span>
+            </div>
+          </div>
+
+          <!-- Bottom Viewport Controls Toolbar -->
+          <div class="absolute bottom-3 left-3 right-3 flex flex-wrap items-center justify-between gap-2 p-2 rounded-2xl bg-slate-900/85 backdrop-blur-md border border-slate-700/80 text-white">
+            
+            <div class="flex items-center gap-2">
+              <button id="coachCamBtn" class="px-3 py-1.5 rounded-xl bg-sky-600 hover:bg-sky-500 text-white text-xs font-semibold flex items-center gap-1.5 transition">
+                <i data-lucide="camera" class="w-3.5 h-3.5"></i> Switch to Live Camera
+              </button>
+              <button id="coachRelockBtn" class="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold flex items-center gap-1.5 transition">
+                <i data-lucide="refresh-cw" class="w-3.5 h-3.5 text-emerald-400"></i> Re-Acquire Lock
+              </button>
+            </div>
+
+            <div class="flex items-center gap-2">
+              <button id="coachCrowdToggleBtn" class="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold flex items-center gap-1.5 transition">
+                <i data-lucide="shield-check" class="w-3.5 h-3.5 text-emerald-400"></i> Crowd Shield: ON
+              </button>
+              <button id="coachSoundBtn" class="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold flex items-center gap-1.5 transition">
+                <i data-lucide="volume-2" class="w-3.5 h-3.5 text-sky-400"></i> Audio Telemetry
+              </button>
+              <button id="coachToggleBtn" class="p-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 transition">
+                <i data-lucide="pause" class="w-4 h-4"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Crowd Filter Explanation Card -->
+        <div class="light-glass-card p-4 rounded-2xl flex items-center gap-4">
+          <div class="w-10 h-10 rounded-xl bg-emerald-50 border border-emerald-200 flex items-center justify-center text-emerald-600 shrink-0">
+            <i data-lucide="user-check" class="w-5 h-5"></i>
+          </div>
+          <div class="text-xs text-slate-600">
+            <span class="font-bold text-slate-900 block mb-0.5">Crowd-Occlusion Immune Optical Lock</span>
+            Deep optical tracking maintains locked focus on <span class="font-mono text-emerald-700 font-semibold">ATHLETE #01</span>. Background individuals and passersby are filtered via IoU threshold rejection to prevent false rep counts.
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT: Velocity & Biometric HUD Cards (5 Cols) -->
+      <div class="lg:col-span-5 flex flex-col gap-5">
+        
+        <!-- Activity Rings Jewel Card: Concentric Velocity & RPE -->
+        <div class="light-glass-card p-6 rounded-3xl">
+          <div class="flex items-center justify-between mb-4">
+            <h2 class="text-sm font-bold tracking-wide uppercase text-slate-500 flex items-center gap-2">
+              <i data-lucide="gauge" class="w-4 h-4 text-sky-600"></i> Bar Velocity Telemetry
+            </h2>
+            <span class="px-2.5 py-0.5 rounded-full bg-sky-50 text-sky-700 border border-sky-200 text-[10px] font-mono font-bold">VBT ENGINE</span>
+          </div>
+
+          <div class="grid grid-cols-2 gap-4">
+            
+            <!-- Mean Concentric Velocity Metric -->
+            <div class="p-4 rounded-2xl bg-gradient-to-br from-sky-50/80 to-white border border-sky-200/80 ring-glow-cyan">
+              <span class="text-[11px] font-semibold text-sky-800 uppercase block mb-1">Mean Velocity</span>
+              <div class="flex items-baseline gap-1">
+                <span id="telemetryBarVelocity" class="font-display text-4xl text-sky-600 leading-none">0.54</span>
+                <span class="text-xs font-mono font-bold text-sky-700">m/s</span>
+              </div>
+              <span class="text-[10px] text-slate-500 mt-2 block">Optimal Power Band: 0.45 - 0.70</span>
+            </div>
+
+            <!-- Peak Velocity Metric -->
+            <div class="p-4 rounded-2xl bg-gradient-to-br from-emerald-50/80 to-white border border-emerald-200/80 ring-glow-emerald">
+              <span class="text-[11px] font-semibold text-emerald-800 uppercase block mb-1">Peak Velocity</span>
+              <div class="flex items-baseline gap-1">
+                <span id="telemetryPeakVelocity" class="font-display text-4xl text-emerald-600 leading-none">0.76</span>
+                <span class="text-xs font-mono font-bold text-emerald-700">m/s</span>
+              </div>
+              <span class="text-[10px] text-slate-500 mt-2 block">Peak Propulsion Force</span>
+            </div>
+          </div>
+
+          <!-- Velocity Loss & RPE Progress -->
+          <div class="mt-5 p-4 rounded-2xl bg-slate-50 border border-slate-200/70 flex flex-col gap-3">
+            <div class="flex items-center justify-between text-xs font-semibold">
+              <span class="text-slate-600">Intra-Set Velocity Loss</span>
+              <span id="telemetryVelLoss" class="font-mono text-rose-600 font-bold">-14.2%</span>
+            </div>
+            
+            <div class="flex items-center justify-between text-xs font-semibold">
+              <span class="text-slate-600">Dynamic Velocity-RPE</span>
+              <span class="font-mono font-bold text-amber-600">RPE <span id="telemetryRpeVal">7.5</span></span>
+            </div>
+
+            <!-- RPE Gradient Bar -->
+            <div class="w-full h-2.5 rounded-full bg-slate-200 overflow-hidden">
+              <div id="telemetryRpeBarFill" class="h-full bg-gradient-to-r from-emerald-500 via-amber-500 to-rose-500 transition-all duration-300" style="width: 75%"></div>
+            </div>
+            <div class="flex justify-between text-[10px] text-slate-400 font-mono">
+              <span>RPE 6.0 (Warmup)</span>
+              <span>RPE 8.0 (Target)</span>
+              <span>RPE 10.0 (Failure)</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Automatic Zero-Click Rep Log Table -->
+        <div class="light-glass-card p-6 rounded-3xl flex-1 flex flex-col">
+          <div class="flex items-center justify-between mb-4">
+            <h2 class="text-sm font-bold tracking-wide uppercase text-slate-500 flex items-center gap-2">
+              <i data-lucide="clipboard-list" class="w-4 h-4 text-emerald-600"></i> Zero-Click Set Log
+            </h2>
+            <button id="coachResetBtn" class="text-xs text-slate-500 hover:text-slate-800 font-semibold flex items-center gap-1">
+              <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i> Clear Log
+            </button>
+          </div>
+
+          <div class="overflow-x-auto max-h-56 overflow-y-auto">
+            <table class="w-full text-left">
+              <thead>
+                <tr class="border-b border-slate-200 text-[10px] font-mono text-slate-400 uppercase tracking-wider">
+                  <th class="pb-2 px-3">Rep</th>
+                  <th class="pb-2 px-3">Mean Vel</th>
+                  <th class="pb-2 px-3">Peak Vel</th>
+                  <th class="pb-2 px-3">Loss</th>
+                  <th class="pb-2 px-3">RPE</th>
+                </tr>
+              </thead>
+              <tbody id="dashboardRepLogBody">
+                <tr class="border-b border-slate-100 hover:bg-sky-50/50 transition-colors text-xs font-mono">
+                  <td class="py-2.5 px-3 font-bold text-slate-900">Rep #1</td>
+                  <td class="py-2.5 px-3 text-sky-600 font-bold">0.68 m/s</td>
+                  <td class="py-2.5 px-3 text-slate-700">0.82 m/s</td>
+                  <td class="py-2.5 px-3 text-emerald-600 font-semibold">0.0%</td>
+                  <td class="py-2.5 px-3 font-bold text-amber-600">RPE 6.5</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="mt-auto pt-4 border-t border-slate-100 flex items-center justify-between text-xs">
+            <span class="text-slate-500">Auto-logged via kinematic camera inflection</span>
+            <a href="analytics.html" class="text-sky-600 hover:text-sky-700 font-bold flex items-center gap-1">
+              View VBT Regression <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+            </a>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- =========================================================================
+       FOOTER
+       ========================================================================= -->
+  <footer class="mt-12 py-6 border-t border-slate-200 light-glass">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
+      <div class="flex items-center gap-2">
+        <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+        <span>Clinical AI Vision Engine Active • Single-Athlete Re-ID 99.4%</span>
+      </div>
+      <div class="flex items-center gap-4 font-semibold">
+        <a href="dashboard.html" class="text-sky-600 hover:underline">Studio Console</a>
+        <a href="wearables.html" class="hover:underline">Wearables Lab</a>
+        <a href="analytics.html" class="hover:underline">VBT Analytics</a>
+        <a href="periodization.html" class="hover:underline">Mesocycle Planner</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/ble-heartrate.js"></script>
+  <script src="js/ai-coach.js"></script>
+  <script src="js/anime-engine.js"></script>
+  <script>
+    if (window.lucide) {
+      window.lucide.createIcons();
+    }
+  </script>
+</body>
+</html>

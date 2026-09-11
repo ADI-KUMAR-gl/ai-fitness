@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>APEX AI — Dynamic Mesocycle & Periodization Planner</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Anime.js CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=JetBrains+Mono:wght@400;500;700&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="min-h-screen text-slate-900 antialiased flex flex-col justify-between">
+
+  <!-- =========================================================================
+       GLOBAL NAVIGATION HEADER
+       ========================================================================= -->
+  <header class="sticky top-0 z-50 light-glass border-b border-slate-200/80">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-18 flex items-center justify-between">
+      
+      <!-- Brand Logo -->
+      <a href="index.html" class="flex items-center gap-3 group">
+        <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-purple-600 via-indigo-500 to-sky-400 flex items-center justify-center text-white shadow-md shadow-purple-500/20 group-hover:scale-105 transition-transform">
+          <i data-lucide="calendar-days" class="w-5 h-5 text-white"></i>
+        </div>
+        <div>
+          <span class="font-display text-2xl tracking-wider text-slate-900 block leading-none">APEX <span class="text-purple-600">MESO</span></span>
+          <span class="text-[10px] font-mono font-bold tracking-widest text-slate-500 uppercase">Adaptive Periodization</span>
+        </div>
+      </a>
+
+      <!-- Desktop Nav Links -->
+      <nav class="hidden md:flex items-center gap-1.5 p-1 rounded-2xl bg-slate-100/80 border border-slate-200/80">
+        <a href="index.html" data-nav-link class="px-4 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:text-slate-900 transition-colors">Overview</a>
+        <a href="dashboard.html" data-nav-link class="px-4 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:text-slate-900 transition-colors">Studio Console</a>
+        <a href="wearables.html" data-nav-link class="px-4 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:text-slate-900 transition-colors">Wearables Lab</a>
+        <a href="analytics.html" data-nav-link class="px-4 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:text-slate-900 transition-colors">VBT Analytics</a>
+        <a href="periodization.html" data-nav-link class="px-4 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:text-slate-900 transition-colors">Mesocycle Planner</a>
+      </nav>
+
+      <div class="flex items-center gap-3">
+        <span class="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-purple-50 border border-purple-200 text-purple-800 text-xs font-mono font-bold">
+          <i data-lucide="git-branch" class="w-3.5 h-3.5 text-purple-600"></i> Auto-Regulation Active
+        </span>
+
+        <button id="mobileMenuToggle" class="md:hidden p-2 rounded-xl border border-slate-200 text-slate-600 hover:bg-slate-100">
+          <i data-lucide="menu" class="w-5 h-5"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer -->
+  <div id="mobileNavDrawer" class="hidden fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-sm flex justify-end">
+    <div class="w-72 bg-white h-full p-6 shadow-2xl flex flex-col justify-between">
+      <div>
+        <div class="flex items-center justify-between pb-6 border-b border-slate-100">
+          <span class="font-display text-xl">APEX SUITE</span>
+          <button id="mobileNavClose" class="p-1 rounded-lg text-slate-400 hover:text-slate-700"><i data-lucide="x" class="w-5 h-5"></i></button>
+        </div>
+        <nav class="mt-6 flex flex-col gap-2">
+          <a href="index.html" class="px-4 py-3 rounded-xl text-sm font-semibold text-slate-700 hover:bg-slate-100">Overview</a>
+          <a href="dashboard.html" class="px-4 py-3 rounded-xl text-sm font-semibold text-slate-700 hover:bg-slate-100">Studio Console</a>
+          <a href="wearables.html" class="px-4 py-3 rounded-xl text-sm font-semibold text-slate-700 hover:bg-slate-100">Wearables Lab</a>
+          <a href="analytics.html" class="px-4 py-3 rounded-xl text-sm font-semibold text-slate-700 hover:bg-slate-100">VBT Analytics</a>
+          <a href="periodization.html" class="px-4 py-3 rounded-xl text-sm font-semibold text-purple-600 bg-purple-50 font-bold">Mesocycle Planner</a>
+        </nav>
+      </div>
+      <div class="text-xs text-slate-400 font-mono text-center">Auto-Regulated Mesocycle</div>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       MAIN PERIODIZATION WORKSPACE
+       ========================================================================= -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
+    
+    <!-- Top Action Banner -->
+    <div class="light-glass-card p-6 rounded-3xl mb-8 flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+      <div>
+        <div class="flex items-center gap-2 mb-1">
+          <span class="px-2.5 py-0.5 rounded-full bg-purple-50 text-purple-700 border border-purple-300 text-[10px] font-mono font-bold">
+            DYNAMIC 4-WEEK PROTOCOL
+          </span>
+          <span class="text-xs text-slate-500 font-mono">Real-Time CNS Auto-Regulation</span>
+        </div>
+        <h1 class="text-2xl sm:text-3xl font-bold tracking-tight text-slate-900">Adaptive Mesocycle Planner</h1>
+        <p class="text-xs sm:text-sm text-slate-500 mt-1 max-w-2xl">
+          Static 12-week spreadsheets lead to overtraining. APEX dynamically rewires upcoming sets, reps, and loads whenever cardiac HRV drops or barbell velocity collapses.
+        </p>
+      </div>
+
+      <!-- Fatigue Simulator Toggle -->
+      <div class="flex flex-col sm:flex-row items-start sm:items-center gap-3">
+        <div class="p-1 rounded-2xl bg-slate-100 border border-slate-200 flex items-center gap-1">
+          <button id="fatigueBtnNormal" class="px-3 py-1.5 rounded-xl bg-white text-slate-800 font-bold text-xs shadow-sm">
+            Optimal Readiness
+          </button>
+          <button id="fatigueBtnFatigued" class="px-3 py-1.5 rounded-xl text-slate-600 hover:text-slate-900 font-semibold text-xs">
+            High CNS Fatigue (Simulate)
+          </button>
+        </div>
+        <button id="exportProtocolBtn" class="px-4 py-2 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-bold text-xs shadow-sm transition flex items-center gap-1.5">
+          <i data-lucide="download" class="w-3.5 h-3.5"></i> Export Protocol
+        </button>
+      </div>
+    </div>
+
+    <!-- Auto-Regulation Status Alert (Shows when high fatigue is simulated) -->
+    <div id="autoDeloadAlert" class="hidden light-glass-card border-l-4 border-l-rose-500 p-4 rounded-2xl mb-8 flex items-center justify-between gap-4">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-rose-50 border border-rose-200 flex items-center justify-center text-rose-600 shrink-0">
+          <i data-lucide="alert-triangle" class="w-5 h-5"></i>
+        </div>
+        <div class="text-xs">
+          <span class="font-bold text-rose-900 block">Auto-Regulation Compensatory Deload Triggered</span>
+          <span class="text-slate-600">Autonomic HRV dropped below 42ms and velocity loss exceeded 22%. Volume targets reduced by 25% for the next 72 hours.</span>
+        </div>
+      </div>
+      <span class="px-3 py-1 rounded-full bg-rose-100 text-rose-800 text-[10px] font-mono font-bold shrink-0">REDUCED -25% VOLUME</span>
+    </div>
+
+    <!-- 4-Week Roadmap Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+      
+      <!-- Week 1: Accumulation -->
+      <div class="light-glass-card p-5 rounded-3xl border-t-4 border-t-sky-500 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-xs font-mono font-bold text-sky-700 uppercase">Week 1</span>
+            <span class="px-2 py-0.5 rounded-full bg-sky-50 text-sky-700 text-[10px] font-bold">COMPLETED</span>
+          </div>
+          <h3 class="font-bold text-slate-900 text-base">Accumulation Phase</h3>
+          <p class="text-xs text-slate-500 mt-1">High volume, moderate intensity base building.</p>
+        </div>
+        <div class="mt-4 pt-3 border-t border-slate-100 text-xs font-mono flex justify-between text-slate-600">
+          <span>Target: 16 Sets</span>
+          <span class="font-bold text-slate-800">RPE 7.0</span>
+        </div>
+      </div>
+
+      <!-- Week 2: Intensification (Current) -->
+      <div class="light-glass-card p-5 rounded-3xl border-t-4 border-t-purple-600 ring-glow-violet flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-xs font-mono font-bold text-purple-700 uppercase">Week 2</span>
+            <span class="px-2 py-0.5 rounded-full bg-purple-100 text-purple-800 text-[10px] font-bold">CURRENT ACTIVE</span>
+          </div>
+          <h3 class="font-bold text-slate-900 text-base">Intensification</h3>
+          <p class="text-xs text-slate-500 mt-1">Increasing load percentage while preserving bar velocity.</p>
+        </div>
+        <div class="mt-4 pt-3 border-t border-slate-100 text-xs font-mono flex justify-between text-slate-600">
+          <span id="week2SetsLabel">Target: 14 Sets</span>
+          <span id="week2RpeLabel" class="font-bold text-purple-700">RPE 8.0</span>
+        </div>
+      </div>
+
+      <!-- Week 3: Realization / Peaking -->
+      <div class="light-glass-card p-5 rounded-3xl border-t-4 border-t-emerald-500 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-xs font-mono font-bold text-emerald-700 uppercase">Week 3</span>
+            <span class="px-2 py-0.5 rounded-full bg-slate-100 text-slate-600 text-[10px] font-bold">SCHEDULED</span>
+          </div>
+          <h3 class="font-bold text-slate-900 text-base">Realization Peak</h3>
+          <p class="text-xs text-slate-500 mt-1">Peak force output and submaximal velocity testing.</p>
+        </div>
+        <div class="mt-4 pt-3 border-t border-slate-100 text-xs font-mono flex justify-between text-slate-600">
+          <span>Target: 10 Sets</span>
+          <span class="font-bold text-slate-800">RPE 9.0</span>
+        </div>
+      </div>
+
+      <!-- Week 4: Deload & Super-compensation -->
+      <div class="light-glass-card p-5 rounded-3xl border-t-4 border-t-amber-500 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-xs font-mono font-bold text-amber-700 uppercase">Week 4</span>
+            <span class="px-2 py-0.5 rounded-full bg-slate-100 text-slate-600 text-[10px] font-bold">PLANNED</span>
+          </div>
+          <h3 class="font-bold text-slate-900 text-base">Active Deload</h3>
+          <p class="text-xs text-slate-500 mt-1">Dissipating systemic fatigue for neuromuscular adaptation.</p>
+        </div>
+        <div class="mt-4 pt-3 border-t border-slate-100 text-xs font-mono flex justify-between text-slate-600">
+          <span>Target: 6 Sets</span>
+          <span class="font-bold text-slate-800">RPE 6.0</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Active Week Daily Schedule Timeline -->
+    <div class="light-glass-card p-6 rounded-3xl">
+      <div class="flex items-center justify-between mb-6">
+        <div>
+          <h2 class="text-base font-bold text-slate-900 flex items-center gap-2">
+            <i data-lucide="layers" class="w-5 h-5 text-purple-600"></i> Week 2 Daily Prescription
+          </h2>
+          <p class="text-xs text-slate-500">Each session prescribes target velocity (m/s) and auto-regulated load cutoffs.</p>
+        </div>
+        <span class="text-xs font-mono text-slate-400">Microcycle #08</span>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+        
+        <!-- Day 1: Heavy Squat -->
+        <div class="p-4 rounded-2xl bg-white border border-slate-200/80 flex flex-col justify-between">
+          <div>
+            <span class="text-[10px] font-mono font-bold text-sky-600 block mb-1">DAY 01 • LOWER STRENGTH</span>
+            <h4 class="font-bold text-slate-900 text-sm">Barbell Back Squat</h4>
+            <div class="mt-2 space-y-1 text-xs text-slate-600">
+              <div class="flex justify-between"><span>Sets × Reps:</span> <strong id="day1Sets">4 × 3</strong></div>
+              <div class="flex justify-between"><span>Velocity Target:</span> <strong class="text-sky-600 font-mono">0.45 m/s</strong></div>
+              <div class="flex justify-between"><span>Load %:</span> <strong class="font-mono">82.5% e1RM</strong></div>
+            </div>
+          </div>
+          <div class="mt-4 pt-2 border-t border-slate-100 text-[11px] text-slate-400 font-mono">Stop set if loss &gt; 15%</div>
+        </div>
+
+        <!-- Day 2: Upper Power Bench -->
+        <div class="p-4 rounded-2xl bg-white border border-slate-200/80 flex flex-col justify-between">
+          <div>
+            <span class="text-[10px] font-mono font-bold text-purple-600 block mb-1">DAY 02 • UPPER POWER</span>
+            <h4 class="font-bold text-slate-900 text-sm">Bench Press & Rows</h4>
+            <div class="mt-2 space-y-1 text-xs text-slate-600">
+              <div class="flex justify-between"><span>Sets × Reps:</span> <strong id="day2Sets">5 × 3</strong></div>
+              <div class="flex justify-between"><span>Velocity Target:</span> <strong class="text-purple-600 font-mono">0.65 m/s</strong></div>
+              <div class="flex justify-between"><span>Load %:</span> <strong class="font-mono">75.0% e1RM</strong></div>
+            </div>
+          </div>
+          <div class="mt-4 pt-2 border-t border-slate-100 text-[11px] text-slate-400 font-mono">Bar path tracking enabled</div>
+        </div>
+
+        <!-- Day 3: Deadlift & Posterior Chain -->
+        <div class="p-4 rounded-2xl bg-white border border-slate-200/80 flex flex-col justify-between">
+          <div>
+            <span class="text-[10px] font-mono font-bold text-emerald-600 block mb-1">DAY 03 • POSTERIOR CHAIN</span>
+            <h4 class="font-bold text-slate-900 text-sm">Conventional Deadlift</h4>
+            <div class="mt-2 space-y-1 text-xs text-slate-600">
+              <div class="flex justify-between"><span>Sets × Reps:</span> <strong id="day3Sets">3 × 3</strong></div>
+              <div class="flex justify-between"><span>Velocity Target:</span> <strong class="text-emerald-600 font-mono">0.50 m/s</strong></div>
+              <div class="flex justify-between"><span>Load %:</span> <strong class="font-mono">80.0% e1RM</strong></div>
+            </div>
+          </div>
+          <div class="mt-4 pt-2 border-t border-slate-100 text-[11px] text-slate-400 font-mono">Lumbar flexion lock on</div>
+        </div>
+
+        <!-- Day 4: Cardiac Flush -->
+        <div class="p-4 rounded-2xl bg-emerald-50/50 border border-emerald-200/80 flex flex-col justify-between">
+          <div>
+            <span class="text-[10px] font-mono font-bold text-emerald-700 block mb-1">DAY 04 • AUTONOMIC FLUSH</span>
+            <h4 class="font-bold text-slate-900 text-sm">Zone 2 Cardiac Flush</h4>
+            <div class="mt-2 space-y-1 text-xs text-slate-600">
+              <div class="flex justify-between"><span>Duration:</span> <strong>35 mins</strong></div>
+              <div class="flex justify-between"><span>Target HR:</span> <strong class="text-emerald-700 font-mono">130–140 BPM</strong></div>
+              <div class="flex justify-between"><span>Focus:</span> <strong>Mitochondrial Base</strong></div>
+            </div>
+          </div>
+          <div class="mt-4 pt-2 border-t border-emerald-200 text-[11px] text-emerald-700 font-mono">Accelerates HRV recovery</div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- =========================================================================
+       FOOTER
+       ========================================================================= -->
+  <footer class="mt-12 py-6 border-t border-slate-200 light-glass">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
+      <div class="flex items-center gap-2">
+        <span class="w-2 h-2 rounded-full bg-purple-500"></span>
+        <span>Adaptive Periodization Engine Active • Dynamic Deload Auto-Trigger</span>
+      </div>
+      <div class="flex items-center gap-4 font-semibold">
+        <a href="dashboard.html" class="hover:underline">Studio Console</a>
+        <a href="wearables.html" class="hover:underline">Wearables Lab</a>
+        <a href="analytics.html" class="hover:underline">VBT Analytics</a>
+        <a href="periodization.html" class="text-purple-600 hover:underline">Mesocycle Planner</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/anime-engine.js"></script>
+  <script>
+    if (window.lucide) window.lucide.createIcons();
+
+    // Fatigue Simulation Logic
+    const normalBtn = document.getElementById('fatigueBtnNormal');
+    const fatigueBtn = document.getElementById('fatigueBtnFatigued');
+    const alertBox = document.getElementById('autoDeloadAlert');
+    const exportBtn = document.getElementById('exportProtocolBtn');
+
+    const day1Sets = document.getElementById('day1Sets');
+    const day2Sets = document.getElementById('day2Sets');
+    const day3Sets = document.getElementById('day3Sets');
+    const week2SetsLabel = document.getElementById('week2SetsLabel');
+    const week2RpeLabel = document.getElementById('week2RpeLabel');
+
+    if (fatigueBtn && normalBtn) {
+      fatigueBtn.addEventListener('click', () => {
+        fatigueBtn.className = 'px-3 py-1.5 rounded-xl bg-rose-600 text-white font-bold text-xs shadow-sm';
+        normalBtn.className = 'px-3 py-1.5 rounded-xl text-slate-600 hover:text-slate-900 font-semibold text-xs';
+        alertBox.classList.remove('hidden');
+
+        // Dynamically adjust prescriptions
+        day1Sets.textContent = '3 × 3 (Deloaded -1 Set)';
+        day2Sets.textContent = '4 × 3 (Deloaded -1 Set)';
+        day3Sets.textContent = '2 × 3 (Deloaded -1 Set)';
+        week2SetsLabel.textContent = 'Target: 10 Sets (Deloaded)';
+        week2RpeLabel.textContent = 'RPE 7.0';
+      });
+
+      normalBtn.addEventListener('click', () => {
+        normalBtn.className = 'px-3 py-1.5 rounded-xl bg-white text-slate-800 font-bold text-xs shadow-sm';
+        fatigueBtn.className = 'px-3 py-1.5 rounded-xl text-slate-600 hover:text-slate-900 font-semibold text-xs';
+        alertBox.classList.add('hidden');
+
+        // Restore normal prescriptions
+        day1Sets.textContent = '4 × 3';
+        day2Sets.textContent = '5 × 3';
+        day3Sets.textContent = '3 × 3';
+        week2SetsLabel.textContent = 'Target: 14 Sets';
+        week2RpeLabel.textContent = 'RPE 8.0';
+      });
+    }
+
+    if (exportBtn) {
+      exportBtn.addEventListener('click', () => {
+        window.print();
+      });
+    }
+  </script>
+</body>
+</html>
