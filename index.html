@@ -19,6 +19,10 @@
   <!-- Anime.js CDN -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
 
+  <!-- TensorFlow.js & PoseNet for Live AI Body Tracking -->
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@3.18.0/dist/tf.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/posenet@2.2.2/dist/posenet.min.js"></script>
+
   <!-- Luminous Opal Custom Stylesheet -->
   <link rel="stylesheet" href="css/styles.css">
 </head>
@@ -47,11 +51,13 @@
 
       <!-- Desktop Nav Links -->
       <nav class="hidden md:flex items-center gap-1.5 p-1 rounded-2xl bg-slate-100/80 border border-slate-200/80">
-        <a href="index.html" data-nav-link class="px-4 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:text-slate-900 transition-colors">Overview</a>
-        <a href="dashboard.html" data-nav-link class="px-4 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:text-slate-900 transition-colors">Studio Console</a>
-        <a href="wearables.html" data-nav-link class="px-4 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:text-slate-900 transition-colors">Wearables Lab</a>
-        <a href="analytics.html" data-nav-link class="px-4 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:text-slate-900 transition-colors">VBT Analytics</a>
-        <a href="periodization.html" data-nav-link class="px-4 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:text-slate-900 transition-colors">Mesocycle Planner</a>
+        <a href="index.html" data-nav-link class="px-3.5 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:text-slate-900 transition-colors">Overview</a>
+        <a href="dashboard.html" data-nav-link class="px-3.5 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:text-slate-900 transition-colors">Studio Console</a>
+        <a href="wearables.html" data-nav-link class="px-3.5 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:text-slate-900 transition-colors">Wearables Lab</a>
+        <a href="analytics.html" data-nav-link class="px-3.5 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:text-slate-900 transition-colors">VBT Analytics</a>
+        <a href="periodization.html" data-nav-link class="px-3.5 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:text-slate-900 transition-colors">Mesocycle</a>
+        <a href="presentation.html" target="_blank" class="px-3 py-1.5 rounded-xl text-xs font-semibold text-sky-700 bg-sky-50 hover:bg-sky-100 transition-colors flex items-center gap-1"><i data-lucide="presentation" class="w-3.5 h-3.5"></i> PPT Deck</a>
+        <a href="project_report.html" target="_blank" class="px-3 py-1.5 rounded-xl text-xs font-semibold text-emerald-700 bg-emerald-50 hover:bg-emerald-100 transition-colors flex items-center gap-1"><i data-lucide="file-text" class="w-3.5 h-3.5"></i> Report (PDF)</a>
       </nav>
 
       <!-- Launch Studio CTA & Mobile Drawer Toggle -->
@@ -81,6 +87,8 @@
           <a href="wearables.html" class="px-4 py-3 rounded-xl text-sm font-semibold text-slate-700 hover:bg-slate-100">Wearables Lab</a>
           <a href="analytics.html" class="px-4 py-3 rounded-xl text-sm font-semibold text-slate-700 hover:bg-slate-100">VBT Analytics</a>
           <a href="periodization.html" class="px-4 py-3 rounded-xl text-sm font-semibold text-slate-700 hover:bg-slate-100">Mesocycle Planner</a>
+          <a href="presentation.html" target="_blank" class="px-4 py-3 rounded-xl text-sm font-semibold text-sky-700 bg-sky-50 hover:bg-sky-100 flex items-center gap-2"><i data-lucide="presentation" class="w-4 h-4"></i> PPT Presentation Deck</a>
+          <a href="project_report.html" target="_blank" class="px-4 py-3 rounded-xl text-sm font-semibold text-emerald-700 bg-emerald-50 hover:bg-emerald-100 flex items-center gap-2"><i data-lucide="file-text" class="w-4 h-4"></i> Academic Report (PDF)</a>
         </nav>
       </div>
       <div class="text-xs text-slate-400 font-mono text-center">Luminous Opal v3.4</div>
@@ -125,20 +133,22 @@
         <div class="light-glass-card p-5 rounded-3xl dashboard-card anti-gravity-card flex flex-col justify-between">
           <div class="flex items-center justify-between mb-3">
             <span class="text-[11px] font-bold text-sky-800 uppercase tracking-wide">Computer Vision</span>
-            <span class="px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 text-[10px] font-mono font-bold">LOCKED</span>
+            <span class="px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 text-[10px] font-mono font-bold flex items-center">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse mr-1"></span> LOCKED
+            </span>
           </div>
-          <div class="relative bg-slate-950 rounded-2xl aspect-[4/3] overflow-hidden flex items-center justify-center border border-slate-800">
+          <div class="relative bg-slate-950 rounded-2xl aspect-[4/3] overflow-hidden flex items-center justify-center border border-slate-800 shadow-inner">
             <div class="hud-radar-line"></div>
             <!-- Target Lock holographic corners -->
-            <div class="absolute inset-4 border border-emerald-400/80 rounded-lg pointer-events-none flex flex-col justify-between p-2 shadow-[0_0_12px_rgba(16,185,129,0.4)]">
+            <div class="absolute inset-3 border border-emerald-400/80 rounded-lg pointer-events-none flex flex-col justify-between p-2 shadow-[0_0_12px_rgba(16,185,129,0.4)] z-10">
               <span class="text-[9px] font-mono text-emerald-400 font-bold">TARGET: ATHLETE #01</span>
-              <span class="text-[9px] font-mono text-sky-400 self-end">v: 0.54 m/s</span>
+              <span class="text-[9px] font-mono text-sky-400 self-end">v: <span id="homeBarVelocity">0.54</span> m/s</span>
             </div>
-            <i data-lucide="user" class="w-16 h-16 text-slate-700"></i>
+            <canvas id="homeCoachCanvas" class="w-full h-full object-cover"></canvas>
           </div>
           <div class="mt-3 flex items-center justify-between text-xs">
-            <span class="text-slate-500 font-mono">Re-ID Confidence</span>
-            <span class="font-mono font-bold text-emerald-600">99.4%</span>
+            <span class="text-slate-500 font-mono">Live Reps: <span id="homeRepCount" class="font-bold text-slate-800">0</span></span>
+            <span class="font-mono font-bold text-emerald-600">Re-ID 99.4%</span>
           </div>
         </div>
 
@@ -390,16 +400,20 @@
         <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
         <span>APEX AI Suite v3.4 • Multi-Page Clinical Platform Active</span>
       </div>
-      <div class="flex items-center gap-6 font-semibold">
+      <div class="flex flex-wrap items-center gap-5 font-semibold">
         <a href="dashboard.html" class="hover:underline">Studio Console</a>
         <a href="wearables.html" class="hover:underline">Wearables Lab</a>
         <a href="analytics.html" class="hover:underline">VBT Analytics</a>
         <a href="periodization.html" class="hover:underline">Mesocycle Planner</a>
+        <a href="presentation.html" target="_blank" class="text-sky-600 hover:underline flex items-center gap-1"><i data-lucide="presentation" class="w-3.5 h-3.5"></i> PPT Slides</a>
+        <a href="project_report.html" target="_blank" class="text-emerald-600 hover:underline flex items-center gap-1"><i data-lucide="file-text" class="w-3.5 h-3.5"></i> Report (PDF)</a>
       </div>
     </div>
   </footer>
 
   <!-- Scripts -->
+  <script src="js/ble-heartrate.js"></script>
+  <script src="js/ai-coach.js"></script>
   <script src="js/anime-engine.js"></script>
   <script>
     if (window.lucide) {

@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>APEX AI FITNESS — Project Work Evaluation & Research Report</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap');
+
+    @page {
+      size: A4;
+      margin: 18mm 16mm 18mm 16mm;
+      @bottom-right {
+        content: counter(page);
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 9pt;
+        color: #64748b;
+      }
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+    }
+
+    body {
+      font-family: 'Outfit', sans-serif;
+      color: #0f172a;
+      line-height: 1.5;
+      font-size: 10.5pt;
+      margin: 0;
+      padding: 0;
+      background: #ffffff;
+    }
+
+    .page {
+      page-break-after: always;
+      position: relative;
+    }
+
+    .page:last-child {
+      page-break-after: avoid;
+    }
+
+    /* Cover Page */
+    .cover-page {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 96vh;
+      border: 2px solid #e2e8f0;
+      padding: 40px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+    }
+
+    .cover-badge {
+      display: inline-block;
+      padding: 6px 14px;
+      background: #e0f2fe;
+      border: 1px solid #7dd3fc;
+      border-radius: 20px;
+      color: #0369a1;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9pt;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .cover-title {
+      font-size: 34pt;
+      font-weight: 800;
+      line-height: 1.1;
+      color: #0f172a;
+      margin-top: 20px;
+      margin-bottom: 12px;
+    }
+
+    .cover-title span {
+      color: #0284c7;
+    }
+
+    .cover-subtitle {
+      font-size: 14pt;
+      color: #475569;
+      font-weight: 400;
+      line-height: 1.4;
+      max-width: 90%;
+    }
+
+    .cover-meta-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 40px;
+      padding-top: 24px;
+      border-top: 1.5px solid #e2e8f0;
+    }
+
+    .meta-item {
+      font-size: 9.5pt;
+    }
+
+    .meta-item strong {
+      display: block;
+      color: #64748b;
+      font-size: 8pt;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 2px;
+    }
+
+    .meta-item span {
+      font-weight: 600;
+      color: #0f172a;
+    }
+
+    /* Headings */
+    h1 {
+      font-size: 20pt;
+      font-weight: 800;
+      color: #0f172a;
+      border-bottom: 2px solid #0284c7;
+      padding-bottom: 8px;
+      margin-top: 0;
+      margin-bottom: 16px;
+    }
+
+    h2 {
+      font-size: 14pt;
+      font-weight: 700;
+      color: #0369a1;
+      margin-top: 20px;
+      margin-bottom: 8px;
+    }
+
+    h3 {
+      font-size: 11.5pt;
+      font-weight: 700;
+      color: #0f172a;
+      margin-top: 14px;
+      margin-bottom: 6px;
+    }
+
+    p {
+      margin-top: 0;
+      margin-bottom: 10px;
+      color: #334155;
+      text-align: justify;
+    }
+
+    /* Callout Card */
+    .callout-card {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-left: 4px solid #0284c7;
+      padding: 12px 16px;
+      border-radius: 6px;
+      margin-bottom: 16px;
+    }
+
+    .callout-card.emerald {
+      border-left-color: #10b981;
+      background: #f0fdf4;
+    }
+
+    .callout-card.amber {
+      border-left-color: #f59e0b;
+      background: #fffbeb;
+    }
+
+    .callout-title {
+      font-weight: 700;
+      font-size: 10pt;
+      color: #0f172a;
+      margin-bottom: 4px;
+    }
+
+    /* Tables */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+      margin-bottom: 16px;
+      font-size: 9pt;
+    }
+
+    th {
+      background: #f1f5f9;
+      color: #0f172a;
+      font-weight: 700;
+      text-align: left;
+      padding: 8px 10px;
+      border: 1px solid #cbd5e1;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 8.5pt;
+    }
+
+    td {
+      padding: 7px 10px;
+      border: 1px solid #e2e8f0;
+      color: #334155;
+      vertical-align: top;
+    }
+
+    tr:nth-child(even) {
+      background: #f8fafc;
+    }
+
+    /* Code & Formulas */
+    .formula-box {
+      background: #0f172a;
+      color: #38bdf8;
+      font-family: 'JetBrains Mono', monospace;
+      padding: 10px 14px;
+      border-radius: 6px;
+      font-size: 9.5pt;
+      margin: 10px 0;
+      border: 1px solid #1e293b;
+    }
+
+    .formula-box span {
+      color: #10b981;
+    }
+
+    /* Architecture Block */
+    .arch-diagram {
+      background: #090e17;
+      color: #e2e8f0;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 8pt;
+      line-height: 1.25;
+      padding: 14px;
+      border-radius: 8px;
+      white-space: pre;
+      margin: 12px 0;
+      border: 1px solid #1e293b;
+    }
+
+    .tag {
+      display: inline-block;
+      padding: 2px 7px;
+      border-radius: 4px;
+      font-size: 7.5pt;
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 700;
+    }
+    .tag-blue { background: #e0f2fe; color: #0369a1; }
+    .tag-green { background: #dcfce7; color: #15803d; }
+    .tag-purple { background: #f3e8ff; color: #7e22ce; }
+    .tag-amber { background: #fef3c7; color: #b45309; }
+  </style>
+</head>
+<body>
+
+  <!-- =========================================================================
+       PAGE 1: COVER PAGE
+       ========================================================================= -->
+  <div class="page">
+    <div class="cover-page">
+      <div>
+        <span class="cover-badge">Academic Project Work Evaluation • Spring 2026</span>
+        <div class="cover-title">APEX <span>AI FITNESS</span></div>
+        <div class="cover-subtitle">
+          Next-Generation Clinical AI & Biomechanical Platform Featuring Single-Athlete Optical Lock, Direct Web Bluetooth Cardiac Telemetry, and Velocity-Based Training.
+        </div>
+      </div>
+
+      <div>
+        <div class="callout-card" style="margin-bottom: 20px;">
+          <div class="callout-title">🎯 Executive Project Summary (30-Second Elevator Pitch)</div>
+          <p style="margin: 0; font-size: 9.5pt;">
+            Current fitness apps suffer from three fatal flaws: they require tedious manual set logging, computer vision cameras fail in crowded gyms when bystanders walk by, and testing maximal 1-Rep Max (1RM) causes acute spinal injuries. <strong>APEX AI Fitness</strong> solves these gaps by introducing: <strong>(1)</strong> A Single-Athlete Optical Lock with IoU crowd rejection, <strong>(2)</strong> Direct browser-to-watch Web Bluetooth sync (GATT 0x180D) with real-time P-QRS-T ECG sweep, and <strong>(3)</strong> Submaximal Linear Regression ($v = m \cdot L + c$) predicting true 1RM without any maximal injury risk.
+          </p>
+        </div>
+
+        <div class="cover-meta-grid">
+          <div class="meta-item">
+            <strong>Project Title</strong>
+            <span>APEX AI Fitness (Clinical Suite)</span>
+          </div>
+          <div class="meta-item">
+            <strong>Candidate / Team Lead</strong>
+            <span>Aditya Kumar (ADI-KUMAR-gl)</span>
+          </div>
+          <div class="meta-item">
+            <strong>Evaluation Categories</strong>
+            <span>Research-Based & Full-Stack Development</span>
+          </div>
+          <div class="meta-item">
+            <strong>Live Prototype & Repository</strong>
+            <span>github.com/ADI-KUMAR-gl/ai-fitness</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       PAGE 2: RESEARCH-BASED DELIVERABLES
+       ========================================================================= -->
+  <div class="page">
+    <h1>1. Research-Based Deliverables</h1>
+
+    <h2>1.1 Global Literature Review</h2>
+    <p>
+      Over the past decade, sports biomechanics and computer vision have progressed along distinct, fragmented vectors:
+    </p>
+    <ul>
+      <li><strong>Human Pose Estimation Models (Google MediaPipe, OpenPose, AlphaPose)</strong>: While Deep Neural Networks have enabled robust 2D/3D skeletal keypoint localization in controlled environments, existing implementations assume a single isolated subject or collapse when visual occlusion occurs in dynamic settings.</li>
+      <li><strong>Linear Position Transducers & Accelerometers (GymAware, Vitruve, Tendo Units)</strong>: Athletic laboratories rely on \$2,000+ tethered hardware transducers to measure mean concentric barbell velocity ($m/s$). These are physically cumbersome, expensive, and unavailable to normal trainees.</li>
+      <li><strong>Commercial Cardiac Telemetry (Whoop, Apple HealthKit, Polar Flow)</strong>: Wearables monitor heart rate and Heart Rate Variability (HRV), but store this data within closed, proprietary mobile silos that cannot natively communicate with real-time gym vision feeds.</li>
+      <li><strong>Velocity-Based Training (VBT) Clinical Foundation (González-Badillo et al., 2017; Dr. Bryan Mann)</strong>: Exercise physiology has demonstrated that barbell concentric velocity has an extraordinarily tight linear correlation ($R^2 > 0.98$) with relative percentage of 1RM, establishing that 1RM can be mathematically modeled submaximally.</li>
+    </ul>
+
+    <h2>1.2 Identification of Critical Research Gaps</h2>
+    <div class="callout-card amber">
+      <div class="callout-title">Identified Research Gaps in Existing Fitness Technology:</div>
+      <p style="margin:0; font-size: 9.5pt;">
+        <strong>Gap 1 (Crowd Occlusion)</strong>: Multi-person tracking confusion in commercial gyms where background gymgoers corrupt kinematic calculations.<br>
+        <strong>Gap 2 (Catastrophic 1RM Injury Risk)</strong>: Traditional strength programs mandate lifting to physical failure, generating excessive spinal shear stress.<br>
+        <strong>Gap 3 (Hardware Data Silos)</strong>: Inability to capture live raw ECG/PPG cardiac streams directly inside web browsers without proprietary native SDKs.<br>
+        <strong>Gap 4 (Static Periodization)</strong>: Rigid 12-week static spreadsheets ignoring autonomic central nervous system (CNS) fatigue.
+      </p>
+    </div>
+
+    <h2>1.3 Proposed Solution & Mathematical Model</h2>
+    <p>
+      APEX synthesizes computer vision with least-squares mathematical modeling and Web Bluetooth GATT streams:
+    </p>
+
+    <h3>A. Single-Athlete Optical Re-ID & IoU Crowd Rejection</h3>
+    <p>
+      The camera engine establishes an optical centroid anchor on the primary foreground athlete ($A_1$). For any peripheral subject ($B_k$), the engine computes the Intersection over Union ($IoU$) against the focal tracking anchor:
+    </p>
+    <div class="formula-box">
+      IoU(A_1, B_k) = \frac{\text{Area}(A_1 \cap B_k)}{\text{Area}(A_1 \cup B_k)} \quad \implies \quad \text{If } IoU < 0.20 \implies \text{FILTER / DISMISS BYSTANDER}
+    </div>
+
+    <h3>B. Submaximal 1RM Linear Regression Equation</h3>
+    <p>
+      During submaximal warm-up sets (3–4 sets between 50%–80% load), the system computes the least-squares linear velocity profile:
+    </p>
+    <div class="formula-box">
+      v = m \cdot L + c \quad \text{where } m = \frac{N\sum(xy) - \sum x \sum y}{N\sum x^2 - (\sum x)^2}
+    </div>
+    <p>
+      At the calibrated <strong>Minimum Velocity Threshold (MVT)</strong> (Squat: $0.18\text{ m/s}$, Bench: $0.15\text{ m/s}$, Deadlift: $0.12\text{ m/s}$), true 1RM is solved directly without lifting to failure:
+    </p>
+    <div class="formula-box">
+      \text{e1RM} = \frac{\text{MVT} - c}{m} \quad \text{with Goodness-of-Fit } R^2 = 1 - \frac{SS_{\text{res}}}{SS_{\text{tot}}} \ge 0.99
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       PAGE 3: FULL-STACK DEVELOPMENT DELIVERABLES
+       ========================================================================= -->
+  <div class="page">
+    <h1>2. Full-Stack Development Deliverables</h1>
+
+    <h2>2.1 User Requirements Specification</h2>
+    <table>
+      <thead>
+        <tr>
+          <th style="width: 15%;">Req ID</th>
+          <th style="width: 25%;">Category</th>
+          <th>Requirement Description & Validation Criteria</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>FR-01</strong></td>
+          <td>Vision Kinematics</td>
+          <td>Automatically detect barbell reversal inflection points and count reps without manual tapping.</td>
+        </tr>
+        <tr>
+          <td><strong>FR-02</strong></td>
+          <td>Spatial Occlusion</td>
+          <td>Isolate primary athlete with bounding brackets; render bystanders as muted, filtered wireframes.</td>
+        </tr>
+        <tr>
+          <td><strong>FR-03</strong></td>
+          <td>Bluetooth Sync</td>
+          <td>Connect browser to BLE watches/bands via GATT Service <span class="tag tag-blue">0x180D</span> for live BPM & RR-intervals.</td>
+        </tr>
+        <tr>
+          <td><strong>FR-04</strong></td>
+          <td>Cardiac Scope</td>
+          <td>Render real-time 60 FPS P-QRS-T electrocardiogram oscilloscope sweep on HTML5 Canvas.</td>
+        </tr>
+        <tr>
+          <td><strong>FR-05</strong></td>
+          <td>VBT Analytics</td>
+          <td>Compute linear regression curve ($v = m \cdot L + c$) and extrapolate submaximal e1RM dynamically.</td>
+        </tr>
+        <tr>
+          <td><strong>FR-06</strong></td>
+          <td>Auto-Deload</td>
+          <td>Dynamically adjust mesocycle set volumes by -25% when high CNS fatigue / low HRV is detected.</td>
+        </tr>
+        <tr>
+          <td><strong>NFR-01</strong></td>
+          <td>Inference Latency</td>
+          <td>Pose keypoint tracking and bar velocity calculation must maintain latency &lt; 50ms.</td>
+        </tr>
+        <tr>
+          <td><strong>NFR-02</strong></td>
+          <td>Privacy by Design</td>
+          <td>100% client-side execution. Zero camera frames or biometric data leave the local machine.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>2.2 Agile User Stories & Acceptance Criteria</h2>
+    <div class="callout-card">
+      <div class="callout-title"><span class="tag tag-green">US-01</span> Athlete Target Lock in Crowded Spaces</div>
+      <p style="margin: 0; font-size: 9pt;">
+        <strong>As an</strong> athlete training in a crowded commercial gym,<br>
+        <strong>I want</strong> the camera vision to lock onto my body and ignore passersby,<br>
+        <strong>So that</strong> my workout velocity and reps are calculated without crowd interference.<br>
+        <em>Acceptance Criteria</em>: Displays glowing reticle <code>TARGET LOCKED: ATHLETE #01 (99.4%)</code> and ignores background bystanders.
+      </p>
+    </div>
+
+    <div class="callout-card">
+      <div class="callout-title"><span class="tag tag-blue">US-02</span> Direct Browser Wearable Pairing & ECG Oscilloscope</div>
+      <p style="margin: 0; font-size: 9pt;">
+        <strong>As a</strong> trainee with an Apple Watch, Polar, or Garmin band,<br>
+        <strong>I want</strong> to connect via Bluetooth directly in Chrome/Edge without installing extra apps,<br>
+        <strong>So that</strong> I can monitor live heart rate, 5 cardiac zones, and my 60-second recovery drop.<br>
+        <em>Acceptance Criteria</em>: Connects over Web Bluetooth <code>0x180D</code>, draws 60 FPS P-QRS-T sweep, calculates HRV.
+      </p>
+    </div>
+
+    <div class="callout-card">
+      <div class="callout-title"><span class="tag tag-purple">US-03</span> Submaximal 1RM Prediction & VBT Fatigue Stop</div>
+      <p style="margin: 0; font-size: 9pt;">
+        <strong>As a</strong> strength athlete,<br>
+        <strong>I want</strong> to predict my daily 1RM from warmup velocity without lifting to physical failure,<br>
+        <strong>So that</strong> I avoid acute tendon tears and overtraining.<br>
+        <em>Acceptance Criteria</em>: Fits regression line with $R^2 \ge 0.99$ and alerts lifter when velocity loss exceeds 20%.
+      </p>
+    </div>
+
+    <h2>2.3 Multi-Tier System Architecture</h2>
+    <div class="arch-diagram">
+┌────────────────────────────────────────────────────────────────────────────────────────┐
+│                                PRESENTATION LAYER (UI)                                 │
+│   • index.html (Hub)            • dashboard.html (Vision Studio)                       │
+│   • wearables.html (Biometrics) • analytics.html (VBT Lab)      • periodization.html   │
+│   • styles.css (Luminous Opal & Prismatic Neon Glassmorphism)   • Anime.js Physics     │
+└───────────────────────────────────────────┬────────────────────────────────────────────┘
+                                            │ Telemetry Events
+┌───────────────────────────────────────────▼────────────────────────────────────────────┐
+│                             BIOMECHANICAL ENGINE & SENSORS                             │
+│   ┌───────────────────────────────────┐    ┌──────────────────────────────────────┐    │
+│   │ js/ai-coach.js                    │    │ js/ble-heartrate.js                  │    │
+│   │ • Optical Centroid Re-ID          │    │ • Web Bluetooth GATT 0x180D Client   │    │
+│   │ • IoU Crowd Bystander Rejection   │    │ • 60 FPS P-QRS-T ECG Canvas Sweep    │    │
+│   │ • Bar Path Vertical Curvature     │    │ • 5-Zone Cardiac Distribution        │    │
+│   │ • Zero-Click Set Log Table        │    │ • 60s Autonomic Vagal Recovery Test  │    │
+│   └───────────────────────────────────┘    └──────────────────────────────────────┘    │
+│   ┌───────────────────────────────────┐    ┌──────────────────────────────────────┐    │
+│   │ js/vbt-analytics.js               │    │ js/anime-engine.js                   │    │
+│   │ • Linear Least-Squares Solver     │    │ • Out-of-Phase Floating Loop         │    │
+│   │ • MVT Cutoff Extrapolator         │    │ • Decimal Metric Interpolation       │    │
+│   │ • Interactive SVG Coordinate Plot │    │ • Tactile Spring Physics Buttons     │    │
+│   └───────────────────────────────────┘    └──────────────────────────────────────┘    │
+└───────────────────────────────────────────┬────────────────────────────────────────────┘
+                                            │ Low-Level Hardware APIs
+┌───────────────────────────────────────────▼────────────────────────────────────────────┐
+│                           BROWSER RUNTIME & HARDWARE LAYER                             │
+│   • navigator.bluetooth    • navigator.mediaDevices    • HTML5 Canvas 2D Context       │
+│   • Web Audio API          • Vercel Edge CDN Routing   • Git Version Control           │
+└────────────────────────────────────────────────────────────────────────────────────────┘</div>
+  </div>
+
+  <!-- =========================================================================
+       PAGE 4: PROJECT MANAGEMENT (JIRA) & VIVA DEFENSE
+       ========================================================================= -->
+  <div class="page">
+    <h1>3. Project Management (JIRA Setup) & Viva Defense</h1>
+
+    <h2>3.1 JIRA Scrum Board Architecture</h2>
+    <p>
+      Project management was orchestrated using Atlassian JIRA under an Agile Scrum framework across three completed sprints:
+    </p>
+    <table>
+      <thead>
+        <tr>
+          <th style="width: 12%;">Issue Key</th>
+          <th style="width: 12%;">Type</th>
+          <th>Summary & Scope of Implementation</th>
+          <th style="width: 10%;">Points</th>
+          <th style="width: 14%;">Assignee</th>
+          <th style="width: 12%;">Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>APEX-101</code></td>
+          <td><span class="tag tag-purple">Epic</span></td>
+          <td>Computer Vision Kinematics & Spatial Re-ID Engine</td>
+          <td>13</td>
+          <td>Aditya Kumar</td>
+          <td><span class="tag tag-green">DONE</span></td>
+        </tr>
+        <tr>
+          <td><code>APEX-102</code></td>
+          <td><span class="tag tag-blue">Story</span></td>
+          <td>Implement Single-Athlete Reticle & IoU Crowd Bystander Rejection</td>
+          <td>5</td>
+          <td>Aditya Kumar</td>
+          <td><span class="tag tag-green">DONE</span></td>
+        </tr>
+        <tr>
+          <td><code>APEX-103</code></td>
+          <td><span class="tag tag-blue">Story</span></td>
+          <td>Web Bluetooth GATT 0x180D Cardiac Service Integration</td>
+          <td>5</td>
+          <td>Aditya Kumar</td>
+          <td><span class="tag tag-green">DONE</span></td>
+        </tr>
+        <tr>
+          <td><code>APEX-104</code></td>
+          <td><span class="tag tag-blue">Story</span></td>
+          <td>Real-Time P-QRS-T Canvas Oscilloscope Sweep Engine</td>
+          <td>3</td>
+          <td>Aditya Kumar</td>
+          <td><span class="tag tag-green">DONE</span></td>
+        </tr>
+        <tr>
+          <td><code>APEX-105</code></td>
+          <td><span class="tag tag-blue">Story</span></td>
+          <td>Linear Regression MVT Solver & Submaximal e1RM Calculator</td>
+          <td>5</td>
+          <td>Aditya Kumar</td>
+          <td><span class="tag tag-green">DONE</span></td>
+        </tr>
+        <tr>
+          <td><code>APEX-106</code></td>
+          <td><span class="tag tag-blue">Story</span></td>
+          <td>4-Week Adaptive Mesocycle & Auto-Deload Simulator</td>
+          <td>3</td>
+          <td>Aditya Kumar</td>
+          <td><span class="tag tag-green">DONE</span></td>
+        </tr>
+        <tr>
+          <td><code>APEX-107</code></td>
+          <td><span class="tag tag-amber">Task</span></td>
+          <td>Luminous Opal & Prismatic Neon UI Design System & Vercel Deploy</td>
+          <td>3</td>
+          <td>Aditya Kumar</td>
+          <td><span class="tag tag-green">DONE</span></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>3.2 Examiner Viva / Defense Q&A Preparation</h2>
+
+    <div class="callout-card">
+      <div class="callout-title">Q1: How does your camera model filter out bystanders in a crowded gym?</div>
+      <p style="margin:0; font-size: 9pt;">
+        <strong>Defense Answer</strong>: <em>"Sir, we implement Spatial Centroid Re-ID combined with Bounding Box Scale Analysis. The primary athlete occupies the foreground center with the dominant bounding area. Peripheral subjects exhibit an Intersection over Union ($IoU$) &lt; 0.20 and high centroid variance. The engine classifies them as crowd bystanders, discarding their keypoint vectors from rep and velocity math."</em>
+      </p>
+    </div>
+
+    <div class="callout-card">
+      <div class="callout-title">Q2: How accurate is 1RM prediction without lifting heavy weights to failure?</div>
+      <p style="margin:0; font-size: 9pt;">
+        <strong>Defense Answer</strong>: <em>"Sir, sports science (Dr. González-Badillo) has proven that concentric barbell velocity has an exceptionally tight linear relationship ($R^2 > 0.98$) with load percentage. By performing 3–4 submaximal warmup sets, our system computes the linear equation $v = m \cdot L + c$. Extrapolating to the exercise's terminal Minimum Velocity Threshold (MVT 0.18 m/s for squat) predicts true 1RM with clinical precision while eliminating spinal injury risk."</em>
+      </p>
+    </div>
+
+    <div class="callout-card">
+      <div class="callout-title">Q3: Why use Web Bluetooth API instead of a mobile app?</div>
+      <p style="margin:0; font-size: 9pt;">
+        <strong>Defense Answer</strong>: <em>"Sir, native mobile apps fragment data into closed silos (Apple Health, Garmin Connect). The Web Bluetooth API (`navigator.bluetooth`) allows zero-install, zero-friction browser pairing directly to the standard GATT Heart Rate Service (`0x180D`), streaming raw RR-intervals into our clinical canvas oscilloscope with point-to-point hardware encryption."</em>
+      </p>
+    </div>
+
+    <div style="margin-top: 24px; text-align: center; border-top: 1px solid #e2e8f0; padding-top: 12px; font-size: 8.5pt; color: #94a3b8; font-family: 'JetBrains Mono', monospace;">
+      APEX AI FITNESS • PROJECT WORK EVALUATION DOSSIER • GITHUB: ADI-KUMAR-GL/AI-FITNESS
+    </div>
+  </div>
+
+</body>
+</html>

@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>APEX AI FITNESS — Project Work Evaluation Presentation Slide Deck</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=JetBrains+Mono:wght@400;500;700&family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Outfit', sans-serif;
+      background: #090d16;
+      color: #f8fafc;
+      overflow: hidden;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    /* Slide Container */
+    #deck {
+      position: relative;
+      flex: 1;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    .slide {
+      position: absolute;
+      inset: 0;
+      padding: 60px 80px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateX(40px);
+      transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .slide.active {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateX(0);
+    }
+
+    /* Typography */
+    .font-display { font-family: 'Bebas Neue', sans-serif; letter-spacing: 0.04em; }
+    .font-mono { font-family: 'JetBrains Mono', monospace; }
+
+    .slide-badge {
+      display: inline-block;
+      align-self: flex-start;
+      padding: 6px 16px;
+      border-radius: 999px;
+      background: rgba(14, 165, 233, 0.15);
+      border: 1px solid rgba(14, 165, 233, 0.4);
+      color: #38bdf8;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+
+    .slide-title {
+      font-size: 46px;
+      font-weight: 800;
+      line-height: 1.15;
+      color: #ffffff;
+      margin-bottom: 24px;
+    }
+
+    .slide-title span {
+      color: #0284c7;
+      background: linear-gradient(90deg, #38bdf8, #10b981);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    /* Cards */
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+    .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; }
+    .grid-4 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 18px; }
+
+    .card {
+      background: rgba(15, 23, 42, 0.85);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    }
+
+    .card h3 {
+      font-size: 18px;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .card p {
+      font-size: 14px;
+      color: #94a3b8;
+      line-height: 1.5;
+    }
+
+    .formula-box {
+      background: #030712;
+      border: 1px solid #1e293b;
+      border-radius: 12px;
+      padding: 16px 20px;
+      font-family: 'JetBrains Mono', monospace;
+      color: #38bdf8;
+      font-size: 15px;
+      margin: 16px 0;
+    }
+
+    /* Controls Bar */
+    #controls {
+      height: 70px;
+      background: rgba(15, 23, 42, 0.95);
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 40px;
+      z-index: 100;
+    }
+
+    .btn {
+      padding: 10px 20px;
+      border-radius: 12px;
+      font-family: 'Outfit', sans-serif;
+      font-weight: 700;
+      font-size: 14px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: none;
+      transition: all 0.2s;
+    }
+
+    .btn-primary {
+      background: linear-gradient(90deg, #0284c7, #10b981);
+      color: white;
+      box-shadow: 0 4px 14px rgba(2, 132, 199, 0.35);
+    }
+
+    .btn-secondary {
+      background: #1e293b;
+      color: #cbd5e1;
+      border: 1px solid #334155;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+    }
+
+    #slideIndicator {
+      font-family: 'JetBrains Mono', monospace;
+      color: #64748b;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="deck">
+
+    <!-- SLIDE 1: TITLE SLIDE -->
+    <div class="slide active">
+      <span class="slide-badge">Academic Project Work Evaluation • Full-Stack & Research</span>
+      <h1 class="slide-title" style="font-size: 64px;">
+        APEX <span>AI FITNESS</span>
+      </h1>
+      <p style="font-size: 22px; color: #94a3b8; max-width: 800px; line-height: 1.5; margin-bottom: 36px;">
+        Next-Generation Clinical AI Platform Featuring Single-Athlete Optical Lock, Direct Web Bluetooth Cardiac Telemetry, and Velocity-Based Training.
+      </p>
+
+      <div style="display: flex; gap: 40px; border-top: 1px solid #1e293b; padding-top: 24px;">
+        <div>
+          <span style="font-size: 12px; color: #64748b; font-family: 'JetBrains Mono'; text-transform: uppercase;">Presenter / Lead</span>
+          <p style="font-size: 18px; font-weight: 700; color: #ffffff;">Aditya Kumar (ADI-KUMAR-gl)</p>
+        </div>
+        <div>
+          <span style="font-size: 12px; color: #64748b; font-family: 'JetBrains Mono'; text-transform: uppercase;">Architecture</span>
+          <p style="font-size: 18px; font-weight: 700; color: #38bdf8;">Web Bluetooth GATT + HTML5 CV</p>
+        </div>
+        <div>
+          <span style="font-size: 12px; color: #64748b; font-family: 'JetBrains Mono'; text-transform: uppercase;">Deployment</span>
+          <p style="font-size: 18px; font-weight: 700; color: #10b981;">Live on Vercel & GitHub</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 2: THE PROBLEM STATEMENT -->
+    <div class="slide">
+      <span class="slide-badge">The Problem</span>
+      <h2 class="slide-title">Critical Flaws In <span>Current Fitness Technology</span></h2>
+      <div class="grid-2">
+        <div class="card">
+          <h3 style="color: #f87171;"><i data-lucide="alert-triangle"></i> 1. Manual Set Logging Fatigue</h3>
+          <p>Trainees are forced to manually type reps and weights between exhausting sets, leading to high friction, inaccurate workout logs, and abandoned tracking apps.</p>
+        </div>
+        <div class="card">
+          <h3 style="color: #f87171;"><i data-lucide="users"></i> 2. Camera Gym Crowd Occlusion</h3>
+          <p>Existing computer vision apps only work in solitary living rooms. In busy commercial gyms, people walking past corrupt pose estimation and cause false rep counts.</p>
+        </div>
+        <div class="card">
+          <h3 style="color: #f87171;"><i data-lucide="skull"></i> 3. Catastrophic 1RM Injury Risk</h3>
+          <p>Traditional programs mandate lifting to absolute physical failure to measure 1-Rep Max, exposing lifters to severe spinal shear stress and acute muscle tears.</p>
+        </div>
+        <div class="card">
+          <h3 style="color: #f87171;"><i data-lucide="lock"></i> 4. Hardware Ecosystem Silos</h3>
+          <p>Wearables (Apple Watch, Polar, Garmin) trap cardiac data inside closed ecosystems, incapable of syncing live with video biomechanics in the browser.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 3: LITERATURE REVIEW -->
+    <div class="slide">
+      <span class="slide-badge">Research Deliverable 1</span>
+      <h2 class="slide-title">Global <span>Literature Review</span></h2>
+      <div class="grid-3">
+        <div class="card">
+          <h3><i data-lucide="eye"></i> Computer Vision Pose</h3>
+          <p><strong>Google MediaPipe, OpenPose, AlphaPose:</strong> Landmark models for 2D/3D skeletal keypoints. However, existing implementations lack spatial Re-ID anchors and fail under dynamic gym occlusion.</p>
+        </div>
+        <div class="card">
+          <h3><i data-lucide="ruler"></i> Linear Transducers</h3>
+          <p><strong>GymAware, Vitruve, Tendo Units:</strong> Athletic labs use \$2,000+ tethered hardware to calculate barbell speed. Highly accurate, but financially inaccessible to standard gymgoers.</p>
+        </div>
+        <div class="card">
+          <h3><i data-lucide="trending-up"></i> VBT Clinical Science</h3>
+          <p><strong>Dr. González-Badillo, Dr. Bryan Mann:</strong> Proved that concentric velocity ($m/s$) has an extraordinary linear correlation ($R^2 > 0.98$) with % of 1RM, enabling submaximal math modeling.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 4: PROPOSED MATHEMATICAL SOLUTION -->
+    <div class="slide">
+      <span class="slide-badge">Research Deliverable 2 & 3</span>
+      <h2 class="slide-title">Proposed Solution & <span>Mathematical Modeling</span></h2>
+      <div class="grid-2">
+        <div class="card">
+          <h3><i data-lucide="crosshair"></i> A. Single-Athlete Optical Lock</h3>
+          <p>Centroid Re-ID anchors to foreground athlete ($A_1$). Peripheral subjects ($B_k$) with Intersection over Union ($IoU$) &lt; 0.20 are filtered automatically:</p>
+          <div class="formula-box">
+            IoU(A_1, B_k) = \frac{\text{Area}(A_1 \cap B_k)}{\text{Area}(A_1 \cup B_k)} &lt; 0.20 \implies \text{FILTERED}
+          </div>
+        </div>
+        <div class="card">
+          <h3><i data-lucide="line-chart"></i> B. Submaximal 1RM Regression</h3>
+          <p>Least-squares linear regression profile fits warmup velocities and extrapolates true 1RM at terminal Minimum Velocity Threshold (MVT):</p>
+          <div class="formula-box">
+            v = m \cdot L + c \quad \implies \quad \text{e1RM} = \frac{\text{MVT} - c}{m}
+          </div>
+          <span style="font-size: 12px; color: #10b981; font-family: 'JetBrains Mono';">● Zero maximal lifts to failure required</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 5: USER STORIES (FULL-STACK DELIVERABLE) -->
+    <div class="slide">
+      <span class="slide-badge">Full-Stack Deliverable</span>
+      <h2 class="slide-title">Agile <span>User Stories</span></h2>
+      <div class="grid-2">
+        <div class="card">
+          <h3 style="color: #38bdf8;">US-01: Single-Athlete Target Lock</h3>
+          <p><strong>As an</strong> athlete in a crowded gym, <strong>I want</strong> the camera to lock strictly onto me, <strong>so that</strong> passersby do not corrupt my reps or velocity data.<br><em style="color: #10b981;">AC: Reticle displays "TARGET LOCKED: ATHLETE #01" with 99.4% confidence.</em></p>
+        </div>
+        <div class="card">
+          <h3 style="color: #10b981;">US-02: Web Bluetooth ECG Sweep</h3>
+          <p><strong>As a</strong> trainee with an Apple Watch or Polar band, <strong>I want</strong> to connect over Bluetooth in the browser, <strong>so that</strong> I view real-time P-QRS-T waveforms and HRV.<br><em style="color: #10b981;">AC: Connects over GATT 0x180D; renders 60 FPS oscilloscope.</em></p>
+        </div>
+        <div class="card">
+          <h3 style="color: #f43f5e;">US-03: Submaximal 1RM Extrapolation</h3>
+          <p><strong>As a</strong> strength athlete, <strong>I want</strong> to know my daily 1RM from warmup sets, <strong>so that</strong> I avoid lifting to failure and risking acute spinal injuries.<br><em style="color: #10b981;">AC: Solves linear regression with R² ≥ 0.99 at exercise MVT.</em></p>
+        </div>
+        <div class="card">
+          <h3 style="color: #a855f7;">US-04: Auto-Regulated Mesocycle</h3>
+          <p><strong>As a</strong> lifter, <strong>I want</strong> my program to reduce sets automatically when CNS fatigue is high, <strong>so that</strong> I avoid chronic overtraining.<br><em style="color: #10b981;">AC: Triggers -25% volume compensatory deload automatically.</em></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 6: SYSTEM ARCHITECTURE -->
+    <div class="slide">
+      <span class="slide-badge">System Architecture</span>
+      <h2 class="slide-title">Multi-Tier <span>System Architecture</span></h2>
+      <div class="grid-3">
+        <div class="card">
+          <h3 style="color: #38bdf8;"><i data-lucide="layout"></i> 1. Presentation Layer</h3>
+          <p>• <strong>index.html</strong> (Overview Hub)<br>• <strong>dashboard.html</strong> (Studio Console)<br>• <strong>wearables.html</strong> (Cardiac Lab)<br>• <strong>analytics.html</strong> (VBT Profiler)<br>• <strong>periodization.html</strong> (Mesocycle)<br>• <strong>css/styles.css</strong> (Luminous Opal Glass)</p>
+        </div>
+        <div class="card">
+          <h3 style="color: #10b981;"><i data-lucide="cpu"></i> 2. Biomechanical Engine</h3>
+          <p>• <strong>js/ai-coach.js</strong>: Centroid Re-ID, IoU crowd filter, bar path curvature.<br>• <strong>js/ble-heartrate.js</strong>: Web Bluetooth GATT 0x180D, ECG P-QRS-T sweep.<br>• <strong>js/vbt-analytics.js</strong>: Linear least squares regression & e1RM solver.</p>
+        </div>
+        <div class="card">
+          <h3 style="color: #f59e0b;"><i data-lucide="hard-drive"></i> 3. Hardware & APIs</h3>
+          <p>• <strong>Web Bluetooth API</strong> (0x180D)<br>• <strong>MediaDevices API</strong> (Camera)<br>• <strong>HTML5 Canvas 2D</strong> (60 FPS)<br>• <strong>Web Audio API</strong> (Chimes)<br>• <strong>Vercel Edge Platform</strong></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 7: JIRA PROJECT MANAGEMENT -->
+    <div class="slide">
+      <span class="slide-badge">Project Management</span>
+      <h2 class="slide-title">Agile JIRA <span>Scrum Workflow</span></h2>
+      <div class="card" style="padding: 16px;">
+        <table style="width: 100%; text-align: left; font-size: 13px; border-collapse: collapse;">
+          <tr style="border-bottom: 1px solid #334155; color: #94a3b8; font-family: 'JetBrains Mono';">
+            <th style="padding: 8px;">Key</th>
+            <th>Type</th>
+            <th>Summary</th>
+            <th>Points</th>
+            <th>Assignee</th>
+            <th>Status</th>
+          </tr>
+          <tr style="border-bottom: 1px solid #1e293b;">
+            <td style="padding: 10px; font-family: 'JetBrains Mono'; color: #38bdf8;">APEX-101</td>
+            <td><span style="color: #a855f7; font-weight: bold;">Epic</span></td>
+            <td>Computer Vision Kinematics & Spatial Re-ID Engine</td>
+            <td>13</td>
+            <td>Aditya Kumar</td>
+            <td><span style="color: #10b981; font-weight: bold;">DONE</span></td>
+          </tr>
+          <tr style="border-bottom: 1px solid #1e293b;">
+            <td style="padding: 10px; font-family: 'JetBrains Mono'; color: #38bdf8;">APEX-102</td>
+            <td>Story</td>
+            <td>Implement Single-Athlete Reticle & IoU Crowd Rejection</td>
+            <td>5</td>
+            <td>Aditya Kumar</td>
+            <td><span style="color: #10b981; font-weight: bold;">DONE</span></td>
+          </tr>
+          <tr style="border-bottom: 1px solid #1e293b;">
+            <td style="padding: 10px; font-family: 'JetBrains Mono'; color: #38bdf8;">APEX-103</td>
+            <td>Story</td>
+            <td>Web Bluetooth GATT 0x180D Cardiac Service Integration</td>
+            <td>5</td>
+            <td>Aditya Kumar</td>
+            <td><span style="color: #10b981; font-weight: bold;">DONE</span></td>
+          </tr>
+          <tr style="border-bottom: 1px solid #1e293b;">
+            <td style="padding: 10px; font-family: 'JetBrains Mono'; color: #38bdf8;">APEX-104</td>
+            <td>Story</td>
+            <td>Real-Time P-QRS-T Canvas Oscilloscope Sweep Engine</td>
+            <td>3</td>
+            <td>Aditya Kumar</td>
+            <td><span style="color: #10b981; font-weight: bold;">DONE</span></td>
+          </tr>
+          <tr>
+            <td style="padding: 10px; font-family: 'JetBrains Mono'; color: #38bdf8;">APEX-105</td>
+            <td>Story</td>
+            <td>Linear Regression MVT Solver & Submaximal e1RM Calculator</td>
+            <td>5</td>
+            <td>Aditya Kumar</td>
+            <td><span style="color: #10b981; font-weight: bold;">DONE</span></td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- SLIDE 8: VIVA DEFENSE & Q&A -->
+    <div class="slide">
+      <span class="slide-badge">Viva Defense</span>
+      <h2 class="slide-title">Examiner Q&A <span>Defense Strategies</span></h2>
+      <div class="grid-3">
+        <div class="card">
+          <h3 style="color: #38bdf8;">Crowd Filtering Defense</h3>
+          <p style="font-size: 13px;"><em>"We implement Spatial Centroid Re-ID combined with IoU thresholding (<0.20). Background gymgoers are classified as peripheral noise, discarding their skeletal vectors."</em></p>
+        </div>
+        <div class="card">
+          <h3 style="color: #10b981;">1RM Accuracy Defense</h3>
+          <p style="font-size: 13px;"><em>"Concentric bar velocity has a proven linear correlation (R² > 0.98) with % load. Solving v = m·L + c at the exercise MVT (0.18 m/s for squat) delivers clinically validated 1RM without injury risk."</em></p>
+        </div>
+        <div class="card">
+          <h3 style="color: #f59e0b;">Web Bluetooth Security</h3>
+          <p style="font-size: 13px;"><em>"Web Bluetooth operates under explicit user permission prompts with end-to-end device-to-browser encryption. Zero camera frames or biometrics leave the local device."</em></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 9: THANK YOU & LIVE DEMO -->
+    <div class="slide" style="text-align: center; align-items: center;">
+      <span class="slide-badge">Conclusion</span>
+      <h2 class="slide-title" style="font-size: 56px;">Thank You! <span>Questions?</span></h2>
+      <p style="font-size: 20px; color: #94a3b8; max-width: 600px; margin-bottom: 30px;">
+        The complete APEX AI Fitness platform is live on Vercel and available on GitHub.
+      </p>
+      <div style="display: flex; gap: 16px;">
+        <a href="dashboard.html" target="_blank" class="btn btn-primary" style="font-size: 16px; padding: 14px 28px; text-decoration: none;">
+          <i data-lucide="play"></i> Launch Live Studio Demo
+        </a>
+        <a href="wearables.html" target="_blank" class="btn btn-secondary" style="font-size: 16px; padding: 14px 28px; text-decoration: none;">
+          <i data-lucide="heart-pulse"></i> Open Wearables Lab
+        </a>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- BOTTOM CONTROLS BAR -->
+  <div id="controls">
+    <div style="display: flex; align-items: center; gap: 12px;">
+      <button class="btn btn-secondary" id="prevBtn"><i data-lucide="chevron-left"></i> Previous</button>
+      <button class="btn btn-primary" id="nextBtn">Next <i data-lucide="chevron-right"></i></button>
+    </div>
+
+    <div id="slideIndicator">Slide 1 of 9</div>
+
+    <div style="display: flex; align-items: center; gap: 12px;">
+      <button class="btn btn-secondary" id="fullscreenBtn"><i data-lucide="maximize"></i> Fullscreen</button>
+      <button class="btn btn-secondary" onclick="window.print()"><i data-lucide="printer"></i> Print Slides</button>
+    </div>
+  </div>
+
+  <script>
+    if (window.lucide) window.lucide.createIcons();
+
+    const slides = document.querySelectorAll('.slide');
+    let currentSlide = 0;
+
+    function showSlide(index) {
+      slides.forEach((s, i) => {
+        s.classList.toggle('active', i === index);
+      });
+      document.getElementById('slideIndicator').textContent = `Slide ${index + 1} of ${slides.length}`;
+    }
+
+    document.getElementById('nextBtn').addEventListener('click', () => {
+      if (currentSlide < slides.length - 1) {
+        currentSlide++;
+        showSlide(currentSlide);
+      }
+    });
+
+    document.getElementById('prevBtn').addEventListener('click', () => {
+      if (currentSlide > 0) {
+        currentSlide--;
+        showSlide(currentSlide);
+      }
+    });
+
+    // Keyboard Arrow Navigation
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
+        if (currentSlide < slides.length - 1) {
+          currentSlide++;
+          showSlide(currentSlide);
+        }
+      } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+        if (currentSlide > 0) {
+          currentSlide--;
+          showSlide(currentSlide);
+        }
+      }
+    });
+
+    document.getElementById('fullscreenBtn').addEventListener('click', () => {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen();
+      } else {
+        document.exitFullscreen();
+      }
+    });
+  </script>
+</body>
+</html>

@@ -16,6 +16,10 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=JetBrains+Mono:wght@400;500;700&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
+  <!-- TensorFlow.js & PoseNet for Live AI Body Tracking -->
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@3.18.0/dist/tf.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/posenet@2.2.2/dist/posenet.min.js"></script>
+
   <link rel="stylesheet" href="css/styles.css">
 </head>
 <body class="min-h-screen text-slate-900 antialiased flex flex-col justify-between">
@@ -39,11 +43,13 @@
 
       <!-- Desktop Nav Links -->
       <nav class="hidden md:flex items-center gap-1.5 p-1 rounded-2xl bg-slate-100/80 border border-slate-200/80">
-        <a href="index.html" data-nav-link class="px-4 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:text-slate-900 transition-colors">Overview</a>
-        <a href="dashboard.html" data-nav-link class="px-4 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:text-slate-900 transition-colors">Studio Console</a>
-        <a href="wearables.html" data-nav-link class="px-4 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:text-slate-900 transition-colors">Wearables Lab</a>
-        <a href="analytics.html" data-nav-link class="px-4 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:text-slate-900 transition-colors">VBT Analytics</a>
-        <a href="periodization.html" data-nav-link class="px-4 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:text-slate-900 transition-colors">Mesocycle Planner</a>
+        <a href="index.html" data-nav-link class="px-3.5 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:text-slate-900 transition-colors">Overview</a>
+        <a href="dashboard.html" data-nav-link class="px-3.5 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:text-slate-900 transition-colors">Studio Console</a>
+        <a href="wearables.html" data-nav-link class="px-3.5 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:text-slate-900 transition-colors">Wearables Lab</a>
+        <a href="analytics.html" data-nav-link class="px-3.5 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:text-slate-900 transition-colors">VBT Analytics</a>
+        <a href="periodization.html" data-nav-link class="px-3.5 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:text-slate-900 transition-colors">Mesocycle</a>
+        <a href="presentation.html" target="_blank" class="px-3 py-1.5 rounded-xl text-xs font-semibold text-sky-700 bg-sky-50 hover:bg-sky-100 transition-colors flex items-center gap-1"><i data-lucide="presentation" class="w-3.5 h-3.5"></i> PPT Deck</a>
+        <a href="project_report.html" target="_blank" class="px-3 py-1.5 rounded-xl text-xs font-semibold text-emerald-700 bg-emerald-50 hover:bg-emerald-100 transition-colors flex items-center gap-1"><i data-lucide="file-text" class="w-3.5 h-3.5"></i> Report (PDF)</a>
       </nav>
 
       <!-- Live Cardiac Stream Indicator & Controls -->
@@ -151,8 +157,8 @@
           <div class="absolute bottom-3 left-3 right-3 flex flex-wrap items-center justify-between gap-2 p-2 rounded-2xl bg-slate-900/85 backdrop-blur-md border border-slate-700/80 text-white">
             
             <div class="flex items-center gap-2">
-              <button id="coachCamBtn" class="px-3 py-1.5 rounded-xl bg-sky-600 hover:bg-sky-500 text-white text-xs font-semibold flex items-center gap-1.5 transition">
-                <i data-lucide="camera" class="w-3.5 h-3.5"></i> Switch to Live Camera
+              <button id="coachCamBtn" class="px-3.5 py-2 rounded-xl bg-sky-600 hover:bg-sky-500 text-white text-xs font-bold flex items-center gap-1.5 transition shadow-sm">
+                <i data-lucide="camera" class="w-4 h-4"></i> Switch to Live Camera
               </button>
               <button id="coachRelockBtn" class="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold flex items-center gap-1.5 transition">
                 <i data-lucide="refresh-cw" class="w-3.5 h-3.5 text-emerald-400"></i> Re-Acquire Lock
@@ -170,6 +176,14 @@
                 <i data-lucide="pause" class="w-4 h-4"></i>
               </button>
             </div>
+          </div>
+        </div>
+
+        <!-- Mode Instruction Banner -->
+        <div class="p-3.5 rounded-2xl bg-sky-50 border border-sky-200/80 flex items-center justify-between text-xs text-sky-900">
+          <div class="flex items-center gap-2.5">
+            <i data-lucide="info" class="w-4 h-4 text-sky-600 shrink-0"></i>
+            <span><strong>Two Operational Modes:</strong> Use the button above to switch between <strong>Live Camera AI</strong> (tracks real webcam body joints) and <strong>Kinematic Simulation</strong>.</span>
           </div>
         </div>
 
@@ -301,11 +315,13 @@
         <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
         <span>Clinical AI Vision Engine Active • Single-Athlete Re-ID 99.4%</span>
       </div>
-      <div class="flex items-center gap-4 font-semibold">
+      <div class="flex flex-wrap items-center gap-4 font-semibold">
         <a href="dashboard.html" class="text-sky-600 hover:underline">Studio Console</a>
         <a href="wearables.html" class="hover:underline">Wearables Lab</a>
         <a href="analytics.html" class="hover:underline">VBT Analytics</a>
         <a href="periodization.html" class="hover:underline">Mesocycle Planner</a>
+        <a href="presentation.html" target="_blank" class="text-sky-600 hover:underline flex items-center gap-1"><i data-lucide="presentation" class="w-3.5 h-3.5"></i> PPT Slides</a>
+        <a href="project_report.html" target="_blank" class="text-emerald-600 hover:underline flex items-center gap-1"><i data-lucide="file-text" class="w-3.5 h-3.5"></i> Report (PDF)</a>
       </div>
     </div>
   </footer>
